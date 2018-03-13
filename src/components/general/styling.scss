@@ -1,0 +1,18 @@
+label {
+  padding: 8px;
+  margin: 0 0 8px;
+  display: block;
+}
+
+label:hover {
+  cursor: pointer;
+}
+
+input:checked + span {
+  background-color: rgb(222, 235, 217);
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
