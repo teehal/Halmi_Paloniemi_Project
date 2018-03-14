@@ -192,6 +192,7 @@ class App extends Component {
 
   handleSelectedDataChange(value) {
     let check = true;
+
     if (value !== "") {
       //  only choose 1 option in time period, the function of time period is similar to radio box
       if (value.dataType === "timePeriod") {
@@ -199,24 +200,24 @@ class App extends Component {
           return element.dataType === "timePeriod";
         });
 
-        if (newArr.length === 0) {
+        // if (newArr.length === 0 || true) {
+        let position = this.state.selectedOptions.findIndex( (element) => {
+          return element.id === value.id && element.dataType === value.dataType
+        });
+
+        if ( position === -1 ) {
           this.state.selectedOptions.push(value);
           this.setState({
             selectedOptions: this.state.selectedOptions
-          });
-        } else {
-          let position = this.state.selectedOptions.findIndex(
-            element =>
-              element.dataType === newArr[0].dataType &&
-              element.id === newArr[0].id
-          );
-
+            });
+        }
+        else if (newArr.length > 1) {
           this.state.selectedOptions.splice(position, 1);
-          this.state.selectedOptions.push(value);
           this.setState({
             selectedOptions: this.state.selectedOptions
           });
         }
+        check = false;
       } else {
         //  Only for scenarios and indicators
         let position = this.state.selectedOptions.findIndex(
