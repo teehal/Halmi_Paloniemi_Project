@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-import BarChart from "./barchart/BarChart";
+import Charts from "./charts/Charts";
 import TableChart from "./table-chart/TableChart";
-import PolarChart from "./polarchart/PolarChart";
 import ChartControls from "./chart-controls/ChartControls";
 
 import "./chartcontainer.scss";
@@ -35,12 +34,13 @@ class ChartContainer extends Component {
     switch (chartType) {
       case "bar":
         return (
-          <BarChart
+          <Charts
             values={this.props.valueData}
             options={this.props.options}
             scenarios={this.props.scenarios}
             regionalLevel={this.props.regionalLevel}
             region={this.props.region}
+            isPolar={false}
           />
         );
       case "table":
@@ -55,16 +55,17 @@ class ChartContainer extends Component {
         );
       case "polar":
       return (
-        <PolarChart
+        <Charts
           values={this.props.valueData}
           options={this.props.options}
           scenarios={this.props.scenarios}
           regionalLevel={this.props.regionalLevel}
           region={this.props.region}
+          isPolar={true}
         />
       );
       default:
-        return <BarChart />;
+        return <Charts />;
     }
   }
 
