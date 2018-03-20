@@ -96,7 +96,8 @@ class App extends Component {
       let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
         regionList[0]
       );
-
+      console.log(`regionList ${Object.entries(regionList[0])}`);
+      console.log(`scenarioCollection ${Object.entries(scenarioCollectionList[0])}`);
       DataBinding.bindChartData(scenarioCollectionList[0], regionList[0]).then(
         result => {
           this.setState({

@@ -31,9 +31,9 @@ class ChartControls extends Component {
           <button className="btn" value="bar" onClick={this.changeChartType}>
             Bar chart
           </button>
-          <button className="btn" value="table" onClick={this.changeChartType}>
+          {/* <button className="btn" value="table" onClick={this.changeChartType}>
             Table chart
-          </button>
+          </button> */}
           <button className="btn" value="polar" onClick={this.changeChartType}>
             Polar chart
           </button>

@@ -9,6 +9,7 @@ function bindRegionalLevelData() {
 }
 
 function bindRegionData(regionalLevel) {
+  console.log("bindRegionData " + regionalLevel.value);
   if (regionalLevel !== "") {
     return new Promise((resolve, reject) => {
       ForestData.getRegion(regionalLevel.value).then(function(result) {
@@ -31,6 +32,7 @@ function bindScenarioCollectionsData(region) {
 }
 
 function bindChartData(scenarioCollection, region) {
+  console.log("bindChartdata scenCollect : " + scenarioCollection.id + " region " + region.id);
   return new Promise((resolve, reject) => {
     if (region !== null && scenarioCollection !== null) {
       ForestData.getScenarionCollection(scenarioCollection.id, region.id).then(

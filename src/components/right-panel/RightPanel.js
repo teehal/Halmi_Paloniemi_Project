@@ -12,7 +12,7 @@ class RightPanel extends Component {
         <h4>
           {item.name}&nbsp;{item.isMandatory === 1 ? "*" : ""}
         </h4>
-
+        <div className="item_list">
         {item.indicators.map((indicator, index) => {
           if (index === 0 && item.isMandatory) {
             // console.log(`MANDATORY: id of ${indicator.name} is ${indicator.id}`)
@@ -45,6 +45,7 @@ class RightPanel extends Component {
           }
           //console.log(index, index === 0 && item.isMandatory ? true : false),
         })}
+        </div>
       </div>
     ));
 
@@ -55,7 +56,7 @@ class RightPanel extends Component {
         <h3 className="header-spacing-panels">
           {this.props.indicatorSelectionLabel}
         </h3>
-        {listItems}
+          {listItems}
       </div>
     );
   }
