@@ -221,7 +221,8 @@ class Charts extends Component {
           crosshair: true
         },
         yAxis: {
-          tickAmount: itIsPolar ? 8 : undefined,
+          max: itIsPolar ? 1 : undefined,
+          tickAmount: itIsPolar ? 5 : undefined,
           min: 0,
           labels: {
             overflow: "justify"

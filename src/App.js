@@ -454,9 +454,9 @@ class App extends Component {
             region={this.state.region}
           />
           <div className="services text-center content-panel shadow-1">
-            <a href="http://Metsämittari.fi">
+            {/* <a href="http://Metsämittari.fi">
               <h4>Metsämittari.fi portal</h4>
-            </a>
+            </a> */}
             <a
               href={getMelaTupaService(
                 this.state.selectedOptions,
@@ -466,6 +466,13 @@ class App extends Component {
               )}
             >
               <h4>MELATuPa service</h4>
+            </a>
+          </div>
+          <div className="feedback content-panel shadow-1">
+            <Modal guidanceLabel={this.state.guidanceLabel} />
+
+            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
+              <h4>{this.state.feedbackLabel}</h4>
             </a>
           </div>
         </div>
@@ -478,13 +485,13 @@ class App extends Component {
             selectedOptions={this.state.selectedOptions}
           /> */}
 
-          <div className="feedback content-panel shadow-1">
+          {/* <div className="feedback content-panel shadow-1">
             <Modal guidanceLabel={this.state.guidanceLabel} />
 
             <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
               <h4>{this.state.feedbackLabel}</h4>
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     );
