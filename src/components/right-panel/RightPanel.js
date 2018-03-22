@@ -23,15 +23,56 @@ class RightPanel extends Component {
     return options;
   }
 
-  handleChange = (option, index) => {
-    let tempArray = this.state.indValues.slice();
+  // handleChange = (option, index) => {
+  //   let tempArray = this.state.indValues.slice();
 
-    if ( !option.length && tempArray[index][0].isMandatory )
-      alert("The item is mandatory!");
-    else {
-      tempArray[index] = option;
-      this.setState( {indValues: tempArray});
+  //   if ( !option.length && tempArray[index][0].isMandatory )
+  //     alert("The item is mandatory!");
+  //   else {
+  //     tempArray[index] = option;
+  //     this.setState( {indValues: tempArray});
+  //   }
+  // }
+
+  findMissingElementIndex = (first_arr, second_arr) => {
+    let value = -1
+    first_arr.forEach( (item, index) => {
+      if ( second_arr.indexOf(item) === -1 )
+        value = index;
+    });
+    return value;
+  }
+  
+  handleChange = (option, index) => {
+    console.log(`opt len ${option.length} key ${Object.keys(option)}`);
+    let tempArray = this.state.indValues.slice();
+    tempArray[index] = option;
+
+    if ( this.state.indValues[index].length > option.length && option.length ) {
+      let missingIndex = this.findMissingElementIndex(this.state.indValues[index], option);
+      let element = this.state.indValues[index].slice(missingIndex, missingIndex + 1);
+      this.props.selectedDataChange({dataType: "indicator", 
+        name: element[0].label, id: element[0].value.toString()});
+      this.setState( {indValues: tempArray} );
     }
+    else if ( option.length > 0 ) {
+      let lastElement = option.slice(-1);
+      this.setState( {indValues: tempArray} );
+      this.props.selectedDataChange({dataType: "indicator", 
+          name: lastElement[0].label, id: lastElement[0].value.toString()});
+    }
+    else if ( this.state.indValues[index][0].isMandatory !== 1 ) {
+      let missingIndex = this.findMissingElementIndex(this.state.indValues[index], option);
+      let element = this.state.indValues[index].slice(missingIndex, missingIndex + 1);
+      this.props.selectedDataChange({dataType: "indicator", 
+        name: element[0].label, id: element[0].value.toString()});
+      this.setState( {indValues: tempArray} );
+      console.log(`element ${element[0].label}`);
+      // this.props.selectedDataChange({dataType: "indicator", 
+      // name: tempArray[index][0].label, id: tempArray[index][0].value.toString()});
+    }
+    else
+      alert("This item is mandatory!.");
   }
 
   updateIndValues = (categories) => {

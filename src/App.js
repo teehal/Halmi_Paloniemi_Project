@@ -193,7 +193,7 @@ class App extends Component {
 
   handleSelectedDataChange(value) {
     let check = true;
-
+    console.log("handling change");
     if (value !== "") {
       //  only choose 1 option in time period, the function of time period is similar to radio box
       if (value.dataType === "timePeriod") {
@@ -205,7 +205,7 @@ class App extends Component {
         let position = this.state.selectedOptions.findIndex( (element) => {
           return element.id === value.id && element.dataType === value.dataType
         });
-
+        console.log(`position in handleSelectedDataChange ${position}`);
         if ( position === -1 ) {
           this.state.selectedOptions.push(value);
           this.setState({
@@ -247,35 +247,40 @@ class App extends Component {
         } else {
           //  Check for mandatory
           if (value.dataType === "indicator") {
-            let indicatorSelected = this.state.selectedOptions.filter(function(
-              element
-            ) {
-              return element.dataType === "indicator";
-            });
-            this.state.indicatorCategories.map(element => {
-              if (element.isMandatory === 1) {
-                let count = 0;
-                element.indicators.map(indicator => {
-                  indicatorSelected.map(s => {
-                    if (s.id.toString() === indicator.id.toString()) {
-                      count++;
-                    }
-                  });
-                });
 
-                // console.log(count);
-
-                if (count > 1) {
-                  this.state.selectedOptions.splice(position, 1);
-                  // console.log("before:",this.state.selectedOptions);
-                  this.setState({
-                    selectedOptions: this.state.selectedOptions
-                  });
-                  // console.log("after:",this.state.selectedOptions);
-                  check = false;
-                }
-              }
+            this.state.selectedOptions.splice(position, 1);
+            this.setState({
+              selectedOptions: this.state.selectedOptions
             });
+
+            // let indicatorSelected = this.state.selectedOptions.filter(function(element) {
+            //   return element.dataType === "indicator";
+            // });
+            
+            // this.state.indicatorCategories.map(element => {
+            //   if (element.isMandatory === 1) {
+            //     let count = 0;
+            //     element.indicators.map(indicator => {
+            //       indicatorSelected.map(s => {
+            //         if (s.id.toString() === indicator.id.toString()) {
+            //           count++;
+            //         }
+            //       });
+            //     });
+
+            //     // console.log(count);
+
+            //     if (count > 1) {
+            //       this.state.selectedOptions.splice(position, 1);
+            //       // console.log("before:",this.state.selectedOptions);
+            //       this.setState({
+            //         selectedOptions: this.state.selectedOptions
+            //       });
+            //       // console.log("after:",this.state.selectedOptions);
+            //       check = false;
+            //     }
+            //   }
+            // });
           } else {
             //  number of allowances of scenarios is 1 minimum
             let numOfScenarios = this.state.selectedOptions.filter(function(e) {
@@ -438,7 +443,7 @@ class App extends Component {
           />
           <RightPanel
             indicatorCategories={this.state.indicatorCategories}
-            handleSelectedDataChange={this.handleSelectedDataChange}
+            selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             selectedOptions={this.state.selectedOptions}
           />

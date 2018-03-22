@@ -11,15 +11,35 @@ class TimePeriods extends Component {
 
   defaultValue(timeperiods) {
     this.setState({ timePeriodValues: [
-      {value: timeperiods[0].id, label: timeperiods[0].yearStart + " - " + timeperiods[0].yearEnd}
+      {value: timeperiods[0].id, label: timeperiods[0].yearStart + " - " + timeperiods[0].yearEnd,
+        dataType: "timePeriod"}
     ]});
   }
 
-  handleChange = (option) => {
-    let tempArray = option;
+  findMissingElementIndex = (first_arr, second_arr) => {
+    let value = -1
+    first_arr.forEach( (item, index) => {
+      if ( second_arr.indexOf(item) === -1 )
+        value = index;
+    });
+    return value;
+  }
 
-    if ( option.length > 0 )
-      this.setState( {timePeriodValues: tempArray} );
+  handleChange = (option) => {
+  
+    if ( this.state.timePeriodValues.length > option.length && option.length ) {
+      let index = this.findMissingElementIndex(this.state.timePeriodValues, option);
+      let element = this.state.timePeriodValues.slice(index, index + 1);
+      this.props.selectedDataChange({dataType: element[0].dataType, 
+        name: element[0].label, id: element[0].value.toString()});
+      this.setState( {timePeriodValues: option} );
+    }
+    else if ( option.length > 0 ) {
+      let lastElement = option.slice(-1);
+      this.setState( {timePeriodValues: option} );
+      this.props.selectedDataChange({dataType: lastElement[0].dataType, 
+          name: lastElement[0].label, id: lastElement[0].value.toString()});
+    }
     else
       alert("This item is mandatory!.");
   }
@@ -28,8 +48,10 @@ class TimePeriods extends Component {
     let options = [];
 
     timeperiods.forEach( (element) => {
-      options.push( {value: element.id, label: element.yearStart + " - " + element.yearEnd} );
+      options.push( {value: element.id, label: element.yearStart + " - " + element.yearEnd, 
+        dataType: "timePeriod"} );
     });
+    
     return options;
   }
 
@@ -41,14 +63,14 @@ class TimePeriods extends Component {
 
     const listItems = [
       <Select
-      name = "timeperiods"
-      multi = {true}
-      options = {this.timePeriodOptions(timePeriods)}
-      onChange = {(option) => this.handleChange(option)}
-      value = {this.state.timePeriodValues}
-      dataType = "timePeriod"
-      closeOnSelect = {false}
-    />];
+        name = "timeperiods"
+        multi = {true}
+        options = {this.timePeriodOptions(timePeriods)}
+        onChange = {(option) => this.handleChange(option)}
+        value = {this.state.timePeriodValues}
+        dataType = "timePeriod"
+        closeOnSelect = {false}
+      />];
     //   timePeriods.map((item, index) => (
     //   <Checkbox
     //     key={item.id}

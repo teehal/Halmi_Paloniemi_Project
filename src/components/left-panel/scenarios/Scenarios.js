@@ -18,11 +18,30 @@ class Scenarios extends Component {
     return options;
   }
 
+  findMissingElementIndex = (first_arr, second_arr) => {
+    let value = -1
+    first_arr.forEach( (item, index) => {
+      if ( second_arr.indexOf(item) === -1 )
+        value = index;
+    });
+    return value;
+  }
+  
   handleChange = (option) => {
-    let tempArray = option;
-
-    if ( option.length > 0 )
-      this.setState( {scenarioValues: tempArray} );
+  
+    if ( this.state.scenarioValues.length > option.length && option.length ) {
+      let index = this.findMissingElementIndex(this.state.scenarioValues, option);
+      let element = this.state.scenarioValues.slice(index, index + 1);
+      this.props.selectedDataChange({dataType: "scenario", 
+        name: element[0].label, id: element[0].value.toString()});
+      this.setState( {scenarioValues: option} );
+    }
+    else if ( option.length > 0 ) {
+      let lastElement = option.slice(-1);
+      this.setState( {scenarioValues: option} );
+      this.props.selectedDataChange({dataType: "scenario", 
+          name: lastElement[0].label, id: lastElement[0].value.toString()});
+    }
     else
       alert("This item is mandatory!.");
   }
@@ -41,14 +60,14 @@ class Scenarios extends Component {
 
     const listItems = [ 
       <Select
-      name = "scenarios"
-      multi = {true}
-      options = {this.scenarioOptions(scenarios)}
-      onChange = {(option) => this.handleChange(option)}
-      value = {this.state.scenarioValues}
-      dataType = "scenario"
-      closeOnSelect = {false}
-    />];
+        name = "scenarios"
+        multi = {true}
+        options = {this.scenarioOptions(scenarios)}
+        onChange = {(option) => this.handleChange(option)}
+        value = {this.state.scenarioValues}
+        dataType = "scenario"
+        closeOnSelect = {false}
+      />];
     // const listItems = scenarios.map((item, index) => (
     //   <Checkbox
     //     key={item.id}
