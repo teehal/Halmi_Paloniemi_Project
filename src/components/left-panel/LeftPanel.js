@@ -6,6 +6,7 @@ import Region from "./region/Region";
 import ScenarioCollection from "./scenario-collection/ScenarioCollection";
 import Scenarios from "./scenarios/Scenarios";
 import TimePeriods from "./time-periods/TimePeriods";
+import Indicators from "./indicators/Indicators";
 
 import "./leftpanel.scss";
 
@@ -35,7 +36,8 @@ class LeftPanel extends Component {
     const selectedDataChange = this.props.handleSelectedDataChange;
 
     return (
-      <div className="leftpanel-container content-panel shadow-1">
+      <div>
+      <div className="leftpanel-container content-panel shadow-1 ">
         <div className="language-select">
           <Language
             language={language}
@@ -91,6 +93,15 @@ class LeftPanel extends Component {
             selectedOptions={this.props.selectedOptions}
           />
         </div>
+      </div>
+      <div>
+        <Indicators
+            indicatorCategories={this.props.indicatorCategories}
+            selectedDataChange={selectedDataChange}
+            selectedOptions={this.props.selectedOptions}
+            indicatorSelectionLabel={this.props.indicatorSelectionLabel}
+        />
+      </div>
       </div>
     );
   }

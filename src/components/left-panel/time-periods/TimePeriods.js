@@ -18,10 +18,17 @@ class TimePeriods extends Component {
 
   findMissingElementIndex = (first_arr, second_arr) => {
     let value = -1
+
     first_arr.forEach( (item, index) => {
-      if ( second_arr.indexOf(item) === -1 )
+      let counter = 0;
+      second_arr.forEach((element) => {
+        if ( item.value === element.value )
+          counter++;
+      });
+      if ( !counter )
         value = index;
     });
+
     return value;
   }
 
@@ -30,14 +37,14 @@ class TimePeriods extends Component {
     if ( this.state.timePeriodValues.length > option.length && option.length ) {
       let index = this.findMissingElementIndex(this.state.timePeriodValues, option);
       let element = this.state.timePeriodValues.slice(index, index + 1);
-      this.props.selectedDataChange({dataType: element[0].dataType, 
+      this.props.selectedDataChange({dataType: "timePeriod", 
         name: element[0].label, id: element[0].value.toString()});
       this.setState( {timePeriodValues: option} );
     }
     else if ( option.length > 0 ) {
       let lastElement = option.slice(-1);
       this.setState( {timePeriodValues: option} );
-      this.props.selectedDataChange({dataType: lastElement[0].dataType, 
+      this.props.selectedDataChange({dataType: "timePeriod", 
           name: lastElement[0].label, id: lastElement[0].value.toString()});
     }
     else
@@ -48,8 +55,7 @@ class TimePeriods extends Component {
     let options = [];
 
     timeperiods.forEach( (element) => {
-      options.push( {value: element.id, label: element.yearStart + " - " + element.yearEnd, 
-        dataType: "timePeriod"} );
+      options.push( {value: element.id, label: element.yearStart + " - " + element.yearEnd });
     });
     
     return options;
@@ -61,13 +67,18 @@ class TimePeriods extends Component {
     if ( !this.state.timePeriodValues.length && timePeriods.length )
       this.defaultValue(timePeriods);
 
+    let values = this.props.selectedOptions.map( (element) => {
+      if (element.dataType === "timePeriod")
+        return {value: Number(element.id), label: element.name};
+    });
+
     const listItems = [
       <Select
         name = "timeperiods"
         multi = {true}
         options = {this.timePeriodOptions(timePeriods)}
         onChange = {(option) => this.handleChange(option)}
-        value = {this.state.timePeriodValues}
+        value = {values}//{this.state.timePeriodValues}
         dataType = "timePeriod"
         closeOnSelect = {false}
       />];

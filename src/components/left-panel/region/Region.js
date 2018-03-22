@@ -38,6 +38,8 @@ class Region extends Component {
           onChange={this.handleChange}
           options={regionList}
           disabled={this.state.dropdownDisabledBool}
+          clearableValue = {false}
+          clearable = {false}
         />
       </div>
     );

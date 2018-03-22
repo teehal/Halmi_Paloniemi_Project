@@ -4,7 +4,6 @@ import "./App.scss";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/header/header";
-import RightPanel from "./components/right-panel/RightPanel";
 import LeftPanel from "./components/left-panel/LeftPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
 import Modal from "./components/general/Modal.js";
@@ -192,115 +191,32 @@ class App extends Component {
   }
 
   handleSelectedDataChange(value) {
-    let check = true;
-    console.log("handling change");
-    if (value !== "") {
-      //  only choose 1 option in time period, the function of time period is similar to radio box
-      if (value.dataType === "timePeriod") {
-        let newArr = this.state.selectedOptions.filter(function(element) {
-          return element.dataType === "timePeriod";
-        });
-
-        // if (newArr.length === 0 || true) {
-        let position = this.state.selectedOptions.findIndex( (element) => {
-          return element.id === value.id && element.dataType === value.dataType
-        });
-        console.log(`position in handleSelectedDataChange ${position}`);
-        if ( position === -1 ) {
-          this.state.selectedOptions.push(value);
-          this.setState({
-            selectedOptions: this.state.selectedOptions
-            });
-        }
-        else if (newArr.length > 1) {
-          this.state.selectedOptions.splice(position, 1);
-          this.setState({
-            selectedOptions: this.state.selectedOptions
-          });
-        }
-        check = false;
-      } else {
-        //  Only for scenarios and indicators
-        let position = this.state.selectedOptions.findIndex(
-          element =>
-            element.dataType === value.dataType && element.id === value.id
-        );
-
-         if (position === -1 || position === "undefined") {
-          //  check for number of allowances
-          // let numOfScenarios = this.state.selectedOptions.filter(function(e) {
-          //   return e.dataType === "scenario";
-          // }).length;
-
-          // let numOfIndicators = this.state.selectedOptions.filter(function(e) {
-          //   return e.dataType === "indicator";
-          // }).length;
-
-          // if (numOfScenarios * (numOfIndicators + 1) <= 20) {
-            this.state.selectedOptions.push(value);
-            this.setState({
-              selectedOptions: this.state.selectedOptions
-            });
-          // } else {
-          //   check = false;
-          // }
-        } else {
-          //  Check for mandatory
-          if (value.dataType === "indicator") {
-
-            this.state.selectedOptions.splice(position, 1);
-            this.setState({
-              selectedOptions: this.state.selectedOptions
-            });
-
-            // let indicatorSelected = this.state.selectedOptions.filter(function(element) {
-            //   return element.dataType === "indicator";
-            // });
-            
-            // this.state.indicatorCategories.map(element => {
-            //   if (element.isMandatory === 1) {
-            //     let count = 0;
-            //     element.indicators.map(indicator => {
-            //       indicatorSelected.map(s => {
-            //         if (s.id.toString() === indicator.id.toString()) {
-            //           count++;
-            //         }
-            //       });
-            //     });
-
-            //     // console.log(count);
-
-            //     if (count > 1) {
-            //       this.state.selectedOptions.splice(position, 1);
-            //       // console.log("before:",this.state.selectedOptions);
-            //       this.setState({
-            //         selectedOptions: this.state.selectedOptions
-            //       });
-            //       // console.log("after:",this.state.selectedOptions);
-            //       check = false;
-            //     }
-            //   }
-            // });
-          } else {
-            //  number of allowances of scenarios is 1 minimum
-            let numOfScenarios = this.state.selectedOptions.filter(function(e) {
-              return e.dataType === "scenario";
-            }).length;
-            //  console.log(numOfScenarios);
-            if (numOfScenarios > 1) {
-              this.state.selectedOptions.splice(position, 1);
-              this.setState({
-                selectedOptions: this.state.selectedOptions
-              });
-              check = false;
-            }
-          }
-        }
-      }
+    // let check = true;
+    if ( value === "" || value === null || value === undefined ) {
+      console.log("Value empty.");
+      return;
     }
-    // console.log("fuc");
 
-    return check;
+    let position = this.state.selectedOptions.findIndex( (element) => {
+      return element.id === value.id && element.dataType === value.dataType
+    });
+
+    if ( position === -1 ) {
+      this.state.selectedOptions.push(value);
+      this.setState({
+        selectedOptions: this.state.selectedOptions
+        });
+    }
+    else {
+      this.state.selectedOptions.splice(position, 1);
+      this.setState({
+        selectedOptions: this.state.selectedOptions
+      });
+    }
+
+    console.log("Success.");
+    return;
+
   }
 
   getAllTheData(isFirst) {
@@ -440,17 +356,13 @@ class App extends Component {
             scenarioCollectionListLabel={this.state.scenarioCollectionListLabel}
             scenariosLabel={this.state.scenariosLabel}
             timePeriodsLabel={this.state.timePeriodsLabel}
-          />
-          <RightPanel
             indicatorCategories={this.state.indicatorCategories}
             selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            selectedOptions={this.state.selectedOptions}
           />
-
         </div>
 
-        <div className="col-lg-8">
+        <div className="col-lg-10">
           <ChartContainer
             valueData={this.state.values}
             options={this.state.selectedOptions}
@@ -480,23 +392,6 @@ class App extends Component {
               <h4>{this.state.feedbackLabel}</h4>
             </a>
           </div>
-        </div>
-
-        <div className="col-lg-2">
-          {/* <RightPanel
-            indicatorCategories={this.state.indicatorCategories}
-            handleSelectedDataChange={this.handleSelectedDataChange}
-            indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            selectedOptions={this.state.selectedOptions}
-          /> */}
-
-          {/* <div className="feedback content-panel shadow-1">
-            <Modal guidanceLabel={this.state.guidanceLabel} />
-
-            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
-              <h4>{this.state.feedbackLabel}</h4>
-            </a>
-          </div> */}
         </div>
       </div>
     );

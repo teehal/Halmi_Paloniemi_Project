@@ -43,6 +43,8 @@ class RegionLevels extends Component {
           onChange={this.handleChange}
           options={regionalLevelList}
           disabled={this.state.dropdownDisabledBool}
+          clearableValue = {false}
+          clearable = {false}
         />
       </div>
     );

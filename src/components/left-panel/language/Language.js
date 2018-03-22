@@ -27,6 +27,8 @@ class Language extends Component {
           value={this.props.language}
           onChange={this.handleChange}
           options={this.props.languageList}
+          clearableValue = {false}
+          clearable = {false}
         />
       </div>
     );

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import Checkbox from "../../general/Checkbox";
 
 class Scenarios extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { scenarioValues: [] }
+    this.state = { scenarioValues: [] };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   scenarioOptions = (scenarios) => {
@@ -20,15 +20,21 @@ class Scenarios extends Component {
 
   findMissingElementIndex = (first_arr, second_arr) => {
     let value = -1
+
     first_arr.forEach( (item, index) => {
-      if ( second_arr.indexOf(item) === -1 )
+      let counter = 0;
+      second_arr.forEach((element) => {
+        if ( item.value === element.value )
+          counter++;
+      });
+      if ( !counter )
         value = index;
-    });
+     });
     return value;
   }
-  
+
   handleChange = (option) => {
-  
+
     if ( this.state.scenarioValues.length > option.length && option.length ) {
       let index = this.findMissingElementIndex(this.state.scenarioValues, option);
       let element = this.state.scenarioValues.slice(index, index + 1);
@@ -57,6 +63,10 @@ class Scenarios extends Component {
 
     if ( !this.state.scenarioValues.length && scenarios.length )
       this.defaultValue(scenarios);
+    let values = this.props.selectedOptions.map( (element) => {
+      if (element.dataType === "scenario")
+        return {value: Number(element.id), label: element.name};
+      });
 
     const listItems = [ 
       <Select
@@ -64,22 +74,11 @@ class Scenarios extends Component {
         multi = {true}
         options = {this.scenarioOptions(scenarios)}
         onChange = {(option) => this.handleChange(option)}
-        value = {this.state.scenarioValues}
+        value = {values}//{this.state.scenarioValues}
         dataType = "scenario"
         closeOnSelect = {false}
       />];
-    // const listItems = scenarios.map((item, index) => (
-    //   <Checkbox
-    //     key={item.id}
-    //     id={item.id}
-    //     name={item.name}
-    //     description={item.description}
-    //     selectedDataChange={this.props.selectedDataChange}
-    //     dataType="scenario"
-    //     checked={index === 0 ? true : false}
-    //     selectedOptions={this.props.selectedOptions}
-    //   />
-    // ));
+
     return (
       <div className="scenarios">
         <h4>{this.props.scenariosLabel}</h4>
