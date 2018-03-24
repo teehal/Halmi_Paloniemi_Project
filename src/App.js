@@ -5,7 +5,6 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/header/header";
 import LeftPanel from "./components/left-panel/LeftPanel";
-import RightPanel from "./components/right-panel/RightPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
 //import Modal from "./components/general/Modal.js";
 
