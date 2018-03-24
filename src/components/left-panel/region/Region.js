@@ -3,7 +3,6 @@ import Select from "react-select";
 import "react-select/dist/react-select.css";
 
 import QuickHelp from "../../general/QuickHelp";
-//import firstImage from '../../../images/first.png';
 
 class Region extends Component {
 
@@ -42,7 +41,7 @@ class Region extends Component {
 	        <QuickHelp 
 	        	helpTitle={this.props.displayTexts.helpRegionTitle} 
 	        	helpText={this.props.displayTexts.helpRegionText}
-	        	helpImage={this.props.displayTexts.helpRegionLevelImage}
+	        	helpImage={this.props.displayTexts.helpRegionImage}
 	        	helpID="helpRegion"
 	        	helpLink="#helpRegion"
 	        	language={this.props.language}

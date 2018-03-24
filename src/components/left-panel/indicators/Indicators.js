@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Select from "react-select";
 import "./indicators.scss";
 
+import QuickHelp from "../../general/QuickHelp";
+
 class Indicators extends Component {
   constructor(props) {
     super(props);
@@ -99,8 +101,9 @@ class Indicators extends Component {
   render() {
     let indicatorCategories = this.props.indicatorCategories;
 
-    if (this.state.indValues.length === 0 && indicatorCategories.length)
+    if (this.state.indValues.length === 0 && indicatorCategories.length) {
       this.updateIndValues(indicatorCategories);
+    }
     let values = [];
 
     indicatorCategories.forEach(element => {
@@ -116,6 +119,7 @@ class Indicators extends Component {
       });
       values.push(tempArray);
     });
+    
 
     const listItems = indicatorCategories.map((item, index) => (
       <div key={index} className="indicators">
@@ -141,7 +145,17 @@ class Indicators extends Component {
     return (
       <div className="panel-container content-panel shadow-1">
         <h3 className="header-spacing-panels">
-          {this.props.indicatorSelectionLabel}
+          	{this.props.indicatorSelectionLabel}
+          	<QuickHelp 
+	        	helpTitle={this.props.displayTexts.helpIndicatorsTitle} 
+	        	helpText={this.props.displayTexts.helpIndicatorsText}
+	        	helpImage={this.props.displayTexts.helpIndicatorsImage}
+	        	helpID="helpIndicators"
+	        	helpLink="#helpIndicators"
+	        	language={this.props.language}
+	        	displayTexts={this.props.displayTexts}
+			/>    
+
         </h3>
         {listItems}
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import Checkbox from "../../general/Checkbox";
+import QuickHelp from "../../general/QuickHelp";
 
 class TimePeriods extends Component {
   constructor(props) {
@@ -96,7 +97,17 @@ class TimePeriods extends Component {
     // ));
     return (
       <div className="time-periods">
-        <h4>{this.props.timePeriodsLabel}</h4>
+        <h4>{this.props.timePeriodsLabel}
+        	<QuickHelp 
+	        	helpTitle={this.props.displayTexts.helpTimePeriodTitle} 
+	        	helpText={this.props.displayTexts.helpTimePeriodText}
+	        	helpImage={this.props.displayTexts.helpTimePeriodImage}
+	        	helpID="helpTimePeriods"
+	        	helpLink="#helpTimePeriods"
+	        	language={this.props.language}
+	        	displayTexts={this.props.displayTexts}
+			/>    
+        </h4>
         <div className="item_list">
           {listItems}
         </div>

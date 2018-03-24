@@ -38,17 +38,26 @@ class RegionLevels extends Component {
     
     return (
       <div>
-        <h4>
-        <h4>{this.props.regionalLevelLabel}</h4>
-        <Select
-          placeholder="Select region level"
-          value={regionalLevel}
-          onChange={this.handleChange}
-          options={regionalLevelList}
-          disabled={this.state.dropdownDisabledBool}
-          clearableValue = {false}
-          clearable = {false}
-        />
+        <h4>{this.props.regionalLevelLabel}
+        	<QuickHelp 
+	        	helpTitle={this.props.displayTexts.helpRegionLevelTitle} 
+	        	helpText={this.props.displayTexts.helpRegionLevelText}
+	        	helpImage={this.props.displayTexts.helpRegionLevelImage}
+	        	helpID="helpRegionLevel"
+	        	helpLink="#helpRegionLevel"
+	        	language={this.props.language}
+	        	displayTexts={this.props.displayTexts}
+			/>    
+		</h4>
+	        <Select
+	          placeholder="Select region level"
+	          value={regionalLevel}
+	          onChange={this.handleChange}
+	          options={regionalLevelList}
+	          disabled={this.state.dropdownDisabledBool}
+	          clearableValue = {false}
+	          clearable = {false}
+	        />
       </div>
     );
   }

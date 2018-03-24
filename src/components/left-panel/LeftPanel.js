@@ -36,85 +36,78 @@ class LeftPanel extends Component {
     const selectedDataChange = this.props.handleSelectedDataChange;
 
     return (
-      <div className="leftpanel-container content-panel shadow-1">
-{/*
-        <div className="language-select">
-          <Language
-            language={language}
-            languageList={languageList}
-            languageData={languageData}
-            languageLabel={this.props.languageLabel}
-            displayTexts={this.props.displayTexts}
-          />
-        </div>
-*/}
-        <h3 className="header-spacing-panels">
-          {this.props.scenarioSelectionLabel}
-        </h3>
-
-        <div className="region-level">
-          <RegionLevel
-          	language={language}
-            regionalLevelList={regionalLevelList}
-            regionalLevel={regionalLevel}
-            regionalLevelData={regionalLevelData}
-            regionalLevelLabel={this.props.regionalLevelLabel}
-            displayTexts={this.props.displayTexts}            
-          />
-        </div>
-
-        <div className="region">
-          <Region
-            regionList={regionList}
-            region={region}
-            regionData={regionData}
-            regionLabel={this.props.regionLabel}
-            displayTexts={this.props.displayTexts}
-            language={language}
-          />
-        </div>
-
-        <div className="region-level">
-          <ScenarioCollection
-            scenarioCollectionList={scenarioCollectionList}
-            scenarioCollection={scenarioCollection}
-            scenarioCollectionData={scenarioCollectionData}
-            scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
-            displayTexts={this.props.displayTexts}
-            language={language}
-          />
-        </div>
-
-        <div className="scenarios">
-          <Scenarios
-            scenarios={scenarios}
-            selectedDataChange={selectedDataChange}
-            scenariosLabel={this.props.scenariosLabel}
-            selectedOptions={this.props.selectedOptions}
-            displayTexts={this.props.displayTexts}
-            language={language}
-          />
-        </div>
-        <div className="timeline">
-          <TimePeriods
-            timePeriods={timePeriods}
-            selectedDataChange={selectedDataChange}
-            timePeriodsLabel={this.props.timePeriodsLabel}
-            selectedOptions={this.props.selectedOptions}
-            displayTexts={this.props.displayTexts}
-            language={language}
-          />
-        </div>
-      </div>
-      <div>
-        <Indicators
-            indicatorCategories={this.props.indicatorCategories}
-            selectedDataChange={selectedDataChange}
-            selectedOptions={this.props.selectedOptions}
-            indicatorSelectionLabel={this.props.indicatorSelectionLabel}
-        />
-      </div>
-      </div>
+	<div>
+      	<div className="leftpanel-container content-panel shadow-1">
+	      
+	        <h3 className="header-spacing-panels">
+	          {this.props.scenarioSelectionLabel}
+	        </h3>
+	
+	        <div className="region-level">
+	          <RegionLevel
+	          	language={language}
+	            regionalLevelList={regionalLevelList}
+	            regionalLevel={regionalLevel}
+	            regionalLevelData={regionalLevelData}
+	            regionalLevelLabel={this.props.regionalLevelLabel}
+	            displayTexts={this.props.displayTexts}            
+	          />
+	        </div>
+	
+	        <div className="region">
+	          <Region
+	            regionList={regionList}
+	            region={region}
+	            regionData={regionData}
+	            regionLabel={this.props.regionLabel}
+	            displayTexts={this.props.displayTexts}
+	            language={language}
+	          />
+	        </div>
+	
+	        <div className="region-level">
+	          <ScenarioCollection
+	            scenarioCollectionList={scenarioCollectionList}
+	            scenarioCollection={scenarioCollection}
+	            scenarioCollectionData={scenarioCollectionData}
+	            scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
+	            displayTexts={this.props.displayTexts}
+	            language={language}
+	          />
+	        </div>
+	
+	        <div className="scenarios">
+	          <Scenarios
+	            scenarios={scenarios}
+	            selectedDataChange={selectedDataChange}
+	            scenariosLabel={this.props.scenariosLabel}
+	            selectedOptions={this.props.selectedOptions}
+	            displayTexts={this.props.displayTexts}
+	            language={language}
+	          />
+	        </div>
+	        <div className="timeline">
+	          <TimePeriods
+	            timePeriods={timePeriods}
+	            selectedDataChange={selectedDataChange}
+	            timePeriodsLabel={this.props.timePeriodsLabel}
+	            selectedOptions={this.props.selectedOptions}
+	            displayTexts={this.props.displayTexts}
+	            language={language}
+	          />
+	        </div>
+	    </div>
+		<div>
+			<Indicators
+			    indicatorCategories={this.props.indicatorCategories}
+			    selectedDataChange={selectedDataChange}
+			    selectedOptions={this.props.selectedOptions}
+			    indicatorSelectionLabel={this.props.indicatorSelectionLabel}
+				displayTexts={this.props.displayTexts}
+				language={language}
+			/>
+		</div>
+	</div>
     );
   }
 }

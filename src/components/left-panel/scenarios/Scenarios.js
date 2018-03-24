@@ -81,21 +81,22 @@ class Scenarios extends Component {
       />];
 
     return (
-      <div className="scenarios">
-        <h4>
-        <h4>{this.props.scenariosLabel}</h4>
-        <div className="item_list">
-	        	helpTitle={this.props.displayTexts.helpRegionTitle} 
-	        	helpText={this.props.displayTexts.helpRegionText}
-	        	helpImage={this.props.displayTexts.helpRegionLevelImage}
-	        	helpID="helpScenarios"
-          {listItems}
-	        	language={this.props.language}
-        </div>
-			/>    
-		</h4>
-        {listItems}
-      </div>
+      	<div className="scenarios">
+	        <h4>{this.props.scenariosLabel}
+	        	<QuickHelp 
+		        	helpTitle={this.props.displayTexts.helpScenariosTitle} 
+		        	helpText={this.props.displayTexts.helpScenariosText}
+		        	helpImage={this.props.displayTexts.helpScenariosImage}
+		        	helpID="helpRegion"
+		        	helpLink="#helpRegion"
+		        	language={this.props.language}
+		        	displayTexts={this.props.displayTexts}
+				/>    
+	        </h4>
+	        <div className="item_list">
+	          {listItems}
+	        </div> 
+      	</div>
     );
   }
 }

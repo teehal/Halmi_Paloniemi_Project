@@ -39,12 +39,12 @@ class QuickHelp extends Component {
                       <br />
                       <br />*/}
                       <div className="row">
-{/*
+
                         <div className="col-md-6">
                           <h5>{this.props.helpTitle}</h5>
-                          <p>{this.props.helpText}</p>
+                          {/*<p>{this.props.helpText}</p>*/}
                         </div>
-*/}
+
                         <div className="col-md-6">
                           <img src={constr} width="100%" />
                         </div>

@@ -5,8 +5,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/header/header";
 import LeftPanel from "./components/left-panel/LeftPanel";
+import RightPanel from "./components/right-panel/RightPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
-import Modal from "./components/general/Modal.js";
+//import Modal from "./components/general/Modal.js";
 
 import language from './Language';
 
@@ -73,20 +74,17 @@ class App extends Component {
     this.handleScenarioCollectionChange = this.handleScenarioCollectionChange.bind(this);
 
     this.handleSelectedDataChange = this.handleSelectedDataChange.bind(this);
-    let cookie = getCookie(getCookieName());
+    //let cookie = getCookie(getCookieName());
 // 	console.log("construtctor state: ", this.state);
 	this.loadDisplayTexts(this.state.language);
   }
 
 // Load help texts 
   loadDisplayTexts(displayLanguage) {
-//  	  console.log("loadDisplayTexts, language: ", displayLanguage);
-	if (displayLanguage == 1) { //English
+	if (displayLanguage === 1) { //English
 	    this.displayTexts = new language("English");
-//  	    console.log("load English");
 	} else {//Finnish		
 		this.displayTexts = new language("Finnish");
-//  		console.log("load Finnish");
 	}
   }
   
@@ -95,11 +93,8 @@ class App extends Component {
     this.setState({
       language: language.value
     });
-
-    // console.log(this.state);
     this.getAllTheLabel();
     this.getAllTheData(false);
-//      console.log("language: ", language, "language.value: ", language.value, "state.language: ", this.state.language);
     this.loadDisplayTexts(language.value);
     // console.log("after", this.state.selectedOptions);
   }
@@ -243,7 +238,6 @@ class App extends Component {
   }
 
   getAllTheData(isFirst) {
-    //  console.log(this.state.language);
     DataBinding.bindRegionalLevelData().then(result => {
       let regionalLevelList = [];
       result.map(element => {
@@ -272,6 +266,7 @@ class App extends Component {
           scenarioCollectionList[0],
           regionList[0]
         ).then(result => {
+	        console.log("bindChartData result: ", result);
           if (isFirst === true) {
             this.setState({
               regionalLevelList: regionalLevelList,
@@ -384,28 +379,23 @@ class App extends Component {
             scenarioCollectionListLabel={this.state.scenarioCollectionListLabel}
             scenariosLabel={this.state.scenariosLabel}
             timePeriodsLabel={this.state.timePeriodsLabel}
-            displayTexts={this.displayTexts}
-          />
-          <RightPanel
             indicatorCategories={this.state.indicatorCategories}
             selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-                   displayTexts={this.displayTexts}
+            displayTexts={this.displayTexts}
           />
+
         </div>
 
         <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
-          <ChartContainer
-            valueData={this.state.values}
-            options={this.state.selectedOptions}
-            scenarios={this.state.scenarios}
-            regionalLevel={this.state.regionalLevel}
-            region={this.state.region}
-          />
+			<ChartContainer
+			valueData={this.state.values}
+			options={this.state.selectedOptions}
+			scenarios={this.state.scenarios}
+			regionalLevel={this.state.regionalLevel}
+			region={this.state.region}
+			/>
 	        <div className="services text-center content-panel shadow-1">
-	            <a href="http://Metsämittari.fi">
-	              <h4>{this.displayTexts.MetsämittariPortal}</h4>
-	            </a>
 	            <a
 	              href={getMelaTupaService(
 	                this.state.selectedOptions,
@@ -416,24 +406,13 @@ class App extends Component {
 	            >
 	              <h4>{this.displayTexts.MelaTUPAService}</h4>
 	            </a>
-          </div>
-          <div className="feedback content-panel shadow-1">
- 	            {/*<Modal displayTexts={this.displayTexts} />*/}
-
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
 	            </a>
-	        </div>
+
+          </div>
         </div>
 
-         {/*<div className="col-lg-2">
-          <RightPanel
-            indicatorCategories={this.state.indicatorCategories}
-            handleSelectedDataChange={this.handleSelectedDataChange}
-            indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            selectedOptions={this.state.selectedOptions}
-          /> 
-        </div>*/}
       </div>
     );
   }

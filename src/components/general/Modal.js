@@ -3,8 +3,6 @@ import React, { Component } from "react";
 class Help extends Component {
   
   render() { 
-	  //console.log("Modal props: ", this.props);
-	  console.log("Modal RegionImage: ", this.props.displayTexts.helpRegionImage);
     return (
 	    <div>
 		    <button 
@@ -12,9 +10,8 @@ class Help extends Component {
 	            className="btn btn-light help-button"
 	            data-toggle="modal"
 	            data-target="#questionModal">
-	            {this.props.displayTexts.help}{/*&nbsp;<i className="fa fa-info" />*/}
+	            {this.props.displayTexts.help}
 	        </button>
-			{/*<a data-toggle="modal" data-target="#questionModal"><h4>{this.props.displayTexts.help}</h4></a> */}
             <div
                 className="modal fade" 
                 id="questionModal"
