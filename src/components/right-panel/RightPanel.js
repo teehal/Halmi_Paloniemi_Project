@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Checkbox from "../general/Checkbox";
 
 import "./rightpanel.scss";
+import QuickHelp from "../general/QuickHelp";
 
 class RightPanel extends Component {
   render() {
@@ -54,6 +55,15 @@ class RightPanel extends Component {
       <div className="panel-container content-panel shadow-1">
         <h3 className="header-spacing-panels">
           {this.props.indicatorSelectionLabel}
+           <QuickHelp 
+	        	helpTitle={this.props.displayTexts.helpIndicatorsTitle} 
+	        	helpText={this.props.displayTexts.helpIndicatorsText}
+	        	helpImage={this.props.displayTexts.helpIndicatorsImage}
+	        	helpID="helpIndicators"
+	        	helpLink="#helpIndicators"
+	        	language={this.props.language}
+	        	displayTexts={this.props.displayTexts}
+			/> 
         </h3>
         {listItems}
       </div>

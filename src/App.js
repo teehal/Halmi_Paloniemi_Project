@@ -9,6 +9,8 @@ import LeftPanel from "./components/left-panel/LeftPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
 import Modal from "./components/general/Modal.js";
 
+import language from './Language';
+
 import DataBinding from "./data/DataBinding";
 
 import { getCookie, getCookieName } from "./services/cookie.js";
@@ -25,11 +27,11 @@ class App extends Component {
       languageList: [
         {
           value: 0,
-          label: "FI"
+          label: "Suomi"
         },
         {
           value: 1,
-          label: "EN"
+          label: "English"
         }
       ],
       languageLabel: "",
@@ -58,18 +60,37 @@ class App extends Component {
       selectedOptions: [],
 
       feedbackLabel: "",
-      guidanceLabel: ""
+      guidanceLabel: "", 
+      
+      //select help text language
+      displayTexts: [],
+      viewHistory:[]
+      
     };
 
     this.handleLanguageChange = this.handleLanguageChange.bind(this);
     this.handleRegionalLevelChange = this.handleRegionalLevelChange.bind(this);
     this.handleRegionChange = this.handleRegionChange.bind(this);
-    this.handleScenarioCollectionChange = this.handleScenarioCollectionChange.bind(
-      this
-    );
+    this.handleScenarioCollectionChange = this.handleScenarioCollectionChange.bind(this);
+
     this.handleSelectedDataChange = this.handleSelectedDataChange.bind(this);
+    let cookie = getCookie(getCookieName());
+// 	console.log("construtctor state: ", this.state);
+	this.loadDisplayTexts(this.state.language);
   }
 
+// Load help texts 
+  loadDisplayTexts(displayLanguage) {
+//  	  console.log("loadDisplayTexts, language: ", displayLanguage);
+	if (displayLanguage == 1) { //English
+	    this.displayTexts = new language("English");
+//  	    console.log("load English");
+	} else {//Finnish		
+		this.displayTexts = new language("Finnish");
+//  		console.log("load Finnish");
+	}
+  }
+  
   handleLanguageChange(language) {
     // console.log("language change");
     this.setState({
@@ -79,6 +100,8 @@ class App extends Component {
     // console.log(this.state);
     this.getAllTheLabel();
     this.getAllTheData(false);
+//      console.log("language: ", language, "language.value: ", language.value, "state.language: ", this.state.language);
+    this.loadDisplayTexts(language.value);
     // console.log("after", this.state.selectedOptions);
   }
 
@@ -376,11 +399,11 @@ class App extends Component {
         regionalLevelLabel: "Regional Level",
         regionLabel: "Region",
         scenarioCollectionListLabel: "Scenario Collection",
-        scenariosLabel: "Scenario",
+        scenariosLabel: "Scenarios",
         timePeriodsLabel: "Time Periods",
         indicatorSelectionLabel: "Indicator Categories",
-        feedbackLabel: "Give us a feedback",
-        guidanceLabel: "Guidance"
+        feedbackLabel: "Give feedback",
+        guidanceLabel: "Help"
       });
     } else {
       this.setState({
@@ -392,8 +415,8 @@ class App extends Component {
         scenariosLabel: "Skenaariot",
         timePeriodsLabel: "Ajankohta",
         indicatorSelectionLabel: "Indikaattoreiden valinta",
-        feedbackLabel: "Anna meille palautetta",
-        guidanceLabel: "Neuvonta"
+        feedbackLabel: "Anna palautetta",
+        guidanceLabel: "Ohje"
       });
     }
   }
@@ -401,15 +424,20 @@ class App extends Component {
   componentDidMount() {
     this.getAllTheLabel();
     this.getAllTheData(true);
+    this.loadDisplayTexts(this.state.language);
   }
 
   render() {
     // console.log(this.state);
     return (
       <div className="container-fluid App">
-        <Header />
+        <Header 
+        	language={this.state.language}
+            languageList={this.state.languageList}
+            handleLanguageChange={this.handleLanguageChange}
+        	displayTexts={this.displayTexts} />
 
-        <div className="col-lg-2">
+        <div className="col-lg-3 col-md-3 col-sm-4 col-xs-6">
           <LeftPanel
             language={this.state.language}
             languageList={this.state.languageList}
@@ -434,17 +462,18 @@ class App extends Component {
             scenarioCollectionListLabel={this.state.scenarioCollectionListLabel}
             scenariosLabel={this.state.scenariosLabel}
             timePeriodsLabel={this.state.timePeriodsLabel}
+            displayTexts={this.displayTexts}
           />
           <RightPanel
             indicatorCategories={this.state.indicatorCategories}
             handleSelectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             selectedOptions={this.state.selectedOptions}
+            displayTexts={this.displayTexts}
           />
-
         </div>
 
-        <div className="col-lg-8">
+        <div className="col-lg-9 col-md-9 col-sm-8 col-xs-6">
           <ChartContainer
             valueData={this.state.values}
             options={this.state.selectedOptions}
@@ -452,39 +481,35 @@ class App extends Component {
             regionalLevel={this.state.regionalLevel}
             region={this.state.region}
           />
-          <div className="services text-center content-panel shadow-1">
-            <a href="http://Metsämittari.fi">
-              <h4>Metsämittari.fi portal</h4>
-            </a>
-            <a
-              href={getMelaTupaService(
-                this.state.selectedOptions,
-                this.state.region,
-                this.state.scenarioCollection,
-                this.state.language
-              )}
-            >
-              <h4>MELATuPa service</h4>
-            </a>
-          </div>
+	        <div className="services text-center content-panel shadow-1">
+	            <a href="http://Metsämittari.fi">
+	              <h4>{this.displayTexts.MetsämittariPortal}</h4>
+	            </a>
+	            <a
+	              href={getMelaTupaService(
+	                this.state.selectedOptions,
+	                this.state.region,
+	                this.state.scenarioCollection,
+	                this.state.language
+	              )}
+	            >
+	              <h4>{this.displayTexts.MelaTUPAService}</h4>
+	            </a>
+ 	            {/*<Modal displayTexts={this.displayTexts} />*/}
+	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
+	              <h4>{this.state.feedbackLabel}</h4>
+	            </a>
+	        </div>
         </div>
 
-        <div className="col-lg-2">
-          {/* <RightPanel
+         {/*<div className="col-lg-2">
+          <RightPanel
             indicatorCategories={this.state.indicatorCategories}
             handleSelectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             selectedOptions={this.state.selectedOptions}
-          /> */}
-
-          <div className="feedback content-panel shadow-1">
-            <Modal guidanceLabel={this.state.guidanceLabel} />
-
-            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
-              <h4>{this.state.feedbackLabel}</h4>
-            </a>
-          </div>
-        </div>
+          /> 
+        </div>*/}
       </div>
     );
   }

@@ -31,29 +31,35 @@ class LeftPanel extends Component {
     const timePeriods = this.props.timePeriods;
     //  console.log(scenarios);
     //  const timePeriods = this.props.timePeriods;
+//     console.log("LeftPanel props: ", this.props);
 
     const selectedDataChange = this.props.handleSelectedDataChange;
 
     return (
       <div className="leftpanel-container content-panel shadow-1">
+{/*
         <div className="language-select">
           <Language
             language={language}
             languageList={languageList}
             languageData={languageData}
             languageLabel={this.props.languageLabel}
+            displayTexts={this.props.displayTexts}
           />
         </div>
+*/}
         <h3 className="header-spacing-panels">
           {this.props.scenarioSelectionLabel}
         </h3>
 
         <div className="region-level">
           <RegionLevel
+          	language={language}
             regionalLevelList={regionalLevelList}
             regionalLevel={regionalLevel}
             regionalLevelData={regionalLevelData}
             regionalLevelLabel={this.props.regionalLevelLabel}
+            displayTexts={this.props.displayTexts}            
           />
         </div>
 
@@ -63,6 +69,8 @@ class LeftPanel extends Component {
             region={region}
             regionData={regionData}
             regionLabel={this.props.regionLabel}
+            displayTexts={this.props.displayTexts}
+            language={language}
           />
         </div>
 
@@ -72,6 +80,8 @@ class LeftPanel extends Component {
             scenarioCollection={scenarioCollection}
             scenarioCollectionData={scenarioCollectionData}
             scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
+            displayTexts={this.props.displayTexts}
+            language={language}
           />
         </div>
 
@@ -81,6 +91,8 @@ class LeftPanel extends Component {
             selectedDataChange={selectedDataChange}
             scenariosLabel={this.props.scenariosLabel}
             selectedOptions={this.props.selectedOptions}
+            displayTexts={this.props.displayTexts}
+            language={language}
           />
         </div>
         <div className="timeline">
@@ -89,6 +101,8 @@ class LeftPanel extends Component {
             selectedDataChange={selectedDataChange}
             timePeriodsLabel={this.props.timePeriodsLabel}
             selectedOptions={this.props.selectedOptions}
+            displayTexts={this.props.displayTexts}
+            language={language}
           />
         </div>
       </div>

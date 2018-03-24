@@ -28,15 +28,28 @@ class ChartControls extends Component {
     return (
       <div className="control-wrapper">
         <div className="chart-control-buttons">
-          <button className="btn" value="bar" onClick={this.changeChartType}>
-            Bar chart
-          </button>
-          <button className="btn" value="table" onClick={this.changeChartType}>
-            Table chart
-          </button>
-          <button className="btn" value="polar" onClick={this.changeChartType}>
-            Polar chart
-          </button>
+	        <div className="btn-group hidden-xs" role="group" aria-label="Basic example">
+		          <button className="btn btn-success" value="bar" onClick={this.changeChartType}>
+		            Bar chart
+		          </button>
+		          <button className="btn btn-success" value="table" onClick={this.changeChartType}>
+		            Table chart
+		          </button>
+		          <button className="btn btn-success" value="polar" onClick={this.changeChartType}>
+		            Polar chart
+		          </button>
+		    </div>
+		    <div className="btn-group btn-group-vertical visible-xs" role="group" aria-label="Basic example">
+		          <button className="btn btn-success" value="bar" onClick={this.changeChartType}>
+		            Bar chart
+		          </button>
+		          <button className="btn btn-success" value="table" onClick={this.changeChartType}>
+		            Table chart
+		          </button>
+		          <button className="btn btn-success" value="polar" onClick={this.changeChartType}>
+		            Polar chart
+		          </button>
+		    </div>
         </div>
       </div>
     );

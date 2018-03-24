@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from "../../general/Checkbox";
+import QuickHelp from "../../general/QuickHelp";
 
 class Scenarios extends Component {
   render() {
@@ -18,7 +19,18 @@ class Scenarios extends Component {
     ));
     return (
       <div className="scenarios">
-        <h4>{this.props.scenariosLabel}</h4>
+        <h4>
+	        {this.props.scenariosLabel} 
+	        <QuickHelp 
+	        	helpTitle={this.props.displayTexts.helpRegionTitle} 
+	        	helpText={this.props.displayTexts.helpRegionText}
+	        	helpImage={this.props.displayTexts.helpRegionLevelImage}
+	        	helpID="helpScenarios"
+	        	helpLink="#helpScenarios"
+	        	language={this.props.language}
+	        	displayTexts={this.props.displayTexts}
+			/>    
+		</h4>
         {listItems}
       </div>
     );
