@@ -53,6 +53,8 @@ class ScenarioCollection extends Component {
           onChange={this.handleChange}
           options={scenarioCollectionList}
           disabled={this.state.dropdownDisabledBool}
+          clearableValue = {false}
+          clearable = {false}
         />
       </div>
     );

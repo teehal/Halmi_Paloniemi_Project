@@ -20,6 +20,7 @@ class Charts extends Component {
 
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
     this.toggleChartType = this.toggleChartType.bind(this);
+    this.myConfig = [];
 
     this.exporting = {
       buttons: {
@@ -68,7 +69,6 @@ class Charts extends Component {
         }
       }
     };
-    this.myConfig = [];
   }
 
   toggleChartType() {
@@ -85,6 +85,28 @@ class Charts extends Component {
   }
   }
 
+  // toggleChartTypeArr(index) {
+  //   if (this.state.chartArr[index] === "column") {
+  //     let temp_arr = this.state.chartArr.slice();
+  //     let temp_arr2 = this.state.chartLabelArr.slice();
+  //     temp_arr[index] = 'bar';
+  //     temp_arr2[index] = 'Column';
+  //     this.setState({
+  //       chartArr: temp_arr,
+  //       chartTypeLabel: temp_arr2
+  //     });
+  //   } else {
+  //     let temp_arr = this.state.chartArr.slice();
+  //     let temp_arr2 = this.state.chartLabelArr.slice();
+  //     temp_arr[index] = 'column';
+  //     temp_arr2[index] = 'Bar chart';
+  //     this.setState({
+  //       chartType: temp_arr,
+  //       chartLabelArr: temp_arr2
+  //   });
+  // }
+  // }
+
   toggleGroupBy() {
     if (this.state.groupBy === "indicator") {
       this.setState({
@@ -98,6 +120,27 @@ class Charts extends Component {
       });
     }
   }
+
+  // toggleGroupByArr(index) {
+  //   let temp_arr = this.state.groupByArr.slice();
+  //   let temp_arr2 = this.state.groupByLabelArr.slice();
+
+  //   if (this.state.groupByArr[index] === "indicator") {
+  //     temp_arr[index] = 'scenario';
+  //     temp_arr2[index] = 'Group by Indicators';
+  //     this.setState({
+  //       groupByArr: temp_arr,
+  //       groupByLabelArr: temp_arr2
+  //     });
+  //   } else {
+  //     temp_arr[index] = 'indicator';
+  //     temp_arr2[index] = 'Group by Scenarios';
+  //     this.setState({
+  //       groupByArr: temp_arr,
+  //       groupByLabelArr: temp_arr2
+  //     });
+  //   }
+  // }
 
   dataForGraphs(groupBy, data, scenarios, indicators) {
     let xCategories = [];
@@ -178,6 +221,8 @@ class Charts extends Component {
           crosshair: true
         },
         yAxis: {
+          max: itIsPolar ? 1 : undefined,
+          tickAmount: itIsPolar ? 5 : undefined,
           min: 0,
           labels: {
             overflow: "justify"
@@ -214,6 +259,19 @@ class Charts extends Component {
              })
         });
       });
+
+      // let groupByArr = timePeriod.map( timePeriod => 'indicator');
+      // let chartTypeArr = timePeriod.map( timePeriod => 'column');
+      // let chartLabelArr = timePeriod.map( timePeriod => 'Column');
+      // let groupByLabelArr = timePeriod.map( timePeriod => "Group by Scenarios");
+
+      // this.setState({
+      //   groupArr: groupByArr,
+      //   chartArr: chartTypeArr,
+      //   chartLabelArr: chartLabelArr,
+      //   groupByLabelArr: groupByLabelArr
+      // });
+
 
       let scenariosSelectedList = options.filter(function(e) {
         return e.dataType === "scenario";

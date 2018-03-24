@@ -1,80 +1,105 @@
 import React, { Component } from "react";
+import Select from "react-select";
 import Checkbox from "../../general/Checkbox";
 
-import fourthImage from '../../../images/fourth.png';
-
 class TimePeriods extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { timePeriodValues: [] }
+  }
+
+  defaultValue(timeperiods) {
+    this.setState({ timePeriodValues: [
+      {value: timeperiods[0].id, label: timeperiods[0].yearStart + " - " + timeperiods[0].yearEnd,
+        dataType: "timePeriod"}
+    ]});
+  }
+
+  findMissingElementIndex = (first_arr, second_arr) => {
+    let value = -1
+
+    first_arr.forEach( (item, index) => {
+      let counter = 0;
+      second_arr.forEach((element) => {
+        if ( item.value === element.value )
+          counter++;
+      });
+      if ( !counter )
+        value = index;
+    });
+
+    return value;
+  }
+
+  handleChange = (option) => {
+  
+    if ( this.state.timePeriodValues.length > option.length && option.length ) {
+      let index = this.findMissingElementIndex(this.state.timePeriodValues, option);
+      let element = this.state.timePeriodValues.slice(index, index + 1);
+      this.props.selectedDataChange({dataType: "timePeriod", 
+        name: element[0].label, id: element[0].value.toString()});
+      this.setState( {timePeriodValues: option} );
+    }
+    else if ( option.length > 0 ) {
+      let lastElement = option.slice(-1);
+      this.setState( {timePeriodValues: option} );
+      this.props.selectedDataChange({dataType: "timePeriod", 
+          name: lastElement[0].label, id: lastElement[0].value.toString()});
+    }
+    else
+      alert("This item is mandatory!.");
+  }
+
+  timePeriodOptions = (timeperiods) => {
+    let options = [];
+
+    timeperiods.forEach( (element) => {
+      options.push( {value: element.id, label: element.yearStart + " - " + element.yearEnd });
+    });
+    
+    return options;
+  }
+
   render() {
     let timePeriods = this.props.timePeriods;
-    const listItems = timePeriods.map((item, index) => (
-      <Checkbox
-        key={item.id}
-        id={item.id}
-        description={item.description}
-        name={item.yearStart + " - " + item.yearEnd}
-        selectedDataChange={this.props.selectedDataChange}
-        dataType="timePeriod"
-        checked={index === 0 ? true : false}
-        selectedOptions={this.props.selectedOptions}
-      />
-    ));
+
+    if ( !this.state.timePeriodValues.length && timePeriods.length )
+      this.defaultValue(timePeriods);
+
+    let values = this.props.selectedOptions.map( (element) => {
+      if (element.dataType === "timePeriod")
+        return {value: Number(element.id), label: element.name};
+    });
+
+    const listItems = [
+      <Select
+        name = "timeperiods"
+        multi = {true}
+        options = {this.timePeriodOptions(timePeriods)}
+        onChange = {(option) => this.handleChange(option)}
+        value = {values}//{this.state.timePeriodValues}
+        dataType = "timePeriod"
+        closeOnSelect = {false}
+      />];
+    //   timePeriods.map((item, index) => (
+    //   <Checkbox
+    //     key={item.id}
+    //     id={item.id}
+    //     description={item.description}
+    //     name={item.yearStart + " - " + item.yearEnd}
+    //     selectedDataChange={this.props.selectedDataChange}
+    //     dataType="timePeriod"
+    //     checked={index === 0 ? true : false}
+    //     selectedOptions={this.props.selectedOptions}
+    //   />
+    // ));
     return (
       <div className="time-periods">
-        <h4>{this.props.timePeriodsLabel} 
-	        <div className="help">
-		        <a data-toggle="modal" data-target="#timePeriodsHelp">[?]</a>
-		    </div> 
-		</h4>
-        {listItems}
-        <div
-            className="modal fade bd-example-modal-lg"
-            id="timePeriodsHelp"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="regionHelp"
-            aria-hidden="true">
-            <div className="modal-dialog modal-lg" role="document">
-              
-	            <div className="modal-content">
-		            
-		            <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLabel">
-                        {this.props.displayTexts.help}
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-	
-	                <div className="modal-body">
-	                  	<div className="row">
-	                    	<div className="col-md-6">
-	                      		<h5>{this.props.displayTexts.helpTimePeriodTitle}</h5>
-						  		<p>{this.props.displayTexts.helpTimePeriodText}</p>
-	                    	</div>
-	                    	<div className="col-md-6">
-	                          <img src={fourthImage} width="100%" />
-	                        </div>
-	                    </div>
-	                </div>
-	                
-	                <div className="modal-footer">
-	                  	<button
-		                    type="button"
-		                    className="btn btn-secondary"
-		                    data-dismiss="modal">
-		                    {this.props.displayTexts.close}
-		                </button>	                
-	                </div>
-	                
-	            </div>
-            </div>
-        </div>    
-
+        <h4>{this.props.timePeriodsLabel}</h4>
+        <div className="item_list">
+          {listItems}
+        </div>
       </div>
     );
   }

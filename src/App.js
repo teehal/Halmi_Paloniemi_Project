@@ -4,7 +4,6 @@ import "./App.scss";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/header/header";
-import RightPanel from "./components/right-panel/RightPanel";
 import LeftPanel from "./components/left-panel/LeftPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
 import Modal from "./components/general/Modal.js";
@@ -119,7 +118,8 @@ class App extends Component {
       let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
         regionList[0]
       );
-
+      console.log(`regionList ${Object.entries(regionList[0])}`);
+      console.log(`scenarioCollection ${Object.entries(scenarioCollectionList[0])}`);
       DataBinding.bindChartData(scenarioCollectionList[0], regionList[0]).then(
         result => {
           this.setState({
@@ -214,110 +214,32 @@ class App extends Component {
   }
 
   handleSelectedDataChange(value) {
-    let check = true;
-
-    if (value !== "") {
-      //  only choose 1 option in time period, the function of time period is similar to radio box
-      if (value.dataType === "timePeriod") {
-        let newArr = this.state.selectedOptions.filter(function(element) {
-          return element.dataType === "timePeriod";
-        });
-
-        // if (newArr.length === 0 || true) {
-        let position = this.state.selectedOptions.findIndex( (element) => {
-          return element.id === value.id && element.dataType === value.dataType
-        });
-
-        if ( position === -1 ) {
-          this.state.selectedOptions.push(value);
-          this.setState({
-            selectedOptions: this.state.selectedOptions
-            });
-        }
-        else if (newArr.length > 1) {
-          this.state.selectedOptions.splice(position, 1);
-          this.setState({
-            selectedOptions: this.state.selectedOptions
-          });
-        }
-        check = false;
-      } else {
-        //  Only for scenarios and indicators
-        let position = this.state.selectedOptions.findIndex(
-          element =>
-            element.dataType === value.dataType && element.id === value.id
-        );
-
-         if (position === -1 || position === "undefined") {
-          //  check for number of allowances
-          // let numOfScenarios = this.state.selectedOptions.filter(function(e) {
-          //   return e.dataType === "scenario";
-          // }).length;
-
-          // let numOfIndicators = this.state.selectedOptions.filter(function(e) {
-          //   return e.dataType === "indicator";
-          // }).length;
-
-          // if (numOfScenarios * (numOfIndicators + 1) <= 20) {
-            this.state.selectedOptions.push(value);
-            this.setState({
-              selectedOptions: this.state.selectedOptions
-            });
-          // } else {
-          //   check = false;
-          // }
-        } else {
-          //  Check for mandatory
-          if (value.dataType === "indicator") {
-            let indicatorSelected = this.state.selectedOptions.filter(function(
-              element
-            ) {
-              return element.dataType === "indicator";
-            });
-            this.state.indicatorCategories.map(element => {
-              if (element.isMandatory === 1) {
-                let count = 0;
-                element.indicators.map(indicator => {
-                  indicatorSelected.map(s => {
-                    if (s.id.toString() === indicator.id.toString()) {
-                      count++;
-                    }
-                  });
-                });
-
-                // console.log(count);
-
-                if (count > 1) {
-                  this.state.selectedOptions.splice(position, 1);
-                  // console.log("before:",this.state.selectedOptions);
-                  this.setState({
-                    selectedOptions: this.state.selectedOptions
-                  });
-                  // console.log("after:",this.state.selectedOptions);
-                  check = false;
-                }
-              }
-            });
-          } else {
-            //  number of allowances of scenarios is 1 minimum
-            let numOfScenarios = this.state.selectedOptions.filter(function(e) {
-              return e.dataType === "scenario";
-            }).length;
-            //  console.log(numOfScenarios);
-            if (numOfScenarios > 1) {
-              this.state.selectedOptions.splice(position, 1);
-              this.setState({
-                selectedOptions: this.state.selectedOptions
-              });
-              check = false;
-            }
-          }
-        }
-      }
+    // let check = true;
+    if ( value === "" || value === null || value === undefined ) {
+      console.log("Value empty.");
+      return;
     }
-    // console.log("fuc");
 
-    return check;
+    let position = this.state.selectedOptions.findIndex( (element) => {
+      return element.id === value.id && element.dataType === value.dataType
+    });
+
+    if ( position === -1 ) {
+      this.state.selectedOptions.push(value);
+      this.setState({
+        selectedOptions: this.state.selectedOptions
+        });
+    }
+    else {
+      this.state.selectedOptions.splice(position, 1);
+      this.setState({
+        selectedOptions: this.state.selectedOptions
+      });
+    }
+
+    console.log("Success.");
+    return;
+
   }
 
   getAllTheData(isFirst) {
@@ -437,7 +359,7 @@ class App extends Component {
             handleLanguageChange={this.handleLanguageChange}
         	displayTexts={this.displayTexts} />
 
-        <div className="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+        <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6">
           <LeftPanel
             language={this.state.language}
             languageList={this.state.languageList}
@@ -466,14 +388,13 @@ class App extends Component {
           />
           <RightPanel
             indicatorCategories={this.state.indicatorCategories}
-            handleSelectedDataChange={this.handleSelectedDataChange}
+            selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            selectedOptions={this.state.selectedOptions}
-            displayTexts={this.displayTexts}
+                   displayTexts={this.displayTexts}
           />
         </div>
 
-        <div className="col-lg-9 col-md-9 col-sm-8 col-xs-6">
+        <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
           <ChartContainer
             valueData={this.state.values}
             options={this.state.selectedOptions}
@@ -495,7 +416,10 @@ class App extends Component {
 	            >
 	              <h4>{this.displayTexts.MelaTUPAService}</h4>
 	            </a>
+          </div>
+          <div className="feedback content-panel shadow-1">
  	            {/*<Modal displayTexts={this.displayTexts} />*/}
+
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
 	            </a>
