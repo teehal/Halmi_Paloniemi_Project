@@ -1,87 +1,135 @@
 import React, { Component } from "react";
-import ReactModal from "react-modal";
 
-class Modal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalIsOpen: false
-    };
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-  openModal() {
-    this.setState({ modalIsOpen: true });
-  }
-
-  closeModal() {
-    this.setState({ modalIsOpen: false });
-  }
-  render() {
-    let customStyles = {
-      content: {
-        width: "75%",
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)"
-      }
-    };
+class Help extends Component {
+  
+  render() { 
     return (
-      <div>
-        <a onClick={this.openModal}>
-          <h4>{this.props.guidanceLabel}</h4>
-        </a>
-        <ReactModal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          contentLabel={this.props.guidanceLabel}
-          style={customStyles}
-        >
-          <div className="">
-            <div className="text-center">
-              <h1>Welcome to the Forest Indicator Service</h1>
-              <h1><small>This guidance will show you how to use our application</small></h1>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item">
-                Step 1: Choose the regional level, region and scenario
-                collection by clicking the option in the dropdown menu.
-              </li>
-              <li class="list-group-item">
-                Step 2: Choose the scenario and time periods as you wish to use
-                in the graph.
-              </li>
-              <li class="list-group-item">
-                Step 3: Choose the indicators from the indicator categories.
-              </li>
-              <li class="list-group-item">
-                Step 4: Choose the type of chart that you want to use.
-              </li>
-            </ul>
-
-            <div className="text-center">
-              <p>
-                Additionally, if you discover any error on our application
-                please giving us feedback. By clicking “Give us a feedback”
-                button, you’ll be lead to Mail app of Microsoft where you can
-                sign in and type the feedback. The e-mail address of feedback
-                receiver is automatically being filled so that after typing the
-                feedback, you just need to click sent.
-              </p>
-            </div>
-          </div>
-          <button className="btn btn-default pull-right" onClick={this.closeModal}>
-            Close
-          </button>
-        </ReactModal>
-      </div>
-    );
+	    <div>
+		    <button 
+			    type="button"
+	            className="btn btn-light help-button"
+	            data-toggle="modal"
+	            data-target="#questionModal">
+	            {this.props.displayTexts.help}
+	        </button>
+            <div
+                className="modal fade" 
+                id="questionModal"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="questionModal"
+                aria-hidden="true">
+                <div className="modal-dialog modal-lg" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLabel">
+                        {this.props.displayTexts.help}
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <p>{this.props.displayTexts.helpGeneralDescription}</p>
+                      <br />
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpRegionLevelTitle}</h5>
+                          <p>{this.props.displayTexts.helpRegionLevelText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpRegionLevelImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpRegionTitle}</h5>
+                          <p>{this.props.displayTexts.helpRegionText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpRegionImage} width="100%" />
+                        </div>
+                      </div>                      
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpScenarioTitle}</h5>
+                          <p>{this.props.displayTexts.helpScenarioText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpScenarioImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpTimePeriodTitle}</h5>
+                          <p>{this.props.displayTexts.helpTimePeriodText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpTimePeriodImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpIndicatorsTitle}</h5>
+                          <p>{this.props.displayTexts.helpIndicatorsText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpIndicatorsImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpTablesTitle}</h5>
+                          <p>{this.props.displayTexts.helpTablesText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpTablesImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpSaveTitle}</h5>
+                          <p>{this.props.displayTexts.helpSaveText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpSaveImage} width="100%" />
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpDescriptionsTitle}</h5>
+                          <p>{this.props.displayTexts.helpDescriptionsText}</p>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        {this.props.displayTexts.close}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>    
+     		</div>         
+     );
   }
 }
 
-export default Modal;
+export default Help;

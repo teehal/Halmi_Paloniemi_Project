@@ -17,11 +17,12 @@ class Language extends Component {
   handleChange = value => {
     setCookie(getCookieName(), value.value, getCookieDuration());
     this.props.languageData(value);
+    
   };
 
   render() {
     return (
-      <div>
+      <div className="languageSelection">
         <h4>{this.props.languageLabel}</h4>
         <Select
           value={this.props.language}

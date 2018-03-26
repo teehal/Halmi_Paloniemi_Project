@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import QuickHelp from "../../general/QuickHelp";
 
 class Scenarios extends Component {
   constructor(props) {
@@ -94,12 +95,22 @@ class Scenarios extends Component {
       />];
 
     return (
-      <div className="scenarios">
-        <h4>{this.props.scenariosLabel}</h4>
-        <div className="item_list">
-          {listItems}
-        </div>
-      </div>
+      	<div className="scenarios">
+	        <h4>{this.props.scenariosLabel}
+	        	<QuickHelp 
+		        	helpTitle={this.props.displayTexts.helpScenariosTitle} 
+		        	helpText={this.props.displayTexts.helpScenariosText}
+		        	helpImage={this.props.displayTexts.helpScenariosImage}
+		        	helpID="helpRegion"
+		        	helpLink="#helpRegion"
+		        	language={this.props.language}
+		        	displayTexts={this.props.displayTexts}
+				/>    
+	        </h4>
+	        <div className="item_list">
+	          {listItems}
+	        </div> 
+      	</div>
     );
   }
 }
