@@ -9,6 +9,18 @@ class TimePeriods extends Component {
     this.state = { timePeriodValues: [] }
   }
 
+  componentWillReceiveProps(nextProp) {
+    let numberOfPeriods = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "timePeriod";
+    }).length;
+ 
+    if ( (nextProp.timePeriods.length && !this.state.timePeriodValues.length) || numberOfPeriods === 1)
+      this.setState({ timePeriodValues: [{
+        value: nextProp.timePeriods[0].id, 
+        label: nextProp.timePeriods[0].yearStart + " - " + nextProp.timePeriods[0].yearEnd}
+      ]});
+  }
+
   defaultValue(timeperiods) {
     this.setState({ timePeriodValues: [
       {value: timeperiods[0].id, label: timeperiods[0].yearStart + " - " + timeperiods[0].yearEnd,
@@ -64,13 +76,13 @@ class TimePeriods extends Component {
   render() {
     let timePeriods = this.props.timePeriods;
 
-    if ( !this.state.timePeriodValues.length && timePeriods.length )
-      this.defaultValue(timePeriods);
+    // if ( !this.state.timePeriodValues.length && timePeriods.length )
+    //   this.defaultValue(timePeriods);
 
-    let values = this.props.selectedOptions.map( (element) => {
-      if (element.dataType === "timePeriod")
-        return {value: Number(element.id), label: element.name};
-    });
+    // let values = this.props.selectedOptions.map( (element) => {
+    //   if (element.dataType === "timePeriod")
+    //     return {value: Number(element.id), label: element.name};
+    // });
 
     const listItems = [
       <Select
@@ -78,7 +90,7 @@ class TimePeriods extends Component {
         multi = {true}
         options = {this.timePeriodOptions(timePeriods)}
         onChange = {(option) => this.handleChange(option)}
-        value = {values}//{this.state.timePeriodValues}
+        value = {this.state.timePeriodValues}//{values}//
         dataType = "timePeriod"
         closeOnSelect = {false}
       />];

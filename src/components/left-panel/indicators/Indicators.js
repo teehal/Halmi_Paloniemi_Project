@@ -11,6 +11,8 @@ class Indicators extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProp) {}
+
   indicatorOptions = (indicators, isMandatory) => {
     let options = [];
 

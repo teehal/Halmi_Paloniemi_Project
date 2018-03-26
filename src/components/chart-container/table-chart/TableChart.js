@@ -3,15 +3,15 @@ import React, { Component } from "react";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import "./table-chart-custom.scss";
-import { removeTable } from "./utils.js";
-import ReactHighcharts from "react-highcharts";
-import Highcharts from "../../../../node_modules/highcharts";
-require("highcharts-exporting")(ReactHighcharts.Highcharts);
-require("../../../../node_modules/highcharts/modules/export-data")(Highcharts);
+//import { removeTable } from "./utils.js";
+// import ReactHighcharts from "react-highcharts";
+// import Highcharts from "../../../../node_modules/highcharts";
+// require("highcharts-exporting")(ReactHighcharts.Highcharts);
+// require("../../../../node_modules/highcharts/modules/export-data")(Highcharts);
 
 class TableChart extends Component {
   render() {
-    removeTable();
+    //removeTable();
     const values = this.props.values;
     const options = this.props.options;
 
@@ -66,112 +66,146 @@ class TableChart extends Component {
             id: scenario.id
           });
         } else {
-          ySeries[position].data.push(seriesData);
+          ySeries[position].data.push(seriesData[0]);
         }
       });
     });
-
+    console.log(ySeries);
     // console.log(this.props.region.name);
+    const dataTableHead = ySeries.map( (item) => (
+      <th scope="col" className="text">{item.name}</th>
+    ));
+    const dataTableRow = xCategories.map( (item, index) => (
+      <tr><th scope="row" className="text">{item}</th>
+        {ySeries.map( (element) => (<td className="number">{element.data[index]}</td>))}</tr>
+    ));
+    const dataTable = <div className="highcharts-data-table"><table>
+      <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
+      <tbody>{dataTableRow}</tbody></table></div>
 
-    let config = {
-      title: {
-        text: this.props.region.name + " " + timePeriod.name
-      },
+    console.log(dataTableHead);
+    //const highTable = '<div class="highcharts-data-table"><table><caption class="highcharts-table-caption">Kainuu 2018 - 2022</caption><thead><tr><th scope="col" class="text">Category</th><th scope="col" class="text">Suurin nettotulo</th><th scope="col" class="text">Ilmasto- ja energiapoliittinen</th><th scope="col" class="text">Mustikkasato</th></tr></thead><tbody><tr><th scope="row" class="text">Kantohinta-arvo</th><td class="number">0.13</td><td class="number">0.18</td><td class="number">0.74</td></tr><tr><th scope="row" class="text">Lahopuun määrä</th><td class="number">0.22</td><td class="number">0.59</td><td class="number">0.66</td></tr><tr><th scope="row" class="text">Nettotulojen nykyarvo</th><td class="number">0.99</td><td class="number">0.9</td><td class="number">0.56</td></tr><tr><th scope="row" class="text">Tukkikertymä</th><td class="number">0.65</td><td class="empty"></td><td class="number">0.3</td></tr></tbody></table></div>'
+    // let config = {
+    //   title: {
+    //    // text: this.props.region.name + " " + timePeriod.name,
+    //     useHTML: true,
+    //     text: "42"
+    //   },
 
-      chart: {
-        spacingBottom: 30,
-        backgroundColor: "transparent",
-        events: {
-          render: function() {
-            document.getElementsByTagName("th")[0].innerHTML = "";
-          }
-        }
-      },
+    //   chart: {
+    //     type: "line",
+    //     spacingBottom: 30,
+    //     backgroundColor: "transparent",
+    //     // events: {
+    //     //   render: function() {
+    //     //     document.getElementsByTagName("th")[0].innerHTML = "";
+    //     //   }
+    //     // }
+    //   },
 
-      yAxis: {
-        title: {
-          text: "Values"
-        }
-      },
-      legend: {
-        layout: "vertical",
-        align: "right",
-        verticalAlign: "middle"
-      },
+    //   tooltip: {
+    //     enabled: false
+    //   },
 
-      xAxis: {
-        categories: xCategories
-      },
+    //   plotOptions: {
+    //     series: {
+    //       enableMouseTracking:false,
+    //       lineWidth: 0,
+    //       pointWidth: 0,
+    //       marker: {
+    //         radius: 0
+    //       }
+    //      }
+    //   },
 
-      series: ySeries,
+    //   yAxis: {
+    //     visible:false,
+    //     title: {
+    //       text: "Values"
+    //     }
+    //   },
+    //   legend: {
+    //     layout: "vertical",
+    //     align: "right",
+    //     verticalAlign: "middle"
+    //   },
 
-      exporting: {
-        showTable: true,
-        buttons: {
-          contextButton: {
-            menuItems: [
-              {
-                textKey: "printChart",
-                onclick: function() {
-                  this.print();
-                }
-              },
-              {
-                separator: true
-              },
-              {
-                textKey: "downloadPNG",
-                onclick: function() {
-                  this.exportChart();
-                }
-              },
-              {
-                textKey: "downloadJPEG",
-                onclick: function() {
-                  this.exportChart({
-                    type: "image/jpeg"
-                  });
-                }
-              },
-              {
-                textKey: "downloadPDF",
-                onclick: function() {
-                  this.exportChart({
-                    type: "application/pdf"
-                  });
-                }
-              },
-              {
-                textKey: "downloadSVG",
-                onclick: function() {
-                  this.exportChart({
-                    type: "image/svg+xml"
-                  });
-                }
-              },
+    //   xAxis: {
+    //     visible: false,
+    //     categories: xCategories
+    //   },
 
-              { separator: true },
-              {
-                textKey: "downloadXLS",
-                onclick: function() {
-                  this.downloadXLS();
-                }
-              },
-              {
-                textKey: "downloadCSV",
-                onclick: function() {
-                  this.downloadCSV();
-                }
-              }
-            ]
-          }
-        }
-      }
-    };
+    //   series: ySeries,
+ 
+    //   exporting: {
+    //     showTable: true,
+    //     allowHTML:true,
+    //     buttons: {
+    //       contextButton: {
+    //         menuItems: [
+    //           {
+    //             textKey: "printChart",
+    //             onclick: function() {
+    //               this.print();
+    //             }
+    //           },
+    //           {
+    //             separator: true
+    //           },
+    //           {
+    //             textKey: "downloadPNG",
+    //             onclick: function() {
+    //               this.exportChart();
+    //             }
+    //           },
+    //           {
+    //             textKey: "downloadJPEG",
+    //             onclick: function() {
+    //               this.exportChart({
+    //                 type: "image/jpeg"
+    //               });
+    //             }
+    //           },
+    //           {
+    //             textKey: "downloadPDF",
+    //             onclick: function() {
+    //               this.exportChart({
+    //                 type: "application/pdf"
+    //               });
+    //             }
+    //           },
+    //           {
+    //             textKey: "downloadSVG",
+    //             onclick: function() {
+    //               this.exportChart({
+    //                 type: "image/svg+xml"
+    //               });
+    //             }
+    //           },
+
+    //           { separator: true },
+    //           {
+    //             textKey: "downloadXLS",
+    //             onclick: function() {
+    //               this.downloadXLS();
+    //             }
+    //           },
+    //           {
+    //             textKey: "downloadCSV",
+    //             onclick: function() {
+    //               this.downloadCSV();
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   }
+    // };
     // console.log(config);
     return (
       <div>
-        <ReactHighcharts config={config} />
+        {dataTable}
+        {/* <ReactHighcharts config={config} /> */}
       </div>
     );
   }

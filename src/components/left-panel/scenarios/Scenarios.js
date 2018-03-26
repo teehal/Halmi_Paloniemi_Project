@@ -9,13 +9,22 @@ class Scenarios extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  scenarioOptions = (scenarios) => {
-    let options = [];
+  componentWillReceiveProps(nextProp) {
+    let numberOfScenarios = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "scenario";
+    }).length;
+ 
+    if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || numberOfScenarios === 1)
+      this.setState({ scenarioValues: [{
+        value: nextProp.scenarios[0].id, 
+        label: nextProp.scenarios[0].name}
+      ]});
+  }
 
-    scenarios.forEach( (element) => {
-      options.push( {value: element.id, label: element.name} );
-    });
-    return options;
+  defaultValue(scenarios) {
+    this.setState({ scenarioValues: [
+      {value: scenarios[0].id, label: scenarios[0].name}
+    ]});
   }
 
   findMissingElementIndex = (first_arr, second_arr) => {
@@ -52,21 +61,26 @@ class Scenarios extends Component {
       alert("This item is mandatory!.");
   }
 
-  defaultValue(scenarios) {
-    this.setState({ scenarioValues: [
-      {value: scenarios[0].id, label: scenarios[0].name}
-    ]});
+
+  scenarioOptions = (scenarios) => {
+    let options = [];
+
+    scenarios.forEach( (element) => {
+      options.push( {value: element.id, label: element.name} );
+    });
+    return options;
   }
 
   render() {
     let scenarios = this.props.scenarios;
 
-    if ( !this.state.scenarioValues.length && scenarios.length )
-      this.defaultValue(scenarios);
-    let values = this.props.selectedOptions.map( (element) => {
-      if (element.dataType === "scenario")
-        return {value: Number(element.id), label: element.name};
-      });
+    // if ( !this.state.scenarioValues.length && scenarios.length )
+    //   this.defaultValue(scenarios);
+
+    // let values = this.props.selectedOptions.map( (element) => {
+    //   if (element.dataType === "scenario")
+    //     return {value: Number(element.id), label: element.name};
+    //   });
 
     const listItems = [ 
       <Select
@@ -74,7 +88,7 @@ class Scenarios extends Component {
         multi = {true}
         options = {this.scenarioOptions(scenarios)}
         onChange = {(option) => this.handleChange(option)}
-        value = {values}//{this.state.scenarioValues}
+        value = {this.state.scenarioValues}//{values}//
         dataType = "scenario"
         closeOnSelect = {false}
       />];

@@ -37,6 +37,7 @@ function bindChartData(scenarioCollection, region) {
     if (region !== null && scenarioCollection !== null) {
       ForestData.getScenarionCollection(scenarioCollection.id, region.id).then(
         function(result) {
+          console.log(result);
           resolve(result[0]);
         }
       );
