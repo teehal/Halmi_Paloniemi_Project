@@ -4,7 +4,7 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./charts.css";
 import ReactHighcharts from "react-highcharts";
 require("highcharts-more")(ReactHighcharts.Highcharts);
-// require("highcharts-exporting")(ReactHighcharts.Highcharts);
+require("highcharts-exporting")(ReactHighcharts.Highcharts);
 
 class Charts extends Component {
   constructor(props) {
