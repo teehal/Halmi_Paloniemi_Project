@@ -12,6 +12,67 @@ import "./table-chart-custom.scss";
 
 class TableChart extends Component {
 
+  dataForGraphs(groupBy, data, scenarios, indicators) {
+    let xCategories = [];
+    let ySeries = [];
+    let tempYSeries = [];
+    let groupingBy = groupBy === "scenario" ? scenarios : indicators;
+    let grouped = groupBy === "scenario" ? indicators : scenarios;
+
+    data.forEach( (item) => {
+      groupingBy.forEach(first_item => {
+        let first_itemId = first_item.id;
+
+        if ( xCategories.indexOf(first_item.name) === -1 )
+          xCategories.push(first_item.name);
+
+          grouped.forEach(second_item => {
+            let data = [];
+            // console.log(indicatorName);
+            if (groupBy === "scenario") {
+               data = item.data.filter(function(e) {
+                return (
+                  e.scenarioId.toString() === first_itemId.toString() &&
+                  e.indicatorId.toString() === second_item.id.toString()
+                );
+              });
+            } else {
+              data = item.data.filter(function(e) {
+                return (
+                  e.indicatorId.toString() === first_itemId.toString() &&
+                  e.scenarioId.toString() === second_item.id.toString()
+                );
+              });
+            }
+            let seriesData = [];
+            data.forEach(d => {
+              seriesData.push(d.value);
+            });
+            let position = tempYSeries.findIndex(
+              element =>
+                element.name === second_item.name && element.id === second_item.id
+            );
+
+            if (position === -1 || position === "undefined") {
+              tempYSeries.push({
+                name: second_item.name,
+                data: seriesData,
+                id: second_item.id,
+              });
+            } else {
+              tempYSeries[position].data.push(seriesData);
+            }
+          });
+      });
+      ySeries.push({name: item.timePeriodName, series: tempYSeries});
+      tempYSeries = [];
+  });
+  // let index = xCategories.length / data.length;
+  // xCategories.splice( index );
+  return {xAxis: xCategories, yAxis: ySeries};
+  }
+
+
   renderImage = (format) => {
     html2canvas(document.querySelector("div.highcharts-data-table")).then( canvas => {
       var base64image = canvas.toDataURL("image/png");
@@ -25,7 +86,7 @@ class TableChart extends Component {
   tableToCSV = (xcat, yser) => {
     let tempArr = [];
     let CSVtext = '';
-
+    console.log(yser);
     yser.forEach( (item) => {
       tempArr.push(item.name);
     });
@@ -46,203 +107,90 @@ class TableChart extends Component {
   }
 
   render() {
-    //removeTable();
+
     const values = this.props.values;
     const options = this.props.options;
+    let tableData;
 
-    let timePeriod = options.filter(function(e) {
-      return e.dataType === "timePeriod";
-    })[0];
-
-    let validData = values.filter(function(e) {
-      return e.timePeriodId.toString() === timePeriod.id.toString();
-    });
-
-    let scenariosSelectedList = options.filter(function(e) {
-      return e.dataType === "scenario";
-    });
-
-    let indicatorsSelectedList = options.filter(function(e) {
-      return e.dataType === "indicator";
-    });
-
-    // console.log(indicatorsSelectedList);
-
-    let xCategories = [];
-    let ySeries = [];
-
-    indicatorsSelectedList.forEach(indicator => {
-      xCategories.push(indicator.name);
-      // console.log(xCategories);
-      scenariosSelectedList.forEach(scenario => {
-        let data = validData.filter(function(e) {
-          return (
-            e.scenarioId.toString() === scenario.id.toString() &&
-            e.indicatorId.toString() === indicator.id.toString()
-          );
-        });
-
-        let seriesData = [];
-        data.forEach(d => {
-          seriesData.push(d.value);
-        });
-        // console.log(seriesData);
-        //  search indicator name first
-        let position = ySeries.findIndex(
-          element =>
-            element.name === scenario.name && element.id === scenario.id
-        );
-        // console.log(position);
-
-        if (position === -1 || position === "undefined") {
-          ySeries.push({
-            name: scenario.name,
-            data: seriesData,
-            id: scenario.id
-          });
-        } else {
-          ySeries[position].data.push(seriesData[0]);
-        }
+    if (values.length > 0 && options.length > 0) {
+      let timePeriod = options.filter(function(e) {
+        return e.dataType === "timePeriod";
       });
-    });
-    //console.log(ySeries);
-    // console.log(this.props.region.name);
-    const dataTableHead = ySeries.map( (item) => (
-      <th scope="col" className="text">{item.name}</th>
-    ));
-    const dataTableRow = xCategories.map( (item, index) => (
-      <tr><th scope="row" className="text">{item}</th>
-        {ySeries.map( (element) => (<td className="number">{element.data[index]}</td>))}</tr>
-    ));
-    const dataTable = <div className="highcharts-data-table"><table>
-      <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
-      <tbody>{dataTableRow}</tbody></table></div>
 
-    //console.log(dataTableHead);
-    //const highTable = '<div class="highcharts-data-table"><table><caption class="highcharts-table-caption">Kainuu 2018 - 2022</caption><thead><tr><th scope="col" class="text">Category</th><th scope="col" class="text">Suurin nettotulo</th><th scope="col" class="text">Ilmasto- ja energiapoliittinen</th><th scope="col" class="text">Mustikkasato</th></tr></thead><tbody><tr><th scope="row" class="text">Kantohinta-arvo</th><td class="number">0.13</td><td class="number">0.18</td><td class="number">0.74</td></tr><tr><th scope="row" class="text">Lahopuun määrä</th><td class="number">0.22</td><td class="number">0.59</td><td class="number">0.66</td></tr><tr><th scope="row" class="text">Nettotulojen nykyarvo</th><td class="number">0.99</td><td class="number">0.9</td><td class="number">0.56</td></tr><tr><th scope="row" class="text">Tukkikertymä</th><td class="number">0.65</td><td class="empty"></td><td class="number">0.3</td></tr></tbody></table></div>'
-    // let config = {
-    //   title: {
-    //    // text: this.props.region.name + " " + timePeriod.name,
-    //     useHTML: true,
-    //     text: "42"
-    //   },
+      let validData = [];
+      timePeriod.forEach( (item, index) => {
+        validData.push({
+          timePeriodId: item.id,
+          timePeriodName: item.name,
+          data: values.filter(function(e) {
+              return e.timePeriodId.toString() === timePeriod[index].id.toString();
+             })
+        });
+      });
 
-    //   chart: {
-    //     type: "line",
-    //     spacingBottom: 30,
-    //     backgroundColor: "transparent",
-    //     // events: {
-    //     //   render: function() {
-    //     //     document.getElementsByTagName("th")[0].innerHTML = "";
-    //     //   }
-    //     // }
-    //   },
+      let scenariosSelectedList = options.filter(function(e) {
+        return e.dataType === "scenario";
+      });
 
-    //   tooltip: {
-    //     enabled: false
-    //   },
+      let indicatorsSelectedList = options.filter(function(e) {
+        return e.dataType === "indicator";
+      });
 
-    //   plotOptions: {
-    //     series: {
-    //       enableMouseTracking:false,
-    //       lineWidth: 0,
-    //       pointWidth: 0,
-    //       marker: {
-    //         radius: 0
-    //       }
-    //      }
-    //   },
+      tableData = this.dataForGraphs(
+        "indicator",validData, scenariosSelectedList, indicatorsSelectedList
+      );
+    }
 
-    //   yAxis: {
-    //     visible:false,
-    //     title: {
-    //       text: "Values"
-    //     }
-    //   },
-    //   legend: {
-    //     layout: "vertical",
-    //     align: "right",
-    //     verticalAlign: "middle"
-    //   },
+    const tableChart = [];
+    if ( tableData ) {
+      console.log(`yAxis len ${tableData.yAxis.length}`);
+      console.log(tableData.xAxis);
 
-    //   xAxis: {
-    //     visible: false,
-    //     categories: xCategories
-    //   },
+      tableData.yAxis.sort( (left, right) => {
+        if ( left.name < right.name )
+          return -1;
+        else if ( left.name > right.name )
+          return 1;
+        else
+          return 0;
+      });
 
-    //   series: ySeries,
- 
-    //   exporting: {
-    //     showTable: true,
-    //     allowHTML:true,
-    //     buttons: {
-    //       contextButton: {
-    //         menuItems: [
-    //           {
-    //             textKey: "printChart",
-    //             onclick: function() {
-    //               this.print();
-    //             }
-    //           },
-    //           {
-    //             separator: true
-    //           },
-    //           {
-    //             textKey: "downloadPNG",
-    //             onclick: function() {
-    //               this.exportChart();
-    //             }
-    //           },
-    //           {
-    //             textKey: "downloadJPEG",
-    //             onclick: function() {
-    //               this.exportChart({
-    //                 type: "image/jpeg"
-    //               });
-    //             }
-    //           },
-    //           {
-    //             textKey: "downloadPDF",
-    //             onclick: function() {
-    //               this.exportChart({
-    //                 type: "application/pdf"
-    //               });
-    //             }
-    //           },
-    //           {
-    //             textKey: "downloadSVG",
-    //             onclick: function() {
-    //               this.exportChart({
-    //                 type: "image/svg+xml"
-    //               });
-    //             }
-    //           },
+      tableData.yAxis.forEach( (element, element_index) => {
 
-    //           { separator: true },
-    //           {
-    //             textKey: "downloadXLS",
-    //             onclick: function() {
-    //               this.downloadXLS();
-    //             }
-    //           },
-    //           {
-    //             textKey: "downloadCSV",
-    //             onclick: function() {
-    //               this.downloadCSV();
-    //             }
-    //           }
-    //         ]
-    //       }
-    //     }
-    //   }
-    // };
-    // console.log(config);
+        let dataTableHead = element.series.map( (item) => (
+          <th scope="col" className="text">{item.name}</th>
+        ));
+
+        let dataTableRow = tableData.xAxis.map( (item, index) => (
+          <tr><th scope="row" className="text">{item}</th>
+          {element.series.map( (ser_item) => (<td className="number">{ser_item.data[index]}</td>))}</tr>
+        ));
+
+        let convertToPNG = <button className="btn" onClick={this.renderImage.bind(this, element_index)}>Save as PNG</button>
+        console.log(element.series[element_index]);
+        let convertToCSV = <button className="btn" 
+          onClick={this.tableToCSV.bind(this, tableData.xAxis, element.series)}>
+          ToCSV</button> 
+
+        let dataTable = <div id={element_index} className="highcharts-data-table"><table>
+          <caption className="highcharts-caption">{element.name}</caption>
+          <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
+          <tbody>{dataTableRow}</tbody></table>
+          {convertToPNG}
+          {convertToCSV}
+          </div> 
+        
+        tableChart.push(dataTable);
+        });
+       
+    }
+
     return (
       <div>
-        {dataTable}
+        {tableChart}
         {/* <ReactHighcharts config={config} /> */}
-        <button className="btn" onClick={this.renderImage}>Save as PNG</button>
-        <button className="btn" onClick={this.tableToCSV.bind(this, xCategories, ySeries)}>ToCSV</button>
+        {/* <button className="btn" onClick={this.renderImage}>Save as PNG</button>
+        <button className="btn" onClick={this.tableToCSV.bind(this, xCategories, ySeries)}>ToCSV</button> */}
       </div>
     );
   }
