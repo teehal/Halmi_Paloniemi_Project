@@ -305,14 +305,33 @@ class Charts extends Component {
     });
 
     const buttonElement = [];
+    // if (!this.props.isPolar) {
+    //     buttonElement.push( 
+    //     <div key={this.state.groupBy} className="text-center">
+    //       <button className="btn btn-info barchart" onClick={this.toggleChartType}>
+    //         {this.state.chartTypeLabel}
+    //       </button>
+    //     </div>
+    // );
+    // }
     if (!this.props.isPolar) {
-        buttonElement.push( 
-        <div key={this.state.groupBy} className="text-center">
-          <button className="btn btn-info barchart" onClick={this.toggleChartType}>
-            {this.state.chartTypeLabel}
-          </button>
-        </div>
-    );
+      buttonElement.push( 
+      <div key={this.state.groupBy} className="btn-group">
+        <button className="btn btn-info charts" onClick={this.toggleChartType}>
+          {this.state.chartTypeLabel}
+        </button>
+        <button className="btn btn-info charts" onClick={this.toggleGroupBy}>
+            {this.state.groupByLabel}
+        </button>
+      </div>
+      );
+  }
+    else {
+      buttonElement.push( 
+        <button className="btn btn-info" onClick={this.toggleGroupBy}>
+        {this.state.groupByLabel}
+        </button>
+      );
     }
 
     // this.myConfig.forEach( (item, index) => {
@@ -332,12 +351,14 @@ class Charts extends Component {
     //graphElement
       <div>
         {graphElement}
-          <div className="text-center">
+          {/* <div className="text-center">
           <button className="btn btn-info" onClick={this.toggleGroupBy}>
             {this.state.groupByLabel}
           </button>
+        </div> */}
+        <div className="control-wrapper">
+          {buttonElement}
         </div>
-        {buttonElement}
       </div>
     );
   }

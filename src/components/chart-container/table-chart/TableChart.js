@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
+import html2canvas from "html2canvas";
+import {saveAs} from "file-saver";
 import "./table-chart-custom.scss";
 //import { removeTable } from "./utils.js";
 // import ReactHighcharts from "react-highcharts";
@@ -10,6 +11,40 @@ import "./table-chart-custom.scss";
 // require("../../../../node_modules/highcharts/modules/export-data")(Highcharts);
 
 class TableChart extends Component {
+
+  renderImage = (format) => {
+    html2canvas(document.querySelector("div.highcharts-data-table")).then( canvas => {
+      var base64image = canvas.toDataURL("image/png");
+      window.open(base64image , "_blank");
+      canvas.toBlob( function(blob) {
+        saveAs(blob, "table.png");
+      });
+    });
+  }
+
+  tableToCSV = (xcat, yser) => {
+    let tempArr = [];
+    let CSVtext = '';
+
+    yser.forEach( (item) => {
+      tempArr.push(item.name);
+    });
+
+    CSVtext += ' ,' + tempArr.join() + '\n';
+
+    xcat.forEach( (element, index) => {
+      tempArr = [];
+      tempArr.push(element);
+      yser.forEach( (item) => { tempArr.push(item.data[index]) });
+      CSVtext += tempArr.join() + '\n';
+    });
+
+    let blob = new Blob([CSVtext], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "table.csv");
+
+    console.log(CSVtext);
+  }
+
   render() {
     //removeTable();
     const values = this.props.values;
@@ -70,7 +105,7 @@ class TableChart extends Component {
         }
       });
     });
-    console.log(ySeries);
+    //console.log(ySeries);
     // console.log(this.props.region.name);
     const dataTableHead = ySeries.map( (item) => (
       <th scope="col" className="text">{item.name}</th>
@@ -83,7 +118,7 @@ class TableChart extends Component {
       <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
       <tbody>{dataTableRow}</tbody></table></div>
 
-    console.log(dataTableHead);
+    //console.log(dataTableHead);
     //const highTable = '<div class="highcharts-data-table"><table><caption class="highcharts-table-caption">Kainuu 2018 - 2022</caption><thead><tr><th scope="col" class="text">Category</th><th scope="col" class="text">Suurin nettotulo</th><th scope="col" class="text">Ilmasto- ja energiapoliittinen</th><th scope="col" class="text">Mustikkasato</th></tr></thead><tbody><tr><th scope="row" class="text">Kantohinta-arvo</th><td class="number">0.13</td><td class="number">0.18</td><td class="number">0.74</td></tr><tr><th scope="row" class="text">Lahopuun määrä</th><td class="number">0.22</td><td class="number">0.59</td><td class="number">0.66</td></tr><tr><th scope="row" class="text">Nettotulojen nykyarvo</th><td class="number">0.99</td><td class="number">0.9</td><td class="number">0.56</td></tr><tr><th scope="row" class="text">Tukkikertymä</th><td class="number">0.65</td><td class="empty"></td><td class="number">0.3</td></tr></tbody></table></div>'
     // let config = {
     //   title: {
@@ -206,6 +241,8 @@ class TableChart extends Component {
       <div>
         {dataTable}
         {/* <ReactHighcharts config={config} /> */}
+        <button className="btn" onClick={this.renderImage}>Save as PNG</button>
+        <button className="btn" onClick={this.tableToCSV.bind(this, xCategories, ySeries)}>ToCSV</button>
       </div>
     );
   }

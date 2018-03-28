@@ -93,7 +93,7 @@ class App extends Component {
       language: language.value
     });
     this.getAllTheLabel();
-    this.getAllTheData(false);
+   // this.getAllTheData(false);
     this.loadDisplayTexts(language.value);
     // console.log("after", this.state.selectedOptions);
   }
