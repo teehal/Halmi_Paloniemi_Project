@@ -3,6 +3,7 @@ import Select from "react-select";
 import "./indicators.scss";
 
 import QuickHelp from "../../general/QuickHelp";
+import * as FormControlNames from "../../general/FormControls";
 
 class Indicators extends Component {
   constructor(props) {
@@ -129,7 +130,7 @@ class Indicators extends Component {
 
         <div className="item_list">
           <Select
-            name="indicators"
+            name={FormControlNames.INDICATORS}
             multi={true}
             options={this.indicatorOptions(item.indicators, item.isMandatory)}
             onChange={option => this.handleChange(option, index)}

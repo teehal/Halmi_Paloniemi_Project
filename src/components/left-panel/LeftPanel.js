@@ -30,10 +30,11 @@ class LeftPanel extends Component {
 
     const scenarios = this.props.scenarios;
     const timePeriods = this.props.timePeriods;
-    //  console.log(scenarios);
-    //  const timePeriods = this.props.timePeriods;
 
     const selectedDataChange = this.props.handleSelectedDataChange;
+    
+    console.log("LeftPanel render, state: ", this.state);
+    console.log("LeftPanel render, props: ", this.props);
 
     return (
 	<div>
@@ -50,7 +51,9 @@ class LeftPanel extends Component {
 	            regionalLevel={regionalLevel}
 	            regionalLevelData={regionalLevelData}
 	            regionalLevelLabel={this.props.regionalLevelLabel}
-	            displayTexts={this.props.displayTexts}            
+	            displayTexts={this.props.displayTexts} 
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}           
 	          />
 	        </div>
 	

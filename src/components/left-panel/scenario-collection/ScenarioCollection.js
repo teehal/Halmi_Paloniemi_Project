@@ -6,6 +6,7 @@ import "react-select/dist/react-select.css";
 
 import secondImage from '../../../images/second.png';
 import QuickHelp from "../../general/QuickHelp";
+import * as FormControlNames from "../../general/FormControls";
 
 class ScenarioCollection extends Component {
   state = {
@@ -47,7 +48,7 @@ class ScenarioCollection extends Component {
 			/>    
 		</h4>
         <Select
-          name=""
+          name={FormControlNames.SCENARIO_COLLECTION}
           className="max"
           value={scenarioCollection}
           onChange={this.handleChange}

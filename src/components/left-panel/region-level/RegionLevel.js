@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import {
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  Button
+} from 'react-bootstrap'
 import "react-select/dist/react-select.css";
 import QuickHelp from "../../general/QuickHelp";
-import firstImage from '../../../images/first.png';
+import * as FormControlNames from "../../general/FormControls";
 
 class RegionLevels extends Component {
 
@@ -35,7 +41,8 @@ class RegionLevels extends Component {
   render() {
     const regionalLevel = this.props.regionalLevel;
     const regionalLevelList = this.props.regionalLevelList;
-    
+    console.log("RegionLevel render, state: ", this.state);
+    console.log("RegionLevel render onToggleAccordionModalClick: ", this.state.onToggleAccordionModalClick);
     return (
       <div>
         <h4>{this.props.regionalLevelLabel}
@@ -49,7 +56,14 @@ class RegionLevels extends Component {
 	        	displayTexts={this.props.displayTexts}
 			/>    
 		</h4>
-	        <Select
+		<Button
+			bsStyle='link'
+			name={FormControlNames.REGION_LEVEL}
+			onClick={this.props.onToggleAccordionModalClick}>
+			[?]
+         </Button>
+        <Select
+        	name={FormControlNames.REGION_LEVEL}
 	          placeholder="Select region level"
 	          value={regionalLevel}
 	          onChange={this.handleChange}
@@ -57,7 +71,7 @@ class RegionLevels extends Component {
 	          disabled={this.state.dropdownDisabledBool}
 	          clearableValue = {false}
 	          clearable = {false}
-	        />
+        />
       </div>
     );
   }

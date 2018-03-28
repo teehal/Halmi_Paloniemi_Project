@@ -3,6 +3,7 @@ import Select from "react-select";
 import "react-select/dist/react-select.css";
 
 import QuickHelp from "../../general/QuickHelp";
+import * as FormControlNames from "../../general/FormControls";
 
 class Region extends Component {
 
@@ -49,7 +50,7 @@ class Region extends Component {
 			/>    
 		</h4>        
         <Select
-          name=""
+          name={FormControlNames.REGION}
           className=""
           value={region}
           onChange={this.handleChange}

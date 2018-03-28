@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Select from "react-select";
 import Checkbox from "../../general/Checkbox";
 import QuickHelp from "../../general/QuickHelp";
+import * as FormControlNames from "../../general/FormControls";
 
 class TimePeriods extends Component {
   constructor(props) {
@@ -106,6 +107,7 @@ class TimePeriods extends Component {
 	        	helpLink="#helpTimePeriods"
 	        	language={this.props.language}
 	        	displayTexts={this.props.displayTexts}
+	        	name={FormControlNames.TIME_PERIOD}
 			/>    
         </h4>
         <div className="item_list">
