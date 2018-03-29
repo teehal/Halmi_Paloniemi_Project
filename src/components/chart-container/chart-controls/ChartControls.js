@@ -31,13 +31,13 @@ class ChartControls extends Component {
       {/* <div className="btn-group"> */}
         <div className="chart-control-buttons btn-group">
           <button className="btn chart-control" value="bar" onClick={this.changeChartType}>
-            Bar chart
+           {this.props.barChartLabel}
           </button>
           <button className="btn chart-control" value="table" onClick={this.changeChartType}>
-            Table chart
+            {this.props.tableChartLabel}
           </button>
           <button className="btn chart-control" value="polar" onClick={this.changeChartType}>
-            Polar chart
+            {this.props.polarChartLabel}
           </button>
         </div>
       </div>

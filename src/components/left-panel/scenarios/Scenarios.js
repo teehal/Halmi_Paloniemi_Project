@@ -58,6 +58,7 @@ class Scenarios extends Component {
           scenarioValues: values,
           currentScenariosLanguage: nextProp.language
         });
+        this.props.updateSelectedOptions(this.state.scenarioValues, "scenario");
       }
     }
   }

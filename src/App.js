@@ -73,6 +73,7 @@ class App extends Component {
     this.handleScenarioCollectionChange = this.handleScenarioCollectionChange.bind(this);
 
     this.handleSelectedDataChange = this.handleSelectedDataChange.bind(this);
+    this.updateSelectedOptions = this.updateSelectedOptions.bind(this);
     //let cookie = getCookie(getCookieName());
 // 	console.log("construtctor state: ", this.state);
 	this.loadDisplayTexts(this.state.language);
@@ -399,7 +400,14 @@ class App extends Component {
         timePeriodsLabel: "Time Periods",
         indicatorSelectionLabel: "Indicator Categories",
         feedbackLabel: "Give feedback",
-        guidanceLabel: "Help"
+        guidanceLabel: "Help",
+        barChartLabel: "Bar chart",
+        tableChartLabel: "Table chart",
+        polarChartLabel: "Polar chart",
+        groupByScenariosLabel: "Group by scenarios",
+        groupByIndicatorsLabel: "Group by indicators",
+        columnTypeLabel: "Vertical",
+        barTypeLabel: "Horizontal"
       });
     } else {
       this.setState({
@@ -412,7 +420,14 @@ class App extends Component {
         timePeriodsLabel: "Ajankohta",
         indicatorSelectionLabel: "Indikaattoreiden valinta",
         feedbackLabel: "Anna palautetta",
-        guidanceLabel: "Ohje"
+        guidanceLabel: "Ohje",
+        barChartLabel: "Pylväskaavio",
+        tableChartLabel: "Taulukko",
+        polarChartLabel: "Ympyräkaavio",
+        groupByScenariosLabel: "Ryhmittele skenaarioittain",
+        groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
+        columnTypeLabel: "Palkit pystysuoraan",
+        barTypeLabel: "Palkit vaakasuoraan"
       });
     }
   }
@@ -421,6 +436,20 @@ class App extends Component {
     this.getAllTheLabel();
     this.getAllTheData(true);
     this.loadDisplayTexts(this.state.language);
+  }
+
+  updateSelectedOptions(valueArray, datatype) {
+    let tempSelected = this.state.selectedOptions.slice();
+
+    valueArray.forEach( (item) => {
+      let position = tempSelected.findIndex( (element) => {
+        return item.value.toString() === element.id.toString() && datatype === element.dataType
+      });
+      tempSelected[position].name = item.label;
+    });
+    this.setState({
+      selectedOptions: tempSelected
+    });
   }
 
   render() {
@@ -462,20 +491,28 @@ class App extends Component {
             selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             displayTexts={this.displayTexts}
+            updateSelectedOptions = {this.updateSelectedOptions}
           />
 
         </div>
 
         <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
 			<ChartContainer
-			valueData={this.state.values}
-			options={this.state.selectedOptions}
-			scenarios={this.state.scenarios}
-			regionalLevel={this.state.regionalLevel}
-			region={this.state.region}
+        valueData={this.state.values}
+        options={this.state.selectedOptions}
+        scenarios={this.state.scenarios}
+        regionalLevel={this.state.regionalLevel}
+        region={this.state.region}
+        barChartLabel = {this.state.barChartLabel}
+        tableChartLabel = {this.state.tableChartLabel}
+        polarChartLabel = {this.state.polarChartLabel}
+        groupByScenariosLabel = {this.state.groupByScenariosLabel}
+        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+        columnTypeLabel = {this.state.columnTypeLabel}
+        barTypeLabel = {this.state.barTypeLabel}
 			/>
 	        <div className="services text-center content-panel shadow-1">
-	            {/* <a
+	            <a
 	              href={getMelaTupaService(
 	                this.state.selectedOptions,
 	                this.state.region,
@@ -484,7 +521,7 @@ class App extends Component {
 	              )}
 	            >
 	              <h4>{this.displayTexts.MelaTUPAService}</h4>
-	            </a> */}
+	            </a>
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
 	            </a>

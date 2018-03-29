@@ -12,9 +12,9 @@ class Charts extends Component {
 
     this.state = {
       groupBy: "indicator",
-      groupByLabel: "Group by Scenarios",
+      groupByLabel: props.groupByScenariosLabel,
       chartType: "column",
-      chartTypeLabel: "Bar chart",
+      chartTypeLabel: props.barTypeLabel,
       pointWidth: 15,
     };
 
@@ -71,76 +71,38 @@ class Charts extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProp) {
+    this.toggleChartType();
+    this.toggleGroupBy();
+  }
+
   toggleChartType() {
     if (this.state.chartType === "column") {
       this.setState({
         chartType: "bar",
-        chartTypeLabel: "Column chart"
+        chartTypeLabel: this.props.columnTypeLabel
       });
     } else {
       this.setState({
         chartType: "column",
-        chartTypeLabel: "Bar chart"
+        chartTypeLabel: this.props.barTypeLabel
     });
   }
   }
-
-  // toggleChartTypeArr(index) {
-  //   if (this.state.chartArr[index] === "column") {
-  //     let temp_arr = this.state.chartArr.slice();
-  //     let temp_arr2 = this.state.chartLabelArr.slice();
-  //     temp_arr[index] = 'bar';
-  //     temp_arr2[index] = 'Column';
-  //     this.setState({
-  //       chartArr: temp_arr,
-  //       chartTypeLabel: temp_arr2
-  //     });
-  //   } else {
-  //     let temp_arr = this.state.chartArr.slice();
-  //     let temp_arr2 = this.state.chartLabelArr.slice();
-  //     temp_arr[index] = 'column';
-  //     temp_arr2[index] = 'Bar chart';
-  //     this.setState({
-  //       chartType: temp_arr,
-  //       chartLabelArr: temp_arr2
-  //   });
-  // }
-  // }
 
   toggleGroupBy() {
     if (this.state.groupBy === "indicator") {
       this.setState({
         groupBy: "scenario",
-        groupByLabel: "Group by Indicators"
+        groupByLabel: this.props.groupByScenariosLabel
       });
     } else {
       this.setState({
         groupBy: "indicator",
-        groupByLabel: "Group by Scenarios"
+        groupByLabel: this.props.groupByIndicatorsLabel
       });
     }
   }
-
-  // toggleGroupByArr(index) {
-  //   let temp_arr = this.state.groupByArr.slice();
-  //   let temp_arr2 = this.state.groupByLabelArr.slice();
-
-  //   if (this.state.groupByArr[index] === "indicator") {
-  //     temp_arr[index] = 'scenario';
-  //     temp_arr2[index] = 'Group by Indicators';
-  //     this.setState({
-  //       groupByArr: temp_arr,
-  //       groupByLabelArr: temp_arr2
-  //     });
-  //   } else {
-  //     temp_arr[index] = 'indicator';
-  //     temp_arr2[index] = 'Group by Scenarios';
-  //     this.setState({
-  //       groupByArr: temp_arr,
-  //       groupByLabelArr: temp_arr2
-  //     });
-  //   }
-  // }
 
   dataForGraphs(groupBy, data, scenarios, indicators) {
     let xCategories = [];
@@ -243,7 +205,7 @@ class Charts extends Component {
   render() {
     const values = this.props.values;
     const options = this.props.options;
-    console.log(options);
+
     if (values.length > 0 && options.length > 0) {
       let timePeriod = options.filter(function(e) {
         return e.dataType === "timePeriod";
@@ -259,19 +221,6 @@ class Charts extends Component {
              })
         });
       });
-
-      // let groupByArr = timePeriod.map( timePeriod => 'indicator');
-      // let chartTypeArr = timePeriod.map( timePeriod => 'column');
-      // let chartLabelArr = timePeriod.map( timePeriod => 'Column');
-      // let groupByLabelArr = timePeriod.map( timePeriod => "Group by Scenarios");
-
-      // this.setState({
-      //   groupArr: groupByArr,
-      //   chartArr: chartTypeArr,
-      //   chartLabelArr: chartLabelArr,
-      //   groupByLabelArr: groupByLabelArr
-      // });
-
 
       let scenariosSelectedList = options.filter(function(e) {
         return e.dataType === "scenario";
@@ -305,15 +254,7 @@ class Charts extends Component {
     });
 
     const buttonElement = [];
-    // if (!this.props.isPolar) {
-    //     buttonElement.push( 
-    //     <div key={this.state.groupBy} className="text-center">
-    //       <button className="btn btn-info barchart" onClick={this.toggleChartType}>
-    //         {this.state.chartTypeLabel}
-    //       </button>
-    //     </div>
-    // );
-    // }
+
     if (!this.props.isPolar) {
       buttonElement.push( 
       <div key={this.state.groupBy} className="btn-group">
@@ -334,29 +275,10 @@ class Charts extends Component {
       );
     }
 
-    // this.myConfig.forEach( (item, index) => {
-    //   graphElement.push(
-    //     <div>
-    //     <ReactHighcharts key={this.state.groupBy + index} config={item} />
-    //       <div className="text-center">
-    //         <button className="btn btn-info" onClick={this.toggleGroupBy}>
-    //           {this.state.groupByLabel}
-    //         </button>
-    //       </div>
-    //     {buttonElement}
-    //     </div>);
-    // });
-
     return (
-    //graphElement
-      <div>
+       <div>
         {graphElement}
-          {/* <div className="text-center">
-          <button className="btn btn-info" onClick={this.toggleGroupBy}>
-            {this.state.groupByLabel}
-          </button>
-        </div> */}
-        <div className="control-wrapper">
+         <div className="control-wrapper">
           {buttonElement}
         </div>
       </div>

@@ -41,6 +41,10 @@ class ChartContainer extends Component {
             regionalLevel={this.props.regionalLevel}
             region={this.props.region}
             isPolar={false}
+            groupByScenariosLabel = {this.props.groupByScenariosLabel}
+            groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+            columnTypeLabel = {this.props.columnTypeLabel}
+            barTypeLabel = {this.props.barTypeLabel}
           />
         );
       case "table":
@@ -62,6 +66,10 @@ class ChartContainer extends Component {
           regionalLevel={this.props.regionalLevel}
           region={this.props.region}
           isPolar={true}
+          groupByScenariosLabel = {this.props.groupByScenariosLabel}
+          groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+          columnTypeLabel = {this.props.columnTypeLabel}
+          barTypeLabel = {this.props.barTypeLabel}
         />
       );
       default:
@@ -76,7 +84,12 @@ class ChartContainer extends Component {
           {this.RenderChart(this.state.chartType)}
         </div>
         <div className="chart-controls">
-          <ChartControls changeChartType={this.changeChartType} />
+          <ChartControls 
+            changeChartType={this.changeChartType}
+            barChartLabel = {this.props.barChartLabel}
+            tableChartLabel = {this.props.tableChartLabel}
+            polarChartLabel = {this.props.polarChartLabel}
+            />
         </div>
       </div>
     );

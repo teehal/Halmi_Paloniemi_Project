@@ -60,6 +60,11 @@ class Indicators extends Component {
           indValues: values,
           currentIndicatorsLanguage: nextProp.language
         });
+
+        this.state.indValues.forEach( (element) => {
+          if ( element.length )
+            this.props.updateSelectedOptions(element, "indicator");
+        });
       }
   }
   }

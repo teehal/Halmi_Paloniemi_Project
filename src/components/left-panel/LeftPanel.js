@@ -29,7 +29,8 @@ class LeftPanel extends Component {
     const scenarioCollectionData = this.props.handleScenarioCollectionChange;
 
     const scenarios = this.props.scenarios;
-    const timePeriods = this.props.timePeriods;
+		const timePeriods = this.props.timePeriods;
+		const updateSelectedOptions = this.props.updateSelectedOptions;
     //  console.log(scenarios);
     //  const timePeriods = this.props.timePeriods;
 
@@ -86,6 +87,7 @@ class LeftPanel extends Component {
 							language={language}
 							region={region}
 							regionalLevel={regionalLevel}
+							updateSelectedOptions = {updateSelectedOptions}
 	          />
 	        </div>
 	        <div className="timeline">
@@ -109,6 +111,7 @@ class LeftPanel extends Component {
 							language={language}
 							region={region}
 							regionalLevel={regionalLevel}
+							updateSelectedOptions = {updateSelectedOptions}
 					/>
 			</div>
 	</div>
