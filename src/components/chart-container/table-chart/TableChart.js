@@ -67,14 +67,13 @@ class TableChart extends Component {
       ySeries.push({name: item.timePeriodName, series: tempYSeries});
       tempYSeries = [];
   });
-  // let index = xCategories.length / data.length;
-  // xCategories.splice( index );
+
   return {xAxis: xCategories, yAxis: ySeries};
   }
 
 
-  renderImage = (format) => {
-    html2canvas(document.querySelector("div.highcharts-data-table")).then( canvas => {
+  renderImage = (index) => {
+    html2canvas(document.querySelector("#highcharts-" + index)).then( canvas => {
       var base64image = canvas.toDataURL("image/png");
       window.open(base64image , "_blank");
       canvas.toBlob( function(blob) {
@@ -172,7 +171,7 @@ class TableChart extends Component {
           onClick={this.tableToCSV.bind(this, tableData.xAxis, element.series)}>
           ToCSV</button> 
 
-        let dataTable = <div id={element_index} className="highcharts-data-table"><table>
+        let dataTable = <div id={"highcharts-" + element_index} className="highcharts-data-table"><table>
           <caption className="highcharts-caption">{element.name}</caption>
           <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
           <tbody>{dataTableRow}</tbody></table>

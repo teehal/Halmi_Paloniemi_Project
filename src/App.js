@@ -90,12 +90,80 @@ class App extends Component {
   handleLanguageChange(language) {
     // console.log("language change");
     this.setState({
-      language: language.value
+      language: language.value,
+      languageHasChanged: true
     });
     this.getAllTheLabel();
-   // this.getAllTheData(false);
+    this.languageData();
     this.loadDisplayTexts(language.value);
     // console.log("after", this.state.selectedOptions);
+  }
+  
+  languageData() {
+    DataBinding.bindRegionalLevelData().then(result => {
+      let regionalLevelList = [];
+      result.map(element => {
+        regionalLevelList.push({
+          value: element.id,
+          label: element.name,
+          ...element
+        });
+      });
+
+      let regionList = [];
+      let position = regionalLevelList.findIndex( (item) => {
+        return this.state.regionalLevel.id === item.id
+      });
+      DataBinding.bindRegionData(regionalLevelList[position]).then(result => {
+        result.map(region => {
+          regionList.push({
+            value: region.id,
+            label: region.name,
+            ...region
+          });
+        });
+
+        let regionPosition = regionList.findIndex( (item) => {
+          return this.state.region.id === item.id
+        });
+        let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
+          regionList[regionPosition]
+        );
+        let scenarioPosition = scenarioCollectionList.findIndex( (item) => {
+          return this.state.scenarioCollection.id === item.id
+        });
+        DataBinding.bindChartData(
+          scenarioCollectionList[scenarioPosition],
+          regionList[regionPosition]
+        ).then(result => {
+          let regionIndex = regionList.findIndex( (item) => {
+            return this.state.region.id === item.id
+          });
+
+          let regionalIndex = regionalLevelList.findIndex( (item) => {
+            return this.state.regionalLevel.id === item.id
+          });
+
+          let scenarioCollectionIndex = scenarioCollectionList.findIndex ( (item) => {
+            return this.state.scenarioCollection.id === item.id
+          });
+
+          this.setState({
+            languageHasChanged: false,
+            regionalLevelList: regionalLevelList,
+            region: regionList[regionIndex],
+            regionalLevel: regionalLevelList[regionalIndex],
+            regionList: regionList,
+            scenarioCollection: scenarioCollectionList[scenarioCollectionIndex],
+            scenarioCollectionList: scenarioCollectionList,
+            scenarios: result.scenarios,
+            indicatorCategories: result.indicatorCategories,
+            timePeriods: result.timePeriods,
+            values: result.values
+          });
+        });
+      });
+    });
   }
 
   handleRegionalLevelChange(regionalLevel) {
@@ -112,8 +180,7 @@ class App extends Component {
       let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
         regionList[0]
       );
-      console.log(`regionList ${Object.entries(regionList[0])}`);
-      console.log(`scenarioCollection ${Object.entries(scenarioCollectionList[0])}`);
+
       DataBinding.bindChartData(scenarioCollectionList[0], regionList[0]).then(
         result => {
           this.setState({
@@ -203,7 +270,19 @@ class App extends Component {
         });
       }
     });
-    // console.log("the list", list);
+
+    list.push({
+      dataType: "regionalLevel",
+      name: this.state.regionalLevel.name,
+      id: this.state.regionalLevel.id
+    });
+
+    list.push({
+      dataType: "region",
+      name: this.state.region.name,
+      id: this.state.region.id
+    });
+     console.log("the list", list);
     return list;
   }
 
@@ -235,6 +314,7 @@ class App extends Component {
     return;
 
   }
+
 
   getAllTheData(isFirst) {
     DataBinding.bindRegionalLevelData().then(result => {
@@ -300,7 +380,7 @@ class App extends Component {
               timePeriods: result.timePeriods,
               values: result.values
             });
-          }
+        }
         });
       });
     });
@@ -395,7 +475,7 @@ class App extends Component {
 			region={this.state.region}
 			/>
 	        <div className="services text-center content-panel shadow-1">
-	            <a
+	            {/* <a
 	              href={getMelaTupaService(
 	                this.state.selectedOptions,
 	                this.state.region,
@@ -404,7 +484,7 @@ class App extends Component {
 	              )}
 	            >
 	              <h4>{this.displayTexts.MelaTUPAService}</h4>
-	            </a>
+	            </a> */}
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
 	            </a>

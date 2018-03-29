@@ -6,20 +6,60 @@ class Scenarios extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { scenarioValues: [] };
+    this.state = { 
+      scenarioValues: [], 
+      currentRegionId: props.region,
+      currentRegionalLevelId: props.regionalLevel
+    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillReceiveProps(nextProp) {
-    let numberOfScenarios = nextProp.selectedOptions.filter( (element) => {
-      return element.dataType === "scenario";
-    }).length;
  
-    if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || numberOfScenarios === 1)
-      this.setState({ scenarioValues: [{
-        value: nextProp.scenarios[0].id, 
-        label: nextProp.scenarios[0].name}
-      ]});
+    let newRegion = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "region";
+    });
+
+    let newRegional = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "regionalLevel";
+    });
+
+    let newRegionId = newRegion.length ? newRegion[0].id : 0;
+    let newRegionalId = newRegional.length ? newRegional[0].id : 0;
+
+    let regionHasChanged = this.state.currentRegionId !== newRegionId;
+    let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
+
+    if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || 
+      ((regionHasChanged || regionalLevelHasChanged) && nextProp.scenarios.length))
+      this.setState({ 
+        scenarioValues: [{
+          value: nextProp.scenarios[0].id, 
+          label: nextProp.scenarios[0].name}
+          ],
+        currentRegionId: newRegionId,
+        currentRegionalLevelId: newRegionalId
+      });
+
+    if (nextProp.scenarios.length && this.props.scenarios.length) {
+      // Check for language change and update labels
+      if ( nextProp.scenarios[0].name !== this.props.scenarios[0].name ) {
+        let values = this.state.scenarioValues.slice();
+        values.forEach( (element) => {
+          let position = nextProp.scenarios.findIndex( (item) => {
+            return element.value === item.id
+          });
+          console.log(`position ${position}`);
+          console.log(values);
+          console.log(nextProp.scenarios);
+          element.label = nextProp.scenarios[position].name;
+        });
+        this.setState({
+          scenarioValues: values,
+          currentScenariosLanguage: nextProp.language
+        });
+      }
+    }
   }
 
   defaultValue(scenarios) {

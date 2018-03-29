@@ -83,7 +83,9 @@ class LeftPanel extends Component {
 	            scenariosLabel={this.props.scenariosLabel}
 	            selectedOptions={this.props.selectedOptions}
 	            displayTexts={this.props.displayTexts}
-	            language={language}
+							language={language}
+							region={region}
+							regionalLevel={regionalLevel}
 	          />
 	        </div>
 	        <div className="timeline">
@@ -97,16 +99,18 @@ class LeftPanel extends Component {
 	          />
 	        </div>
 	    </div>
-		<div>
-			<Indicators
-			    indicatorCategories={this.props.indicatorCategories}
-			    selectedDataChange={selectedDataChange}
-			    selectedOptions={this.props.selectedOptions}
-			    indicatorSelectionLabel={this.props.indicatorSelectionLabel}
-				displayTexts={this.props.displayTexts}
-				language={language}
-			/>
-		</div>
+			<div>
+					<Indicators
+							indicatorCategories={this.props.indicatorCategories}
+							selectedDataChange={selectedDataChange}
+							selectedOptions={this.props.selectedOptions}
+							indicatorSelectionLabel={this.props.indicatorSelectionLabel}
+							displayTexts={this.props.displayTexts}
+							language={language}
+							region={region}
+							regionalLevel={regionalLevel}
+					/>
+			</div>
 	</div>
     );
   }

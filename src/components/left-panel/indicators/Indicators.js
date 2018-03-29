@@ -8,12 +8,61 @@ class Indicators extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { indValues: [] };
+    this.state = { 
+      indValues: [],
+      currentIndicatorsLanguage: props.language,
+      currentRegionId: props.region.id,
+      currentRegionalLevelId: props.regionalLevel
+     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProp) {}
+  componentWillReceiveProps(nextProp) {
+
+    let newRegion = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "region";
+    });
+
+    let newRegional = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "regionalLevel";
+    });
+
+    let newRegionId = newRegion.length ? newRegion[0].id : 0;
+    let newRegionalId = newRegional.length ? newRegional[0].id : 0;
+
+    let regionHasChanged = this.state.currentRegionId !== newRegionId;
+    let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
+
+    if ( (nextProp.indicatorCategories.length && !this.state.indValues.length) || 
+      ((regionHasChanged || regionalLevelHasChanged) && nextProp.indicatorCategories.length)) {
+        this.updateIndValues(nextProp.indicatorCategories);
+        this.setState({ 
+          currentRegionId: newRegionId,
+          currentRegionalLevelId: newRegionalId
+        });
+    }
+
+    if (nextProp.indicatorCategories.length && this.props.indicatorCategories.length) {
+      // Check for language change and update if needed.
+      if ( nextProp.indicatorCategories[0].name !== this.props.indicatorCategories[0].name ) {
+        let values = this.state.indValues.slice();
+        values.forEach( (element, index) => {
+          element.forEach( (item) => {
+            let position = nextProp.indicatorCategories[index].indicators.findIndex( (indicator_item) => {
+              return item.value === indicator_item.id
+            });
+            item.label = nextProp.indicatorCategories[index].indicators[position].name;
+          });
+          
+        });
+        this.setState({
+          indValues: values,
+          currentIndicatorsLanguage: nextProp.language
+        });
+      }
+  }
+  }
 
   indicatorOptions = (indicators, isMandatory) => {
     let options = [];
@@ -102,10 +151,11 @@ class Indicators extends Component {
 
   render() {
     let indicatorCategories = this.props.indicatorCategories;
+    console.log(this.props.selectedOptions);
 
-    if (this.state.indValues.length === 0 && indicatorCategories.length) {
-      this.updateIndValues(indicatorCategories);
-    }
+    // if (this.state.indValues.length === 0 && indicatorCategories.length) {
+    //   this.updateIndValues(indicatorCategories);
+    // }
     let values = [];
 
     indicatorCategories.forEach(element => {
@@ -135,7 +185,7 @@ class Indicators extends Component {
             multi={true}
             options={this.indicatorOptions(item.indicators, item.isMandatory)}
             onChange={option => this.handleChange(option, index)}
-            value={values[index]} //{this.state.indValues[index]}
+            value={this.state.indValues[index]} //{values[index]} //
             id={index.toString()}
             dataType="indicator"
             closeOnSelect={false}

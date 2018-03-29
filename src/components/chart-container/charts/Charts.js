@@ -243,7 +243,7 @@ class Charts extends Component {
   render() {
     const values = this.props.values;
     const options = this.props.options;
-
+    console.log(options);
     if (values.length > 0 && options.length > 0) {
       let timePeriod = options.filter(function(e) {
         return e.dataType === "timePeriod";
