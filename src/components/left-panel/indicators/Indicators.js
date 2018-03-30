@@ -156,27 +156,6 @@ class Indicators extends Component {
 
   render() {
     let indicatorCategories = this.props.indicatorCategories;
-    console.log(this.props.selectedOptions);
-
-    // if (this.state.indValues.length === 0 && indicatorCategories.length) {
-    //   this.updateIndValues(indicatorCategories);
-    // }
-    let values = [];
-
-    indicatorCategories.forEach(element => {
-      let tempArray = [];
-      element.indicators.forEach(indicator => {
-        this.props.selectedOptions.forEach(item => {
-          if (
-            item.dataType === "indicator" &&
-            Number(item.id) === Number(indicator.id)
-          )
-            tempArray.push({ value: Number(item.id), label: item.name });
-        });
-      });
-      values.push(tempArray);
-    });
-    
 
     const listItems = indicatorCategories.map((item, index) => (
       <div key={index} className="indicators">

@@ -4,6 +4,7 @@
   background: transparent;
   min-width: 100%;
   margin-top: 10px;
+  margin-bottom: 25px;
 }
 .highcharts-data-table td, .highcharts-data-table th {
   font-family: sans-serif;
@@ -22,4 +23,75 @@
   text-align: center;
   font-size:18px;
   color:#333333;
+}
+
+.dropdown {
+  float:right;
+  position: relative;
+  display: block;
+}
+
+.dropdown-bars {
+  border-radius: 3px;
+  background-color: #ffffff;
+  width: 24px;
+  height: 22px;
+}
+
+.dropdown-bars:hover {
+  background-color: #cccc;
+}
+
+.dropdown-menu-bars {
+  margin: auto;
+  padding: 3px 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  right: 0px;
+  min-width: 160px;
+  z-index: 1;
+  border: 1px solid #999999;
+  background: white;
+  padding: 5px 0;
+  box-shadow: 3px 3px 10px #888;
+}
+
+.menu-bar {
+  width: 18px;
+  height: 3px;
+  background-color:#666666;
+  margin: 3px 0px 3px 3px;
+  transition: 0.4s;
+}
+
+.menu-button {
+  background-color: white;
+  border: 0px;
+  width: 100%;
+  text-align: left;
+  font-size: 12px;
+  height: 30px;
+}
+
+.menu-button:hover {
+  background-color: #335cad;
+  border: 0px;
+  color:white;
+  transition: 0.4s;
+}
+
+.dropdown-menu-bars .menu-bar:first-child {
+  margin: auto;
+}
+
+.dropdown-menu-bars .menu-bar:last-child {
+  margin: auto;
+}
+
+.show {
+  display: block;
 }

@@ -96,7 +96,9 @@ class LeftPanel extends Component {
 	            selectedDataChange={selectedDataChange}
 	            timePeriodsLabel={this.props.timePeriodsLabel}
 	            selectedOptions={this.props.selectedOptions}
-	            displayTexts={this.props.displayTexts}
+							displayTexts={this.props.displayTexts}
+							region={region}
+							regionalLevel={regionalLevel}
 	            language={language}
 	          />
 	        </div>

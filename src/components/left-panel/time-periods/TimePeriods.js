@@ -1,25 +1,44 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import Checkbox from "../../general/Checkbox";
 import QuickHelp from "../../general/QuickHelp";
 
 class TimePeriods extends Component {
   constructor(props) {
     super(props)
 
-    this.state = { timePeriodValues: [] }
+    this.state = { 
+      timePeriodValues: [],
+      currentRegionId: props.region,
+      currentRegionalLevelId: props.regionalLevel
+    }
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillReceiveProps(nextProp) {
-    let numberOfPeriods = nextProp.selectedOptions.filter( (element) => {
-      return element.dataType === "timePeriod";
-    }).length;
- 
-    if ( (nextProp.timePeriods.length && !this.state.timePeriodValues.length) || numberOfPeriods === 1)
-      this.setState({ timePeriodValues: [{
-        value: nextProp.timePeriods[0].id, 
-        label: nextProp.timePeriods[0].yearStart + " - " + nextProp.timePeriods[0].yearEnd}
-      ]});
+    let newRegion = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "region";
+    });
+
+    let newRegional = nextProp.selectedOptions.filter( (element) => {
+      return element.dataType === "regionalLevel";
+    });
+
+    let newRegionId = newRegion.length ? newRegion[0].id : -1;
+    let newRegionalId = newRegional.length ? newRegional[0].id : -1;
+
+    let regionHasChanged = this.state.currentRegionId !== newRegionId;
+    let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
+
+    if ( (nextProp.timePeriods.length && !this.state.timePeriodValues.length) || 
+      ((regionHasChanged || regionalLevelHasChanged) && nextProp.timePeriods.length))
+      this.setState({ 
+        timePeriodValues: [{
+          value: nextProp.timePeriods[0].id, 
+          label: nextProp.timePeriods[0].yearStart + " - " + nextProp.timePeriods[0].yearEnd
+        }],
+        currentRegionId: newRegionId,
+        currentRegionalLevelId: newRegionalId
+      });
   }
 
   defaultValue(timeperiods) {
@@ -76,15 +95,7 @@ class TimePeriods extends Component {
 
   render() {
     let timePeriods = this.props.timePeriods;
-
-    // if ( !this.state.timePeriodValues.length && timePeriods.length )
-    //   this.defaultValue(timePeriods);
-
-    // let values = this.props.selectedOptions.map( (element) => {
-    //   if (element.dataType === "timePeriod")
-    //     return {value: Number(element.id), label: element.name};
-    // });
-
+    
     const listItems = [
       <Select
         name = "timeperiods"
@@ -95,18 +106,7 @@ class TimePeriods extends Component {
         dataType = "timePeriod"
         closeOnSelect = {false}
       />];
-    //   timePeriods.map((item, index) => (
-    //   <Checkbox
-    //     key={item.id}
-    //     id={item.id}
-    //     description={item.description}
-    //     name={item.yearStart + " - " + item.yearEnd}
-    //     selectedDataChange={this.props.selectedDataChange}
-    //     dataType="timePeriod"
-    //     checked={index === 0 ? true : false}
-    //     selectedOptions={this.props.selectedOptions}
-    //   />
-    // ));
+
     return (
       <div className="time-periods">
         <h4>{this.props.timePeriodsLabel}

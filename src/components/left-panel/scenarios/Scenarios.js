@@ -24,8 +24,8 @@ class Scenarios extends Component {
       return element.dataType === "regionalLevel";
     });
 
-    let newRegionId = newRegion.length ? newRegion[0].id : 0;
-    let newRegionalId = newRegional.length ? newRegional[0].id : 0;
+    let newRegionId = newRegion.length ? newRegion[0].id : -1;
+    let newRegionalId = newRegional.length ? newRegional[0].id : -1;
 
     let regionHasChanged = this.state.currentRegionId !== newRegionId;
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
@@ -49,9 +49,6 @@ class Scenarios extends Component {
           let position = nextProp.scenarios.findIndex( (item) => {
             return element.value === item.id
           });
-          console.log(`position ${position}`);
-          console.log(values);
-          console.log(nextProp.scenarios);
           element.label = nextProp.scenarios[position].name;
         });
         this.setState({

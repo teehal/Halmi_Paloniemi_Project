@@ -407,7 +407,9 @@ class App extends Component {
         groupByScenariosLabel: "Group by scenarios",
         groupByIndicatorsLabel: "Group by indicators",
         columnTypeLabel: "Vertical",
-        barTypeLabel: "Horizontal"
+        barTypeLabel: "Horizontal",
+        saveAsPNG: "Save as PNG",
+        saveAsCSV: "Save as CSV"
       });
     } else {
       this.setState({
@@ -427,7 +429,9 @@ class App extends Component {
         groupByScenariosLabel: "Ryhmittele skenaarioittain",
         groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
         columnTypeLabel: "Palkit pystysuoraan",
-        barTypeLabel: "Palkit vaakasuoraan"
+        barTypeLabel: "Palkit vaakasuoraan",
+        saveAsPNG: "Tallenna PNG",
+        saveAsCSV: "Tallenna CSV"
       });
     }
   }
@@ -510,6 +514,8 @@ class App extends Component {
         groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
         columnTypeLabel = {this.state.columnTypeLabel}
         barTypeLabel = {this.state.barTypeLabel}
+        saveAsPNG = {this.state.saveAsPNG}
+        saveAsCSV = {this.state.saveAsCSV}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a

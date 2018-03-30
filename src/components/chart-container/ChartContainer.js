@@ -55,6 +55,8 @@ class ChartContainer extends Component {
             scenarios={this.props.scenarios}
             regionalLevel={this.props.regionalLevel}
             region={this.props.region}
+            saveAsPNG = {this.props.saveAsPNG}
+            saveAsCSV = {this.props.saveAsCSV}
           />
         );
       case "polar":

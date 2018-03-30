@@ -71,21 +71,31 @@ class TableChart extends Component {
   return {xAxis: xCategories, yAxis: ySeries};
   }
 
+  hideMenu = (index) => {
+    document.getElementById("dropdownMenu" + index).classList.remove("show");
+  }
+
+  mouseLeave = (index) => {
+    setTimeout(() => {this.hideMenu(index);}, 250);
+  }
 
   renderImage = (index) => {
     html2canvas(document.querySelector("#highcharts-" + index)).then( canvas => {
       var base64image = canvas.toDataURL("image/png");
-      window.open(base64image , "_blank");
+    //  window.open(base64image , "_blank");
       canvas.toBlob( function(blob) {
         saveAs(blob, "table.png");
       });
     });
   }
 
+  showMenu = (index) => {
+    document.getElementById("dropdownMenu" + index).classList.toggle("show");
+  }
+
   tableToCSV = (xcat, yser) => {
     let tempArr = [];
     let CSVtext = '';
-    console.log(yser);
     yser.forEach( (item) => {
       tempArr.push(item.name);
     });
@@ -101,10 +111,8 @@ class TableChart extends Component {
 
     let blob = new Blob([CSVtext], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "table.csv");
-
-    console.log(CSVtext);
   }
-
+  
   render() {
 
     const values = this.props.values;
@@ -142,9 +150,6 @@ class TableChart extends Component {
 
     const tableChart = [];
     if ( tableData ) {
-      console.log(`yAxis len ${tableData.yAxis.length}`);
-      console.log(tableData.xAxis);
-
       tableData.yAxis.sort( (left, right) => {
         if ( left.name < right.name )
           return -1;
@@ -165,18 +170,26 @@ class TableChart extends Component {
           {element.series.map( (ser_item) => (<td className="number">{ser_item.data[index]}</td>))}</tr>
         ));
 
-        let convertToPNG = <button className="btn" onClick={this.renderImage.bind(this, element_index)}>Save as PNG</button>
-        console.log(element.series[element_index]);
-        let convertToCSV = <button className="btn" 
-          onClick={this.tableToCSV.bind(this, tableData.xAxis, element.series)}>
-          ToCSV</button> 
+        let conversionMenu = 
+          <div className="dropdown" data-html2canvas-ignore onMouseLeave={this.mouseLeave.bind(this, element_index)}>
+            <div className="dropdown-bars" onClick={this.showMenu.bind(this, element_index)}>
+              <div className="dropdown-menu-bars">
+                <div className="menu-bar"></div>
+                <div className="menu-bar"></div>
+                <div className="menu-bar"></div>
+              </div>
+            </div>          
+            <div id={"dropdownMenu" + element_index} className="dropdown-content">
+              <button className="menu-button" onClick={this.renderImage.bind(this, element_index)}>{this.props.saveAsPNG}</button>
+              <button className="menu-button" onClick={this.tableToCSV.bind(this, tableData.xAxis, element.series)}>{this.props.saveAsCSV}</button>
+            </div>
+          </div>
 
-        let dataTable = <div id={"highcharts-" + element_index} className="highcharts-data-table"><table>
+        let dataTable = <div id={"highcharts-" + element_index} className="highcharts-data-table">{conversionMenu}
+          <table>
           <caption className="highcharts-caption">{element.name}</caption>
           <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
           <tbody>{dataTableRow}</tbody></table>
-          {convertToPNG}
-          {convertToCSV}
           </div> 
         
         tableChart.push(dataTable);
@@ -187,9 +200,6 @@ class TableChart extends Component {
     return (
       <div>
         {tableChart}
-        {/* <ReactHighcharts config={config} /> */}
-        {/* <button className="btn" onClick={this.renderImage}>Save as PNG</button>
-        <button className="btn" onClick={this.tableToCSV.bind(this, xCategories, ySeries)}>ToCSV</button> */}
       </div>
     );
   }
