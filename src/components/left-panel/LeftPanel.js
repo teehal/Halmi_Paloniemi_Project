@@ -35,7 +35,6 @@ class LeftPanel extends Component {
     //  const timePeriods = this.props.timePeriods;
 
     const selectedDataChange = this.props.handleSelectedDataChange;
-	console.log("LeftPanel, render, this.PROPS: ", this.props);
     return (
 	<div>
       	<div className="leftpanel-container content-panel shadow-1">

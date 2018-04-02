@@ -107,7 +107,6 @@ class App extends Component {
   }
   
   onToggleAccordionModalClick(event) {
-	  console.log("App, onToggleAccordionModalClick");
     let accordionModal  = this.state.accordionModal;
     switch (event.target.name) {
       case (FormControlNames.REGION_LEVEL):
