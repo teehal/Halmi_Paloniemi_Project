@@ -46,7 +46,7 @@ class QuickHelp extends Component {
                         </div>
 
                         <div className="col-md-6">
-                          <img src={constr} width="100%" />
+                          <img src={constr} width="100%" alt=""/>
                         </div>
                       </div>
                     </div>

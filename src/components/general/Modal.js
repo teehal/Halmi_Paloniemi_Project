@@ -43,7 +43,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpRegionLevelText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpRegionLevelImage} width="100%" />
+                          <img src={this.props.displayTexts.helpRegionLevelImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
@@ -53,7 +53,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpRegionText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpRegionImage} width="100%" />
+                          <img src={this.props.displayTexts.helpRegionImage} width="100%" alt=""/>
                         </div>
                       </div>                      
                       <br />
@@ -63,7 +63,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpScenarioText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpScenarioImage} width="100%" />
+                          <img src={this.props.displayTexts.helpScenarioImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
@@ -73,7 +73,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpTimePeriodText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpTimePeriodImage} width="100%" />
+                          <img src={this.props.displayTexts.helpTimePeriodImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
@@ -83,7 +83,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpIndicatorsText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpIndicatorsImage} width="100%" />
+                          <img src={this.props.displayTexts.helpIndicatorsImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
@@ -93,7 +93,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpTablesText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpTablesImage} width="100%" />
+                          <img src={this.props.displayTexts.helpTablesImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
@@ -103,7 +103,7 @@ class Help extends Component {
                           <p>{this.props.displayTexts.helpSaveText}</p>
                         </div>
                         <div className="col-md-6">
-                          <img src={this.props.displayTexts.helpSaveImage} width="100%" />
+                          <img src={this.props.displayTexts.helpSaveImage} width="100%" alt=""/>
                         </div>
                       </div>
                       <br />
