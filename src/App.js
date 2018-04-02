@@ -92,10 +92,11 @@ class App extends Component {
 
 // Load help texts 
   loadDisplayTexts(displayLanguage) {
+	  
 	if (displayLanguage === 1 || displayLanguage === "1") { //English
-	    this.setState({ displayTexts: new language("English") });
+	    this.state.displayTexts = new language("English");
 	} else {//Finnish		
-		this.setState({ displayTexts: new language("Finnish") });
+		this.state.displayTexts = new language("Finnish");
 	}
   }
   
@@ -106,6 +107,7 @@ class App extends Component {
   }
   
   onToggleAccordionModalClick(event) {
+	  console.log("App, onToggleAccordionModalClick");
     let accordionModal  = this.state.accordionModal;
     switch (event.target.name) {
       case (FormControlNames.REGION_LEVEL):
@@ -135,7 +137,7 @@ class App extends Component {
         break
       case (FormControlNames.INDICATORS):
         accordionModal.data = this.state.indicatorCategories;
-        accordionModal.title = this.state.indicatorSelectionLabel;//????
+        accordionModal.title = this.state.indicatorSelectionLabel;
         accordionModal.hasGroups = true
         break
        default:
@@ -163,7 +165,7 @@ class App extends Component {
     });
     this.getAllTheLabel();
     this.languageData();
-this.getAllTheData(false);
+	this.getAllTheData(false);
     this.loadDisplayTexts(language.value);
   }
   
@@ -543,7 +545,7 @@ this.getAllTheData(false);
             handleLanguageChange={this.handleLanguageChange}
         	displayTexts={this.state.displayTexts} />
 
-        <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+        <div className="col-lg-2 col-md-4 col-sm-4 col-xs-6">
           <LeftPanel
             language={this.state.language}
             languageList={this.state.languageList}
@@ -573,28 +575,28 @@ this.getAllTheData(false);
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             displayTexts={this.state.displayTexts}
             onToggleAccordionModalClick={this.onToggleAccordionModalClick}
-onCloseAccordionModalClick={this.onCloseAccordionModalClick
+			onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
           />
 
         </div>
 
-        <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
+        <div className="col-lg-10 col-md-8 col-sm-8 col-xs-6">
 			<ChartContainer
 				valueData={this.state.values}
 				options={this.state.selectedOptions}
 				scenarios={this.state.scenarios}
 				regionalLevel={this.state.regionalLevel}
 				region={this.state.region}
-        barChartLabel = {this.state.barChartLabel}
-        tableChartLabel = {this.state.tableChartLabel}
-        polarChartLabel = {this.state.polarChartLabel}
-        groupByScenariosLabel = {this.state.groupByScenariosLabel}
-        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
-        columnTypeLabel = {this.state.columnTypeLabel}
-        barTypeLabel = {this.state.barTypeLabel}
-        saveAsPNG = {this.state.saveAsPNG}
-        saveAsCSV = {this.state.saveAsCSV}
+		        barChartLabel = {this.state.barChartLabel}
+		        tableChartLabel = {this.state.tableChartLabel}
+		        polarChartLabel = {this.state.polarChartLabel}
+		        groupByScenariosLabel = {this.state.groupByScenariosLabel}
+		        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+		        columnTypeLabel = {this.state.columnTypeLabel}
+		        barTypeLabel = {this.state.barTypeLabel}
+		        saveAsPNG = {this.state.saveAsPNG}
+		        saveAsCSV = {this.state.saveAsCSV}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a

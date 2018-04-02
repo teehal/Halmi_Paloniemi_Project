@@ -35,7 +35,7 @@ class LeftPanel extends Component {
     //  const timePeriods = this.props.timePeriods;
 
     const selectedDataChange = this.props.handleSelectedDataChange;
-
+	console.log("LeftPanel, render, this.PROPS: ", this.props);
     return (
 	<div>
       	<div className="leftpanel-container content-panel shadow-1">
@@ -51,7 +51,8 @@ class LeftPanel extends Component {
 	            regionalLevel={regionalLevel}
 	            regionalLevelData={regionalLevelData}
 	            regionalLevelLabel={this.props.regionalLevelLabel}
-	            displayTexts={this.props.displayTexts}            
+	            displayTexts={this.props.displayTexts}  
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}          
 	          />
 	        </div>
 	
@@ -63,6 +64,7 @@ class LeftPanel extends Component {
 	            regionLabel={this.props.regionLabel}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
 	          />
 	        </div>
 	
@@ -74,6 +76,7 @@ class LeftPanel extends Component {
 	            scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
 	          />
 	        </div>
 	
@@ -84,37 +87,40 @@ class LeftPanel extends Component {
 	            scenariosLabel={this.props.scenariosLabel}
 	            selectedOptions={this.props.selectedOptions}
 	            displayTexts={this.props.displayTexts}
-							language={language}
-							region={region}
-							regionalLevel={regionalLevel}
-							updateSelectedOptions = {updateSelectedOptions}
+				language={language}
+				region={region}
+				regionalLevel={regionalLevel}
+				updateSelectedOptions = {updateSelectedOptions}
+				onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
 	          />
 	        </div>
 	        <div className="timeline">
-	          <TimePeriods
-	            timePeriods={timePeriods}
-	            selectedDataChange={selectedDataChange}
-	            timePeriodsLabel={this.props.timePeriodsLabel}
-	            selectedOptions={this.props.selectedOptions}
-							displayTexts={this.props.displayTexts}
-							region={region}
-							regionalLevel={regionalLevel}
-	            language={language}
-	          />
+				<TimePeriods
+					timePeriods={timePeriods}
+					selectedDataChange={selectedDataChange}
+					timePeriodsLabel={this.props.timePeriodsLabel}
+					selectedOptions={this.props.selectedOptions}
+					displayTexts={this.props.displayTexts}
+					region={region}
+					regionalLevel={regionalLevel}
+					language={language}
+					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+				/>
 	        </div>
 	    </div>
 			<div>
-					<Indicators
-							indicatorCategories={this.props.indicatorCategories}
-							selectedDataChange={selectedDataChange}
-							selectedOptions={this.props.selectedOptions}
-							indicatorSelectionLabel={this.props.indicatorSelectionLabel}
-							displayTexts={this.props.displayTexts}
-							language={language}
-							region={region}
-							regionalLevel={regionalLevel}
-							updateSelectedOptions = {updateSelectedOptions}
-					/>
+				<Indicators
+					indicatorCategories={this.props.indicatorCategories}
+					selectedDataChange={selectedDataChange}
+					selectedOptions={this.props.selectedOptions}
+					indicatorSelectionLabel={this.props.indicatorSelectionLabel}
+					displayTexts={this.props.displayTexts}
+					language={language}
+					region={region}
+					regionalLevel={regionalLevel}
+					updateSelectedOptions = {updateSelectedOptions}
+					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+				/>
 			</div>
 	</div>
     );

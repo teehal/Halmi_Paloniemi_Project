@@ -18,6 +18,7 @@
 		  window.onpopstate = function(event){
 		  	if (confirm("Haluatko poistua sivustolta?")) {
 			  	window.history.back();
+			  	return;
 			} else {
 				history.pushState( "noback", null, "" );
 			}

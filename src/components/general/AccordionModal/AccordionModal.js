@@ -13,7 +13,7 @@ const AccordionModal = ({
   let actualModal
   // If there's more nested array's, expand this to a switch.
   const subArrayName = FormControlNames.INDICATORS
-  
+  console.log("AccordionModal, 'render'");
   if (accordionModal.hasGroups) {
     actualModal =
       <Modal show={accordionModal.showModal} onHide={onCloseAccordionModalClick}>
