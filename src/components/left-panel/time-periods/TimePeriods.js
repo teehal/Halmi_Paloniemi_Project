@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import Checkbox from "../../general/Checkbox";
-import QuickHelp from "../../general/QuickHelp";
+import {Button} from 'react-bootstrap'
 import * as FormControlNames from "../../general/FormControls";
 
 class TimePeriods extends Component {
@@ -72,6 +71,7 @@ class TimePeriods extends Component {
     let values = this.props.selectedOptions.map( (element) => {
       if (element.dataType === "timePeriod")
         return {value: Number(element.id), label: element.name};
+      return true;	
     });
 
     const listItems = [
@@ -99,17 +99,15 @@ class TimePeriods extends Component {
     return (
       <div className="time-periods">
         <h4>{this.props.timePeriodsLabel}
-        	<QuickHelp 
-	        	helpTitle={this.props.displayTexts.helpTimePeriodTitle} 
-	        	helpText={this.props.displayTexts.helpTimePeriodText}
-	        	helpImage={this.props.displayTexts.helpTimePeriodImage}
-	        	helpID="helpTimePeriods"
-	        	helpLink="#helpTimePeriods"
-	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-	        	name={FormControlNames.TIME_PERIOD}
-			/>    
-        </h4>
+			<div className="help">
+				<Button
+					bsStyle='link'
+					name={FormControlNames.TIME_PERIOD}
+					onClick={this.props.onToggleAccordionModalClick}>
+					[?]
+		         </Button>
+         	</div>
+		</h4>
         <div className="item_list">
           {listItems}
         </div>

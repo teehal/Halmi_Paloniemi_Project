@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 
 import Select from "react-select";
+import {Button} from 'react-bootstrap'
 
 import "react-select/dist/react-select.css";
-
-import secondImage from '../../../images/second.png';
-import QuickHelp from "../../general/QuickHelp";
 import * as FormControlNames from "../../general/FormControls";
 
 class ScenarioCollection extends Component {
@@ -37,15 +35,14 @@ class ScenarioCollection extends Component {
       <div>
         <h4>
 	        {this.props.scenarioCollectionListLabel} 
-	        <QuickHelp 
-	        	helpTitle={this.props.displayTexts.helpScenarioCollectionTitle} 
-	        	helpText={this.props.displayTexts.helpScenarioCollectionText}
-	        	helpImage={this.props.displayTexts.helpScenarioCollectionImage}
-	        	helpID="helpScenarioCollections"
-	        	helpLink="#helpScenarioCollections"
-	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-			/>    
+			<div className="help">
+				<Button
+					bsStyle='link'
+					name={FormControlNames.SCENARIO_COLLECTION}
+					onClick={this.props.onToggleAccordionModalClick}>
+					[?]
+		        </Button>
+         	</div>
 		</h4>
         <Select
           name={FormControlNames.SCENARIO_COLLECTION}

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import {Button} from 'react-bootstrap'
 import "./indicators.scss";
-
-import QuickHelp from "../../general/QuickHelp";
 import * as FormControlNames from "../../general/FormControls";
 
 class Indicators extends Component {
@@ -23,6 +22,7 @@ class Indicators extends Component {
         label: indicator.name,
         isMandatory: isMandatory
       });
+      return true;
     });
     return options;
   };
@@ -147,16 +147,14 @@ class Indicators extends Component {
       <div className="panel-container content-panel shadow-1">
         <h3 className="header-spacing-panels">
           	{this.props.indicatorSelectionLabel}
-          	<QuickHelp 
-	        	helpTitle={this.props.displayTexts.helpIndicatorsTitle} 
-	        	helpText={this.props.displayTexts.helpIndicatorsText}
-	        	helpImage={this.props.displayTexts.helpIndicatorsImage}
-	        	helpID="helpIndicators"
-	        	helpLink="#helpIndicators"
-	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-			/>    
-
+			<div className="help">
+				<Button
+					bsStyle='link'
+					name={FormControlNames.INDICATORS}
+					onClick={this.props.onToggleAccordionModalClick}>
+					[?]
+		        </Button>
+         	</div>
         </h3>
         {listItems}
       </div>

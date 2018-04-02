@@ -27,9 +27,55 @@ label {
   margin-top: 2rem;
 }
 
+//Detail panel
+.panel-default {
+	background: rgb(210, 247, 199);
+	//color: white;
+}
+
+.panel-heading {
+	background-color: rgb(92,184,92) !important;
+	color: white !important;
+	cursor: pointer;
+}
+
+.modal-content {
+	background: linear-gradient(rgba(210, 247, 199, .95), rgba(108, 155, 87, .95)) !important;
+	//rgb(137, 158, 124)
+
+}
+
+.modal-dialog {
+	//position: absolute;
+	top: 200px;
+	left: -100px;
+
+}
+
+//Detail panel upper close button
+button.close {
+	//display: inline-block;
+	//border: solid red 1px !important;
+	float: right !important;
+}
+
+.modal-header {
+	//border: solid cyan 1px;
+	//text-align: left;
+	display: block;
+	cursor: pointer;
+}
+
+.modal-header>h4 {
+	float: left;
+	//display: inline-block;
+	//border: solid blue 1px;
+}
 .help {
 	float: right;
-	margin-right: .5rem;
+	//margin-right: .5rem;
+	//padding-bottom: 5rem;
+	color: rgba(18, 97, 35, 1);
 	font-size: small;
 	font-weight: normal;
 }

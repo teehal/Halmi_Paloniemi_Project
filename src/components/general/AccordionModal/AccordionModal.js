@@ -13,8 +13,6 @@ const AccordionModal = ({
   let actualModal
   // If there's more nested array's, expand this to a switch.
   const subArrayName = FormControlNames.INDICATORS
-  console.log("AccordionModal accordionModal: ", accordionModal);
-  console.log("AccordionModal data before: ", accordionModal.data);
   
   if (accordionModal.hasGroups) {
     actualModal =
@@ -39,7 +37,7 @@ const AccordionModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onCloseAccordionModalClick}>
-            Close
+            {accordionModal.close}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -62,14 +60,11 @@ const AccordionModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onCloseAccordionModalClick}>
-            Close
+            {accordionModal.close}
           </Button>
         </Modal.Footer>
       </Modal>
-  }
-  console.log("AccordionModal data: ", accordionModal.data);
- // console.log("AccordionModal actualModal: ", actualModal);
-  
+  }  
   return (actualModal)
 }
 

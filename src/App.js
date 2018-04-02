@@ -18,7 +18,8 @@ import { getCookie, getCookieName } from "./services/cookie.js";
 import { getMelaTupaService } from "./services/utils.js";
 
 class App extends Component {
-  constructor(props) {
+	
+  constructor(props) {	  
     super(props);
 
     this.state = {
@@ -51,6 +52,7 @@ class App extends Component {
 
       scenariosLabel: "",
       scenarios: [],
+      
       timePeriods: [],
       timePeriodsLabel: "",
 
@@ -69,6 +71,7 @@ class App extends Component {
 	    showModal: false,
 	    hasGroups: false,
 	    title: '',
+	    close: '',
 	    data: {}
 	  },       
 	  onCloseAccordionModalClick: {},
@@ -83,83 +86,65 @@ class App extends Component {
     this.handleSelectedDataChange = this.handleSelectedDataChange.bind(this);
     this.onCloseAccordionModalClick = this.onCloseAccordionModalClick.bind(this);
     this.onToggleAccordionModalClick = this.onToggleAccordionModalClick.bind(this);
-    console.log("App constructor language: ", this.state.language);
 	this.loadDisplayTexts(this.state.language);
   }
 
 // Load help texts 
   loadDisplayTexts(displayLanguage) {
-	  console.log("App loadDisplayTexts language: ", displayLanguage);
-	if (displayLanguage === 1) { //English
-	    this.displayTexts = new language("English");
+	if (displayLanguage === 1 || displayLanguage === "1") { //English
+	    this.setState({ displayTexts: new language("English") });
 	} else {//Finnish		
-		this.displayTexts = new language("Finnish");
+		this.setState({ displayTexts: new language("Finnish") });
 	}
   }
   
   onCloseAccordionModalClick() {
-    let { accordionModal } = this.state.accordionModal;
+    let accordionModal = this.state.accordionModal;
     accordionModal.showModal = false
     this.setState({ accordionModal })
   }
   
   onToggleAccordionModalClick(event) {
-	console.log("Home: onToggleAccordionModalClick, props: ", this.props);
-    //const { regionLevels, scenarios, indicatorCategories, translate } = this.props
-    let { accordionModal } = this.state.accordionModal
-	console.log("Home onToggleAccordionModalClick state: ", this.state);
-	console.log("Home onToggleAccordionModalClick accordionModal: ", {accordionModal});
+    let accordionModal  = this.state.accordionModal;
     switch (event.target.name) {
       case (FormControlNames.REGION_LEVEL):
-        this.state.accordionModal.data = this.state.regionalLevelList;
-        this.state.accordionModal.title = this.state.regionalLevelLabel;
-        this.state.accordionModal.hasGroups = false
-        console.log("Home accordion region_level, regionLevels: ", this.state.regionalLevelList);
+        accordionModal.data = this.state.regionalLevelList;
+        accordionModal.title = this.state.regionalLevelLabel;
+        accordionModal.hasGroups = false
+        break
+		case (FormControlNames.REGION):
+        accordionModal.data = this.state.regionList;
+        accordionModal.title = this.state.regionLabel;
+        accordionModal.hasGroups = false
         break
       case (FormControlNames.SCENARIO_COLLECTION):
-        this.state.accordionModal.data = this.state.scenarioCollectionList;
-        this.state.accordionModal.title = this.state.scenarioCollectionLabel;
-        this.state.accordionModal.hasGroups = false
-        console.log("Home accordion scenario_collection, scenarioCollections: ", this.state.scenarioCollectionList);
+        accordionModal.data = this.state.scenarioCollectionList;
+        accordionModal.title = this.state.scenarioCollectionLabel;
+        accordionModal.hasGroups = false
         break
       case (FormControlNames.SCENARIOS):
-        this.state.accordionModal.data = this.state.scenarios;
-        this.state.accordionModal.title = this.state.scenariosLabel;
-        this.state.accordionModal.hasGroups = false
-        console.log("Home accordion scenarios, scenarios: ", this.state.scenarios);
+        accordionModal.data = this.state.scenarios;
+        accordionModal.title = this.state.scenariosLabel;
+        accordionModal.hasGroups = false
+        break
+       case (FormControlNames.TIME_PERIOD):
+        accordionModal.data = this.state.timePeriods;
+        accordionModal.title = this.state.timePeriodsLabel;
+        accordionModal.hasGroups = false
         break
       case (FormControlNames.INDICATORS):
-        this.state.accordionModal.data = this.state.indicatorCategories;
-        this.state.accordionModal.title = this.state.indicatorSelectionLabel;//????
-        this.state.accordionModal.hasGroups = true
-        console.log("Home accordion indicators, indicatorCategories: ", this.state.indicatorCategories);
+        accordionModal.data = this.state.indicatorCategories;
+        accordionModal.title = this.state.indicatorSelectionLabel;//????
+        accordionModal.hasGroups = true
         break
+       default:
     }
-    this.state.accordionModal.showModal = !this.state.accordionModal.showModal
-	console.log("Home onToggleAccordionModalClick, accordionModal: ", this.state.accordionModal);
+    accordionModal.close = this.state.displayTexts.close;
+    accordionModal.showModal = !this.state.accordionModal.showModal
     this.setState({ accordionModal })
-    console.log("Home onToggleAccordionModalClick, state after: ", this.state);
   }
-
-  /*	
-  // Get scenario collections from chosen region
-  get scenarioCollections () {
-    if (
-      !this.props.regions ||
-      !this.props.selectedValues[FormControlNames.REGION]) {
-      return null
-    }
-
-    let chosenRegion = _.find(
-      this.props.regions,
-      r => (r.id) === this.props.selectedValues[FormControlNames.REGION]
-    )
-    return chosenRegion ? chosenRegion.scenarioCollections : null
-  }
-*/
   
   get accordionModal () {
-	  console.log("Home accordionModal() accordionModal: ", this.state.accordionModal);
     return (
       	<AccordionModal
 	        accordionModal={this.state.accordionModal}
@@ -171,14 +156,12 @@ class App extends Component {
 
     
   handleLanguageChange(language) {
-    // console.log("language change");
     this.setState({
       language: language.value
     });
     this.getAllTheLabel();
     this.getAllTheData(false);
     this.loadDisplayTexts(language.value);
-    // console.log("after", this.state.selectedOptions);
   }
 
   handleRegionalLevelChange(regionalLevel) {
@@ -190,13 +173,14 @@ class App extends Component {
           label: region.name,
           ...region
         });
+      return true;
       });
 
       let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
         regionList[0]
       );
-      console.log(`regionList ${Object.entries(regionList[0])}`);
-      console.log(`scenarioCollection ${Object.entries(scenarioCollectionList[0])}`);
+      //console.log(`regionList ${Object.entries(regionList[0])}`);
+      //console.log(`scenarioCollection ${Object.entries(scenarioCollectionList[0])}`);
       DataBinding.bindChartData(scenarioCollectionList[0], regionList[0]).then(
         result => {
           this.setState({
@@ -213,6 +197,7 @@ class App extends Component {
           this.setState({ selectedOptions: this.getDefaultSelectedOptions() });
         }
       );
+    return true;
     });
   }
 
@@ -283,8 +268,10 @@ class App extends Component {
               id: indicator.id.toString()
             });
           }
+        return true;
         });
       }
+    return true;
     });
     // console.log("the list", list);
     return list;
@@ -328,6 +315,7 @@ class App extends Component {
           label: element.name,
           ...element
         });
+      return true;
       });
 
       let regionList = [];
@@ -338,6 +326,7 @@ class App extends Component {
             label: region.name,
             ...region
           });
+        return true;
         });
 
         let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
@@ -370,7 +359,6 @@ class App extends Component {
               selectedOptions: this.getDefaultSelectedOptions()
             });
 
-            //console.log("after", this.state.selectedOptions);
             this.setState({
               regionalLevelList: regionalLevelList,
               regionalLevel: regionalLevelList[0],
@@ -385,7 +373,9 @@ class App extends Component {
             });
           }
         });
+      return true;
       });
+    return true;
     });
     this.setState({
 	    onToggleAccordionModalClick: this.onToggleAccordionModalClick,
@@ -431,15 +421,13 @@ class App extends Component {
   }
 
   render() {
-    console.log("Home render state: ", this.state);
-    console.log("Home render, onToggleAccordionModalClick: ", this.state.onToggleAccordionModalClick);
     return (
       <div className="container-fluid App">
         <Header 
         	language={this.state.language}
             languageList={this.state.languageList}
             handleLanguageChange={this.handleLanguageChange}
-        	displayTexts={this.displayTexts} />
+        	displayTexts={this.state.displayTexts} />
 
         <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6">
           <LeftPanel
@@ -469,7 +457,7 @@ class App extends Component {
             indicatorCategories={this.state.indicatorCategories}
             selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            displayTexts={this.displayTexts}
+            displayTexts={this.state.displayTexts}
             onToggleAccordionModalClick={this.onToggleAccordionModalClick}
             onCloseAccordionModalClick={this.onCloseAccordionModalClick}           
           />
@@ -478,11 +466,11 @@ class App extends Component {
 
         <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
 			<ChartContainer
-			valueData={this.state.values}
-			options={this.state.selectedOptions}
-			scenarios={this.state.scenarios}
-			regionalLevel={this.state.regionalLevel}
-			region={this.state.region}
+				valueData={this.state.values}
+				options={this.state.selectedOptions}
+				scenarios={this.state.scenarios}
+				regionalLevel={this.state.regionalLevel}
+				region={this.state.region}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a
@@ -493,7 +481,7 @@ class App extends Component {
 	                this.state.language
 	              )}
 	            >
-	              <h4>{this.displayTexts.MelaTUPAService}</h4>
+	              <h4>{this.state.displayTexts.MelaTUPAService}</h4>
 	            </a>
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
@@ -501,7 +489,9 @@ class App extends Component {
 
           </div>
         </div>
-		{this.accordionModal}
+        <div className="accordionModal">
+			{this.accordionModal}
+		</div>
       </div>
     );
   }

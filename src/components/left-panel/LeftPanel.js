@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import Language from "./language/Language";
 import RegionLevel from "./region-level/RegionLevel";
 import Region from "./region/Region";
 import ScenarioCollection from "./scenario-collection/ScenarioCollection";
@@ -13,8 +12,6 @@ import "./leftpanel.scss";
 class LeftPanel extends Component {
   render() {
     const language = this.props.language;
-    const languageList = this.props.languageList;
-    const languageData = this.props.handleLanguageChange;
 
     const regionalLevel = this.props.regionalLevel;
     const regionalLevelList = this.props.regionalLevelList;
@@ -32,9 +29,6 @@ class LeftPanel extends Component {
     const timePeriods = this.props.timePeriods;
 
     const selectedDataChange = this.props.handleSelectedDataChange;
-    
-    console.log("LeftPanel render, state: ", this.state);
-    console.log("LeftPanel render, props: ", this.props);
 
     return (
 	<div>
@@ -65,6 +59,8 @@ class LeftPanel extends Component {
 	            regionLabel={this.props.regionLabel}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}
 	          />
 	        </div>
 	
@@ -76,6 +72,8 @@ class LeftPanel extends Component {
 	            scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}
 	          />
 	        </div>
 	
@@ -87,6 +85,8 @@ class LeftPanel extends Component {
 	            selectedOptions={this.props.selectedOptions}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}
 	          />
 	        </div>
 	        <div className="timeline">
@@ -97,6 +97,8 @@ class LeftPanel extends Component {
 	            selectedOptions={this.props.selectedOptions}
 	            displayTexts={this.props.displayTexts}
 	            language={language}
+	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}
 	          />
 	        </div>
 	    </div>
@@ -108,6 +110,8 @@ class LeftPanel extends Component {
 			    indicatorSelectionLabel={this.props.indicatorSelectionLabel}
 				displayTexts={this.props.displayTexts}
 				language={language}
+				onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+				onCloseAccordionModalClick={this.props.onCloseAccordionModalClick}
 			/>
 		</div>
 	</div>
