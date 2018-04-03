@@ -72,8 +72,26 @@ class Charts extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    this.toggleChartType();
-    this.toggleGroupBy();
+
+    if (this.state.chartType === "column") {
+      this.setState({
+        chartTypeLabel: this.props.barTypeLabel
+      });
+    } else {
+      this.setState({
+         chartTypeLabel: this.props.columnTypeLabel
+      });
+    }
+
+    if (this.state.groupBy === "indicator") {
+      this.setState({
+        groupByLabel: this.props.groupByScenariosLabel
+      });
+    } else {
+      this.setState({
+        groupByLabel: this.props.groupByIndicatorsLabel
+      });
+    }
   }
 
   toggleChartType() {
