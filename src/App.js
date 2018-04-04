@@ -93,10 +93,16 @@ class App extends Component {
 // Load help texts 
   loadDisplayTexts(displayLanguage) {
 	  
-	if (displayLanguage === 1 || displayLanguage === "1") { //English
-	    this.state.displayTexts = new language("English");
-	} else {//Finnish		
-		this.state.displayTexts = new language("Finnish");
+  if (displayLanguage === 1 || displayLanguage === "1") { //English
+      this.setState({
+        displayTexts: new language("English")
+      });
+	   // this.state.displayTexts = new language("English");
+  } else {//Finnish
+      this.setState({
+        displayTexts: new language("Finnish")
+      });
+		 // this.state.displayTexts = new language("Finnish");
 	}
   }
   
@@ -164,7 +170,7 @@ class App extends Component {
     });
     this.getAllTheLabel();
     this.languageData();
-	this.getAllTheData(false);
+	  //this.getAllTheData(false);
     this.loadDisplayTexts(language.value);
   }
   
@@ -523,11 +529,12 @@ class App extends Component {
 
   updateSelectedOptions(valueArray, datatype) {
     let tempSelected = this.state.selectedOptions.slice();
-
+    console.log("sel ops ", this.state.selectedOptions);
     valueArray.forEach( (item) => {
       let position = tempSelected.findIndex( (element) => {
         return item.value.toString() === element.id.toString() && datatype === element.dataType
       });
+      console.log(`item ${item} positon ${position}`);
       tempSelected[position].name = item.label;
     });
     this.setState({
