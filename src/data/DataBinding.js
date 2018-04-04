@@ -33,12 +33,10 @@ function bindScenarioCollectionsData(region) {
 }
 
 function bindChartData(scenarioCollection, region) {
-  //console.log("bindChartdata scenCollect : " + scenarioCollection.id + " region " + region.id);
   return new Promise((resolve, reject) => {
     if (region !== null && scenarioCollection !== null) {
       ForestData.getScenarionCollection(scenarioCollection.id, region.id).then(
         function(result) {
-          console.log(result);
           resolve(result[0]);
         }
       );

@@ -16,8 +16,6 @@ class Scenarios extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    console.log("this scenariocollection", this.props.scenarioCollection);
-    console.log("next scen", nextProp.scenarioCollection);
 
     let scenarioCollectionChanged = this.props.scenarioCollection.id !== nextProp.scenarioCollection.id;
  

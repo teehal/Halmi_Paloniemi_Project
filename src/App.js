@@ -361,7 +361,7 @@ class App extends Component {
       name: this.state.region.name,
       id: this.state.region.id
     });
-     console.log("the list", list);
+
     return list;
   }
 
@@ -389,7 +389,6 @@ class App extends Component {
       });
     }
 
-    console.log("Success.");
     return;
 
   }
@@ -529,12 +528,12 @@ class App extends Component {
 
   updateSelectedOptions(valueArray, datatype) {
     let tempSelected = this.state.selectedOptions.slice();
-    console.log("sel ops ", this.state.selectedOptions);
+
     valueArray.forEach( (item) => {
       let position = tempSelected.findIndex( (element) => {
         return item.value.toString() === element.id.toString() && datatype === element.dataType
       });
-      console.log(`item ${item} positon ${position}`);
+
       tempSelected[position].name = item.label;
     });
     this.setState({
