@@ -16,6 +16,10 @@ class Scenarios extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
+    console.log("this scenariocollection", this.props.scenarioCollection);
+    console.log("next scen", nextProp.scenarioCollection);
+
+    let scenarioCollectionChanged = this.props.scenarioCollection.id !== nextProp.scenarioCollection.id;
  
     let newRegion = nextProp.selectedOptions.filter( (element) => {
       return element.dataType === "region";
@@ -32,7 +36,7 @@ class Scenarios extends Component {
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
 
     if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || 
-      ((regionHasChanged || regionalLevelHasChanged) && nextProp.scenarios.length))
+      ((regionHasChanged || regionalLevelHasChanged  || scenarioCollectionChanged) && nextProp.scenarios.length))
       this.setState({ 
         scenarioValues: [{
           value: nextProp.scenarios[0].id, 

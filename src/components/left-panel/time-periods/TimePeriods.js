@@ -23,6 +23,7 @@ class TimePeriods extends Component {
       return element.dataType === "regionalLevel";
     });
 
+    let scenarioCollectionChanged = this.props.scenarioCollection.id !== nextProp.scenarioCollection.id;
     let newRegionId = newRegion.length ? newRegion[0].id : -1;
     let newRegionalId = newRegional.length ? newRegional[0].id : -1;
 
@@ -30,7 +31,7 @@ class TimePeriods extends Component {
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
 
     if ( (nextProp.timePeriods.length && !this.state.timePeriodValues.length) || 
-      ((regionHasChanged || regionalLevelHasChanged) && nextProp.timePeriods.length))
+      ((regionHasChanged || regionalLevelHasChanged || scenarioCollectionChanged) && nextProp.timePeriods.length))
       this.setState({ 
         timePeriodValues: [{
           value: nextProp.timePeriods[0].id, 

@@ -21,8 +21,8 @@ export function getMelaTupaService(
   let timePeriods = selectedOptions.filter(function(e) {
     return e.dataType === "timePeriod";
   });
-  // test URL http://mela2.metla.fi/mela/_tupatest15/tupa/index.php
-  let url = "http://mela2.metla.fi/mela/tupa/index.php?lk=";
+  let url =  "http://mela2.metla.fi/mela/_tupatest15/tupa/index.php?lk=";
+  //let url = "http://mela2.metla.fi/mela/tupa/index.php?lk=";
   url += scenarioCollection !== "" ? scenarioCollection.id.toString() : "";
   url += "&ko=";
   url += region !== "" ? region.id.toString() : "";

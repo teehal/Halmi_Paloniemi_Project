@@ -86,11 +86,12 @@ class LeftPanel extends Component {
 	            scenariosLabel={this.props.scenariosLabel}
 	            selectedOptions={this.props.selectedOptions}
 	            displayTexts={this.props.displayTexts}
-				language={language}
-				region={region}
-				regionalLevel={regionalLevel}
-				updateSelectedOptions = {updateSelectedOptions}
-				onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							language={language}
+							region={region}
+							regionalLevel={regionalLevel}
+							updateSelectedOptions = {updateSelectedOptions}
+							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+							scenarioCollection = {scenarioCollection} 
 	          />
 	        </div>
 	        <div className="timeline">
@@ -103,6 +104,7 @@ class LeftPanel extends Component {
 					region={region}
 					regionalLevel={regionalLevel}
 					language={language}
+					scenarioCollection = {scenarioCollection}
 					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
 				/>
 	        </div>
@@ -118,6 +120,7 @@ class LeftPanel extends Component {
 					region={region}
 					regionalLevel={regionalLevel}
 					updateSelectedOptions = {updateSelectedOptions}
+					scenarioCollection = {scenarioCollection}
 					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
 				/>
 			</div>
