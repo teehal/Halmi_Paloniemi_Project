@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import {Button} from 'react-bootstrap'
 import "react-select/dist/react-select.css";
 
-import QuickHelp from "../../general/QuickHelp";
+import * as FormControlNames from "../../general/FormControls";
 
 class Region extends Component {
 
@@ -28,28 +29,24 @@ class Region extends Component {
   
 
   render() {
-	    //console.log("Region texts: ", this.props.displayTexts);
-//   console.log("Region props: ", this.props);
-//   console.log("Region state: ", this.state);
     const regionList = this.props.regionList;
     const region = this.props.region;
-
+	//console.log("Region, regionList: ", this.props.regionList);
     return (
       <div>
         <h4>
 	        {this.props.regionLabel} 
-	        <QuickHelp 
-	        	helpTitle={this.props.displayTexts.helpRegionTitle} 
-	        	helpText={this.props.displayTexts.helpRegionText}
-	        	helpImage={this.props.displayTexts.helpRegionImage}
-	        	helpID="helpRegion"
-	        	helpLink="#helpRegion"
-	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-			/>    
-		</h4>        
+			<div className="help">
+				<Button
+					bsStyle='link'
+					name={FormControlNames.REGION}
+					onClick={this.props.onToggleAccordionModalClick}>
+					[?]
+		        </Button>
+	        </div>
+		</h4>     
         <Select
-          name=""
+          name={FormControlNames.REGION}
           className=""
           value={region}
           onChange={this.handleChange}

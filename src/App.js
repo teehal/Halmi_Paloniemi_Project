@@ -6,9 +6,11 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/header/header";
 import LeftPanel from "./components/left-panel/LeftPanel";
 import ChartContainer from "./components/chart-container/ChartContainer";
-//import Modal from "./components/general/Modal.js";
+
 
 import language from './Language';
+import AccordionModal from './components/general/AccordionModal/AccordionModal';
+import * as FormControlNames from "./components/general/FormControls";
 
 import DataBinding from "./data/DataBinding";
 
@@ -16,7 +18,8 @@ import { getCookie, getCookieName } from "./services/cookie.js";
 import { getMelaTupaService } from "./services/utils.js";
 
 class App extends Component {
-  constructor(props) {
+	
+  constructor(props) {	  
     super(props);
 
     this.state = {
@@ -49,6 +52,7 @@ class App extends Component {
 
       scenariosLabel: "",
       scenarios: [],
+      
       timePeriods: [],
       timePeriodsLabel: "",
 
@@ -63,8 +67,15 @@ class App extends Component {
       
       //select help text language
       displayTexts: [],
-      viewHistory:[]
-      
+      accordionModal: {
+	    showModal: false,
+	    hasGroups: false,
+	    title: '',
+	    close: '',
+	    data: {}
+	  },       
+	  onCloseAccordionModalClick: {},
+	  onToggleAccordionModalClick: {}
     };
 
     this.handleLanguageChange = this.handleLanguageChange.bind(this);
@@ -74,30 +85,87 @@ class App extends Component {
 
     this.handleSelectedDataChange = this.handleSelectedDataChange.bind(this);
     this.updateSelectedOptions = this.updateSelectedOptions.bind(this);
-    //let cookie = getCookie(getCookieName());
-// 	console.log("construtctor state: ", this.state);
+        this.onCloseAccordionModalClick = this.onCloseAccordionModalClick.bind(this);
+    this.onToggleAccordionModalClick = this.onToggleAccordionModalClick.bind(this);
 	this.loadDisplayTexts(this.state.language);
   }
 
 // Load help texts 
   loadDisplayTexts(displayLanguage) {
-	if (displayLanguage === 1) { //English
-	    this.displayTexts = new language("English");
+	  
+	if (displayLanguage === 1 || displayLanguage === "1") { //English
+	    this.state.displayTexts = new language("English");
 	} else {//Finnish		
-		this.displayTexts = new language("Finnish");
+		this.state.displayTexts = new language("Finnish");
 	}
   }
   
+  onCloseAccordionModalClick() {
+    let accordionModal = this.state.accordionModal;
+    accordionModal.showModal = false
+    this.setState({ accordionModal })
+  }
+  
+  onToggleAccordionModalClick(event) {
+    let accordionModal  = this.state.accordionModal;
+    switch (event.target.name) {
+      case (FormControlNames.REGION_LEVEL):
+        accordionModal.data = this.state.regionalLevelList;
+        accordionModal.title = this.state.regionalLevelLabel;
+        accordionModal.hasGroups = false
+        break
+		case (FormControlNames.REGION):
+        accordionModal.data = this.state.regionList;
+        accordionModal.title = this.state.regionLabel;
+        accordionModal.hasGroups = false
+        break
+      case (FormControlNames.SCENARIO_COLLECTION):
+        accordionModal.data = this.state.scenarioCollectionList;
+        accordionModal.title = this.state.scenarioCollectionLabel;
+        accordionModal.hasGroups = false
+        break
+      case (FormControlNames.SCENARIOS):
+        accordionModal.data = this.state.scenarios;
+        accordionModal.title = this.state.scenariosLabel;
+        accordionModal.hasGroups = false
+        break
+       case (FormControlNames.TIME_PERIOD):
+        accordionModal.data = this.state.timePeriods;
+        accordionModal.title = this.state.timePeriodsLabel;
+        accordionModal.hasGroups = false
+        break
+      case (FormControlNames.INDICATORS):
+        accordionModal.data = this.state.indicatorCategories;
+        accordionModal.title = this.state.indicatorSelectionLabel;
+        accordionModal.hasGroups = true
+        break
+       default:
+    }
+    accordionModal.close = this.state.displayTexts.close;
+    accordionModal.showModal = !this.state.accordionModal.showModal
+    this.setState({ accordionModal })
+  }
+  
+  get accordionModal () {
+    return (
+      	<AccordionModal
+	        accordionModal={this.state.accordionModal}
+	        onToggleAccordionModalClick={this.onToggleAccordionModalClick}
+	        onCloseAccordionModalClick={this.onCloseAccordionModalClick} 
+		/>
+    )
+  }
+
+    
   handleLanguageChange(language) {
-    // console.log("language change");
     this.setState({
       language: language.value,
       languageHasChanged: true
     });
     this.getAllTheLabel();
     this.languageData();
+	this.getAllTheData(false);
     this.loadDisplayTexts(language.value);
-    // console.log("after", this.state.selectedOptions);
   }
   
   languageData() {
@@ -176,6 +244,7 @@ class App extends Component {
           label: region.name,
           ...region
         });
+      return true;
       });
 
       let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
@@ -198,6 +267,7 @@ class App extends Component {
           this.setState({ selectedOptions: this.getDefaultSelectedOptions() });
         }
       );
+    return true;
     });
   }
 
@@ -268,8 +338,10 @@ class App extends Component {
               id: indicator.id.toString()
             });
           }
+        return true;
         });
       }
+    return true;
     });
 
     list.push({
@@ -326,6 +398,7 @@ class App extends Component {
           label: element.name,
           ...element
         });
+      return true;
       });
 
       let regionList = [];
@@ -336,6 +409,7 @@ class App extends Component {
             label: region.name,
             ...region
           });
+        return true;
         });
 
         let scenarioCollectionList = DataBinding.bindScenarioCollectionsData(
@@ -346,7 +420,7 @@ class App extends Component {
           scenarioCollectionList[0],
           regionList[0]
         ).then(result => {
-	        console.log("bindChartData result: ", result);
+	        //console.log("bindChartData result: ", result);
           if (isFirst === true) {
             this.setState({
               regionalLevelList: regionalLevelList,
@@ -368,7 +442,6 @@ class App extends Component {
               selectedOptions: this.getDefaultSelectedOptions()
             });
 
-            console.log("after", this.state.selectedOptions);
             this.setState({
               regionalLevelList: regionalLevelList,
               regionalLevel: regionalLevelList[0],
@@ -383,7 +456,13 @@ class App extends Component {
             });
         }
         });
+      return true;
       });
+    return true;
+    });
+    this.setState({
+	    onToggleAccordionModalClick: this.onToggleAccordionModalClick,
+	    onCloseAccordionModalClick: this.onCloseAccordionModalClick
     });
   }
 
@@ -457,16 +536,15 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.state);
     return (
       <div className="container-fluid App">
         <Header 
         	language={this.state.language}
             languageList={this.state.languageList}
             handleLanguageChange={this.handleLanguageChange}
-        	displayTexts={this.displayTexts} />
+        	displayTexts={this.state.displayTexts} />
 
-        <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+        <div className="col-lg-2 col-md-4 col-sm-4 col-xs-6">
           <LeftPanel
             language={this.state.language}
             languageList={this.state.languageList}
@@ -494,28 +572,30 @@ class App extends Component {
             indicatorCategories={this.state.indicatorCategories}
             selectedDataChange={this.handleSelectedDataChange}
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            displayTexts={this.displayTexts}
+            displayTexts={this.state.displayTexts}
+            onToggleAccordionModalClick={this.onToggleAccordionModalClick}
+			onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
           />
 
         </div>
 
-        <div className="col-lg-10 col-md-9 col-sm-8 col-xs-6">
+        <div className="col-lg-10 col-md-8 col-sm-8 col-xs-6">
 			<ChartContainer
-        valueData={this.state.values}
-        options={this.state.selectedOptions}
-        scenarios={this.state.scenarios}
-        regionalLevel={this.state.regionalLevel}
-        region={this.state.region}
-        barChartLabel = {this.state.barChartLabel}
-        tableChartLabel = {this.state.tableChartLabel}
-        polarChartLabel = {this.state.polarChartLabel}
-        groupByScenariosLabel = {this.state.groupByScenariosLabel}
-        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
-        columnTypeLabel = {this.state.columnTypeLabel}
-        barTypeLabel = {this.state.barTypeLabel}
-        saveAsPNG = {this.state.saveAsPNG}
-        saveAsCSV = {this.state.saveAsCSV}
+				valueData={this.state.values}
+				options={this.state.selectedOptions}
+				scenarios={this.state.scenarios}
+				regionalLevel={this.state.regionalLevel}
+				region={this.state.region}
+		        barChartLabel = {this.state.barChartLabel}
+		        tableChartLabel = {this.state.tableChartLabel}
+		        polarChartLabel = {this.state.polarChartLabel}
+		        groupByScenariosLabel = {this.state.groupByScenariosLabel}
+		        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+		        columnTypeLabel = {this.state.columnTypeLabel}
+		        barTypeLabel = {this.state.barTypeLabel}
+		        saveAsPNG = {this.state.saveAsPNG}
+		        saveAsCSV = {this.state.saveAsCSV}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a
@@ -526,7 +606,7 @@ class App extends Component {
 	                this.state.language
 	              )}
 	            >
-	              <h4>{this.displayTexts.MelaTUPAService}</h4>
+	              <h4>{this.state.displayTexts.MelaTUPAService}</h4>
 	            </a>
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
@@ -534,7 +614,9 @@ class App extends Component {
 
           </div>
         </div>
-
+        <div className="accordionModal">
+			{this.accordionModal}
+		</div>
       </div>
     );
   }

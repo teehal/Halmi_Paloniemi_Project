@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import { Button } from 'react-bootstrap'
 import "react-select/dist/react-select.css";
-import QuickHelp from "../../general/QuickHelp";
-import firstImage from '../../../images/first.png';
+import * as FormControlNames from "../../general/FormControls";
 
 class RegionLevels extends Component {
 
@@ -35,21 +35,21 @@ class RegionLevels extends Component {
   render() {
     const regionalLevel = this.props.regionalLevel;
     const regionalLevelList = this.props.regionalLevelList;
-    
     return (
       <div>
         <h4>{this.props.regionalLevelLabel}
-        	<QuickHelp 
-	        	helpTitle={this.props.displayTexts.helpRegionLevelTitle} 
-	        	helpText={this.props.displayTexts.helpRegionLevelText}
-	        	helpImage={this.props.displayTexts.helpRegionLevelImage}
-	        	helpID="helpRegionLevel"
-	        	helpLink="#helpRegionLevel"
-	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-			/>    
+ 		<div className="help">
+			<Button
+				bsStyle='link'
+				name={FormControlNames.REGION_LEVEL}
+				onClick={this.props.onToggleAccordionModalClick}>
+				[?]
+	         </Button>
+         </div>
 		</h4>
-	        <Select
+		
+        <Select
+        	name={FormControlNames.REGION_LEVEL}
 	          placeholder="Select region level"
 	          value={regionalLevel}
 	          onChange={this.handleChange}
@@ -57,7 +57,7 @@ class RegionLevels extends Component {
 	          disabled={this.state.dropdownDisabledBool}
 	          clearableValue = {false}
 	          clearable = {false}
-	        />
+        />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Select from "react-select";
-import QuickHelp from "../../general/QuickHelp";
+import {Button} from 'react-bootstrap'
+import * as FormControlNames from "../../general/FormControls";
 
 class Scenarios extends Component {
   constructor(props) {
@@ -115,6 +116,11 @@ class Scenarios extends Component {
 
     // if ( !this.state.scenarioValues.length && scenarios.length )
     //   this.defaultValue(scenarios);
+    let values = this.props.selectedOptions.map( (element) => {
+      if (element.dataType === "scenario")
+        return {value: Number(element.id), label: element.name};
+      return true;
+      });
 
     // let values = this.props.selectedOptions.map( (element) => {
     //   if (element.dataType === "scenario")
@@ -135,16 +141,15 @@ class Scenarios extends Component {
     return (
       	<div className="scenarios">
 	        <h4>{this.props.scenariosLabel}
-	        	<QuickHelp 
-		        	helpTitle={this.props.displayTexts.helpScenariosTitle} 
-		        	helpText={this.props.displayTexts.helpScenariosText}
-		        	helpImage={this.props.displayTexts.helpScenariosImage}
-		        	helpID="helpRegion"
-		        	helpLink="#helpRegion"
-		        	language={this.props.language}
-		        	displayTexts={this.props.displayTexts}
-				/>    
-	        </h4>
+				<div className="help">
+					<Button
+						bsStyle='link'
+						name={FormControlNames.SCENARIOS}
+						onClick={this.props.onToggleAccordionModalClick}>
+						[?]
+			         </Button>
+	         	</div>
+			</h4>
 	        <div className="item_list">
 	          {listItems}
 	        </div> 
