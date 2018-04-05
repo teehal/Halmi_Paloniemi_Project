@@ -118,11 +118,11 @@ class Scenarios extends Component {
 
     // if ( !this.state.scenarioValues.length && scenarios.length )
     //   this.defaultValue(scenarios);
-    let values = this.props.selectedOptions.map( (element) => {
-      if (element.dataType === "scenario")
-        return {value: Number(element.id), label: element.name};
-      return true;
-      });
+    // let values = this.props.selectedOptions.map( (element) => {
+    //   if (element.dataType === "scenario")
+    //     return {value: Number(element.id), label: element.name};
+    //   return true;
+    //   });
 
     // let values = this.props.selectedOptions.map( (element) => {
     //   if (element.dataType === "scenario")

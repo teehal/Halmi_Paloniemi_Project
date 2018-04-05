@@ -605,6 +605,7 @@ class App extends Component {
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a
+                target="_blank"
 	              href={getMelaTupaService(
 	                this.state.selectedOptions,
 	                this.state.region,
