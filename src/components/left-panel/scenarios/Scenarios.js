@@ -16,6 +16,8 @@ class Scenarios extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
+
+    let scenarioCollectionChanged = this.props.scenarioCollection.id !== nextProp.scenarioCollection.id;
  
     let newRegion = nextProp.selectedOptions.filter( (element) => {
       return element.dataType === "region";
@@ -32,7 +34,7 @@ class Scenarios extends Component {
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
 
     if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || 
-      ((regionHasChanged || regionalLevelHasChanged) && nextProp.scenarios.length))
+      ((regionHasChanged || regionalLevelHasChanged  || scenarioCollectionChanged) && nextProp.scenarios.length))
       this.setState({ 
         scenarioValues: [{
           value: nextProp.scenarios[0].id, 
@@ -116,11 +118,11 @@ class Scenarios extends Component {
 
     // if ( !this.state.scenarioValues.length && scenarios.length )
     //   this.defaultValue(scenarios);
-    let values = this.props.selectedOptions.map( (element) => {
-      if (element.dataType === "scenario")
-        return {value: Number(element.id), label: element.name};
-      return true;
-      });
+    // let values = this.props.selectedOptions.map( (element) => {
+    //   if (element.dataType === "scenario")
+    //     return {value: Number(element.id), label: element.name};
+    //   return true;
+    //   });
 
     // let values = this.props.selectedOptions.map( (element) => {
     //   if (element.dataType === "scenario")

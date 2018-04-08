@@ -81,7 +81,7 @@ class TableChart extends Component {
 
   renderImage = (index) => {
     html2canvas(document.querySelector("#highcharts-" + index)).then( canvas => {
-      var base64image = canvas.toDataURL("image/png");
+      // var base64image = canvas.toDataURL("image/png");
     //  window.open(base64image , "_blank");
       canvas.toBlob( function(blob) {
         saveAs(blob, "table.png");

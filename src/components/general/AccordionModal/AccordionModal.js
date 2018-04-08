@@ -11,11 +11,12 @@ const AccordionModal = ({
 }) => {
 	//console.log("AccordionModal, accordionModal: ", accordionModal);
   let actualModal
+
   // If there's more nested array's, expand this to a switch.
   const subArrayName = FormControlNames.INDICATORS
   if (accordionModal.hasGroups) {
     actualModal =
-      <Modal show={accordionModal.showModal} onHide={onCloseAccordionModalClick}>
+      <Modal show={accordionModal.showModal} onHide={onCloseAccordionModalClick} >
         <Modal.Header closeButton>
           <Modal.Title> {accordionModal.title} </Modal.Title>
         </Modal.Header>
@@ -50,9 +51,9 @@ const AccordionModal = ({
           <Accordion>
             {_.map(accordionModal.data, (array) => {
               return (
-                <Panel key={array.id} header={array.name} eventKey={array.id}>
-                  {array.description}
-                </Panel>
+                <Panel key={array.id} header={array.name} eventKey={array.id}> 
+                   {array.description}
+                   </Panel>
               )
             })}
           </Accordion>

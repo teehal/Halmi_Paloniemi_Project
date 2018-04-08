@@ -10,7 +10,7 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 class ChartContainer extends Component {
   constructor(props) {
     super(props);
-    this.setScenarioId = this.setScenarioId.bind(this);
+  //  this.setScenarioId = this.setScenarioId.bind(this);
 
     this.state = {
       chartType: "bar"
@@ -20,9 +20,9 @@ class ChartContainer extends Component {
     this.RenderChart = this.RenderChart.bind(this);
   }
 
-  setScenarioId() {
-    console.log(this.props.options);
-  }
+  // setScenarioId() {
+  //   console.log(this.props.options);
+  // }
 
   changeChartType(type) {
     this.setState({

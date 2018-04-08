@@ -28,6 +28,7 @@ class Indicators extends Component {
       return element.dataType === "regionalLevel";
     });
 
+    let scenarioCollectionChanged = this.props.scenarioCollection.id !== nextProp.scenarioCollection.id;
     let newRegionId = newRegion.length ? newRegion[0].id : 0;
     let newRegionalId = newRegional.length ? newRegional[0].id : 0;
 
@@ -35,7 +36,7 @@ class Indicators extends Component {
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
 
     if ( (nextProp.indicatorCategories.length && !this.state.indValues.length) || 
-      ((regionHasChanged || regionalLevelHasChanged) && nextProp.indicatorCategories.length)) {
+      ((regionHasChanged || regionalLevelHasChanged || scenarioCollectionChanged) && nextProp.indicatorCategories.length)) {
         this.updateIndValues(nextProp.indicatorCategories);
         this.setState({ 
           currentRegionId: newRegionId,
