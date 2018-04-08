@@ -18,14 +18,14 @@ class TableChart extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    
-    if (this.state.groupBy === "indicator") {
+
+    if (this.state.groupBy === "scenario") {
       this.setState({
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: nextProp.groupByIndicatorsLabel
       });
     } else {
       this.setState({
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: nextProp.groupByScenariosLabel
       });
     }
   }
@@ -109,12 +109,12 @@ class TableChart extends Component {
     if (this.state.groupBy === "indicator") {
       this.setState({
         groupBy: "scenario",
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: this.props.groupByIndicatorsLabel
       });
     } else {
       this.setState({
         groupBy: "indicator",
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: this.props.groupByScenariosLabel
       });
     }
   }

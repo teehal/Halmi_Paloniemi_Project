@@ -75,21 +75,21 @@ class Charts extends Component {
 
     if (this.state.chartType === "column") {
       this.setState({
-        chartTypeLabel: this.props.barTypeLabel
+        chartTypeLabel: nextProp.barTypeLabel
       });
     } else {
       this.setState({
-         chartTypeLabel: this.props.columnTypeLabel
+         chartTypeLabel: nextProp.columnTypeLabel
       });
     }
 
-    if (this.state.groupBy === "indicator") {
+    if (this.state.groupBy === "scenario") {
       this.setState({
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: nextProp.groupByIndicatorsLabel
       });
     } else {
       this.setState({
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: nextProp.groupByScenariosLabel
       });
     }
   }
@@ -112,12 +112,12 @@ class Charts extends Component {
     if (this.state.groupBy === "indicator") {
       this.setState({
         groupBy: "scenario",
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: this.props.groupByIndicatorsLabel
       });
     } else {
       this.setState({
         groupBy: "indicator",
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: this.props.groupByScenariosLabel
       });
     }
   }
