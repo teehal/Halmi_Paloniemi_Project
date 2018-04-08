@@ -618,8 +618,16 @@ class App extends Component {
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
 	            </a>
-
+				
           </div>
+          <div id="logos">
+					{/*<img src="images/logo_luke.png" alt="" class="logo" />
+					<img src="images/oamk_logo.png" alt="" class="logo" />
+					<img src="images/EU_EAKR_FI.png" alt="" class="logo" />*/}
+					{/*<img src="images/flag_eu.png" alt="" />*/}
+					<img src="images/logot2.png" alt="" class="logo" />
+					
+				</div>
         </div>
         <div className="accordionModal">
 			{this.accordionModal}
