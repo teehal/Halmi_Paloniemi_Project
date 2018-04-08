@@ -11,6 +11,7 @@
   font-size: 10pt;
   border: 1px solid black;
   padding: 0.5em;
+  text-align: center;
 }
 .highcharts-data-table tr:nth-child(even), .highcharts-data-table thead tr {
   background: rgba(255, 255, 255, 0.3);
@@ -29,6 +30,7 @@
   float:right;
   position: relative;
   display: block;
+  margin-bottom: 0.5rem;
 }
 
 .dropdown-bars {
@@ -94,4 +96,8 @@
 
 .show {
   display: block;
+}
+
+.header{
+  text-align: center;
 }

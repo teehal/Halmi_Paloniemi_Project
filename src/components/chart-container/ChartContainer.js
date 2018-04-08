@@ -55,6 +55,8 @@ class ChartContainer extends Component {
             scenarios={this.props.scenarios}
             regionalLevel={this.props.regionalLevel}
             region={this.props.region}
+            groupByScenariosLabel = {this.props.groupByScenariosLabel}
+            groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
             saveAsPNG = {this.props.saveAsPNG}
             saveAsCSV = {this.props.saveAsCSV}
           />

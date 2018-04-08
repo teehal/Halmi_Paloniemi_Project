@@ -4,13 +4,34 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import html2canvas from "html2canvas";
 import {saveAs} from "file-saver";
 import "./table-chart-custom.scss";
-//import { removeTable } from "./utils.js";
-// import ReactHighcharts from "react-highcharts";
-// import Highcharts from "../../../../node_modules/highcharts";
-// require("highcharts-exporting")(ReactHighcharts.Highcharts);
-// require("../../../../node_modules/highcharts/modules/export-data")(Highcharts);
 
 class TableChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      groupBy: "indicator",
+      groupByLabel: props.groupByScenariosLabel
+    }
+    this.toggleGroupBy = this.toggleGroupBy.bind(this);
+    this.renderImage = this.renderImage.bind(this);
+    this.convertDataToTable = this.convertDataToTable.bind(this);
+  }
+
+  convertDataToTable( data, index ) {
+    let returnArray = [];
+    let seriesLenght = data[0].series.length;
+    let dataLength = data.length;
+
+    for ( let i = 0; i < seriesLenght; i++) {
+      for ( let j = 0; j < dataLength; j++) {
+        returnArray.push(
+          <td>{data[j].series[i].data[index]}</td>
+        );
+      }
+    }
+
+    return returnArray;
+  }
 
   dataForGraphs(groupBy, data, scenarios, indicators) {
     let xCategories = [];
@@ -71,16 +92,30 @@ class TableChart extends Component {
   return {xAxis: xCategories, yAxis: ySeries};
   }
 
-  hideMenu = (index) => {
-    document.getElementById("dropdownMenu" + index).classList.remove("show");
+  toggleGroupBy() {
+    if (this.state.groupBy === "indicator") {
+      this.setState({
+        groupBy: "scenario",
+        groupByLabel: this.props.groupByScenariosLabel
+      });
+    } else {
+      this.setState({
+        groupBy: "indicator",
+        groupByLabel: this.props.groupByIndicatorsLabel
+      });
+    }
   }
 
-  mouseLeave = (index) => {
-    setTimeout(() => {this.hideMenu(index);}, 250);
+  hideMenu = () => {
+    document.getElementById("dropdownMenu").classList.remove("show");
+  }
+
+  mouseLeave = () => {
+    setTimeout(() => {this.hideMenu();}, 250);
   }
 
   renderImage = (index) => {
-    html2canvas(document.querySelector("#highcharts-" + index)).then( canvas => {
+    html2canvas(document.querySelector("#highcharts")).then( canvas => {
       // var base64image = canvas.toDataURL("image/png");
     //  window.open(base64image , "_blank");
       canvas.toBlob( function(blob) {
@@ -90,23 +125,28 @@ class TableChart extends Component {
   }
 
   showMenu = (index) => {
-    document.getElementById("dropdownMenu" + index).classList.toggle("show");
+    document.getElementById("dropdownMenu").classList.toggle("show");
   }
 
-  tableToCSV = (xcat, yser) => {
+  tableToCSV = (data) => {
+    let tempNameArr = [];
     let tempArr = [];
     let CSVtext = '';
-    yser.forEach( (item) => {
-      tempArr.push(item.name);
+    let ydata = data.yAxis;
+    let xdata = data.xAxis;
+
+    ydata[0].series.forEach( (item) => {
+      tempNameArr.push(item.name);
     });
 
-    CSVtext += ' ,' + tempArr.join() + '\n';
-
-    xcat.forEach( (element, index) => {
-      tempArr = [];
-      tempArr.push(element);
-      yser.forEach( (item) => { tempArr.push(item.data[index]) });
-      CSVtext += tempArr.join() + '\n';
+     ydata.forEach( (y_item) => {
+      CSVtext += y_item.name + ' ,' + tempNameArr.join() + '\n';
+      xdata.forEach( (element, index) => {
+        tempArr = [];
+        tempArr.push(element);
+        y_item.series.forEach( (item) => { tempArr.push(item.data[index]) });
+        CSVtext += tempArr.join() + '\n';
+      });
     });
 
     let blob = new Blob([CSVtext], {type: "text/plain;charset=utf-8"});
@@ -144,11 +184,12 @@ class TableChart extends Component {
       });
 
       tableData = this.dataForGraphs(
-        "indicator",validData, scenariosSelectedList, indicatorsSelectedList
+        this.state.groupBy, validData, scenariosSelectedList, indicatorsSelectedList
       );
     }
 
     const tableChart = [];
+
     if ( tableData ) {
       tableData.yAxis.sort( (left, right) => {
         if ( left.name < right.name )
@@ -158,48 +199,66 @@ class TableChart extends Component {
         else
           return 0;
       });
+      console.log(tableData.yAxis);
 
+      let headColumnSpan = tableData.yAxis.length;
+      let numberOfScenarios = tableData.yAxis[0].series.length;
+      let dataTableHead, dataTableRow;
+      let dataTableYearHead = [];
+     
       tableData.yAxis.forEach( (element, element_index) => {
+        dataTableHead = element.series.map( item => 
+          <th scope="col" colSpan={headColumnSpan} className="text header">{item.name}</th>
+        );
+      });
 
-        let dataTableHead = element.series.map( (item) => (
-          <th scope="col" className="text">{item.name}</th>
-        ));
+      dataTableYearHead = Array.apply(null, {length: numberOfScenarios}).map( item =>
+        tableData.yAxis.map( element => 
+          <th className="text header">{element.name}</th>
+      ));
 
-        let dataTableRow = tableData.xAxis.map( (item, index) => (
-          <tr><th scope="row" className="text">{item}</th>
-          {element.series.map( (ser_item) => (<td className="number">{ser_item.data[index]}</td>))}</tr>
-        ));
+      dataTableRow = tableData.xAxis.map( (x_item, index) => (
+          <tr>
+            <th scope="row" className="text">{x_item}</th>
+            {this.convertDataToTable(tableData.yAxis, index)}
+          </tr>
+      ));
 
-        let conversionMenu = 
-          <div className="dropdown" data-html2canvas-ignore onMouseLeave={this.mouseLeave.bind(this, element_index)}>
-            <div className="dropdown-bars" onClick={this.showMenu.bind(this, element_index)}>
-              <div className="dropdown-menu-bars">
-                <div className="menu-bar"></div>
-                <div className="menu-bar"></div>
-                <div className="menu-bar"></div>
-              </div>
-            </div>          
-            <div id={"dropdownMenu" + element_index} className="dropdown-content">
-              <button className="menu-button" onClick={this.renderImage.bind(this, element_index)}>{this.props.saveAsPNG}</button>
-              <button className="menu-button" onClick={this.tableToCSV.bind(this, tableData.xAxis, element.series)}>{this.props.saveAsCSV}</button>
+      let conversionMenu = 
+        <div className="dropdown" data-html2canvas-ignore onMouseLeave={this.mouseLeave.bind(this)}>
+          <div className="dropdown-bars" onClick={this.showMenu.bind(this)}>
+            <div className="dropdown-menu-bars">
+              <div className="menu-bar"></div>
+              <div className="menu-bar"></div>
+              <div className="menu-bar"></div>
             </div>
+          </div>          
+          <div id={"dropdownMenu"} className="dropdown-content">
+            <button className="menu-button" onClick={this.renderImage}>{this.props.saveAsPNG}</button>
+            <button className="menu-button" onClick={this.tableToCSV.bind(this, tableData)}>{this.props.saveAsCSV}</button>
           </div>
+        </div>
 
-        let dataTable = <div id={"highcharts-" + element_index} className="highcharts-data-table">{conversionMenu}
-          <table>
-          <caption className="highcharts-caption">{element.name}</caption>
-          <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
-          <tbody>{dataTableRow}</tbody></table>
-          </div> 
-        
-        tableChart.push(dataTable);
-        });
-       
+      let dataTable = <div id={"highcharts"} className="highcharts-data-table">{conversionMenu}
+        <table>
+        {/* <caption className="highcharts-caption">{element.name}</caption> */}
+        <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
+        <tbody>
+        <tr><th scope="col" className="text"></th>{dataTableYearHead}</tr>
+        {dataTableRow}</tbody></table>
+        </div> 
+      
+      tableChart.push(dataTable);
     }
 
     return (
       <div>
         {tableChart}
+        <div className="control-wrapper">
+          <button className="btn btn-info" onClick={this.toggleGroupBy}>
+          {this.state.groupByLabel}
+          </button>
+        </div>
       </div>
     );
   }
