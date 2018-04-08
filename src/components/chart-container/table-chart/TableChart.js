@@ -17,6 +17,19 @@ class TableChart extends Component {
     this.convertDataToTable = this.convertDataToTable.bind(this);
   }
 
+  componentWillReceiveProps(nextProp) {
+    
+    if (this.state.groupBy === "indicator") {
+      this.setState({
+        groupByLabel: this.props.groupByScenariosLabel
+      });
+    } else {
+      this.setState({
+        groupByLabel: this.props.groupByIndicatorsLabel
+      });
+    }
+  }
+
   convertDataToTable( data, index ) {
     let returnArray = [];
     let seriesLenght = data[0].series.length;
@@ -250,14 +263,15 @@ class TableChart extends Component {
       
       tableChart.push(dataTable);
     }
+    const buttonElement = <button className="btn btn-info" onClick={this.toggleGroupBy}>
+                            {this.state.groupByLabel}
+                          </button>
 
     return (
       <div>
         {tableChart}
         <div className="control-wrapper">
-          <button className="btn btn-info" onClick={this.toggleGroupBy}>
-          {this.state.groupByLabel}
-          </button>
+          {buttonElement}
         </div>
       </div>
     );
