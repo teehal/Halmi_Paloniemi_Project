@@ -36,3 +36,22 @@
   padding: 0.5rem 1rem 2rem;
   margin-bottom: 2rem;
 }
+
+div#logos {
+	//float: right;
+	display: inline-block !important;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	text-align: center;
+}
+
+.logo {
+	//margin-left: 2rem;
+	//margin-bottom: 10rem;
+	width: 300px;
+	//float: right;
+	//display: inline-flex;
+	//margin-left: auto;
+	//margin-right: auto;
+}

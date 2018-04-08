@@ -89,6 +89,26 @@ class Help extends Component {
                       <br />
                       <div className="row">
                         <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpBarChartTitle}</h5>
+                          <p>{this.props.displayTexts.helpBarChartText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpBarChartImage} width="100%" alt=""/>
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
+                          <h5>{this.props.displayTexts.helpPolarChartTitle}</h5>
+                          <p>{this.props.displayTexts.helpPolarChartText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpPolarChartImage} width="100%" alt=""/>
+                        </div>
+                      </div>
+                      <br />
+                      <div className="row">
+                        <div className="col-md-5">
                           <h5>{this.props.displayTexts.helpTablesTitle}</h5>
                           <p>{this.props.displayTexts.helpTablesText}</p>
                         </div>
@@ -111,6 +131,9 @@ class Help extends Component {
                         <div className="col-md-5">
                           <h5>{this.props.displayTexts.helpDescriptionsTitle}</h5>
                           <p>{this.props.displayTexts.helpDescriptionsText}</p>
+                        </div>
+                        <div className="col-md-6">
+                          <img src={this.props.displayTexts.helpDescriptionsImage} width="100%" alt=""/>
                         </div>
                       </div>
                       
