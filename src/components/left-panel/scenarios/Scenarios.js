@@ -116,21 +116,9 @@ class Scenarios extends Component {
   render() {
     let scenarios = this.props.scenarios;
 
-    // if ( !this.state.scenarioValues.length && scenarios.length )
-    //   this.defaultValue(scenarios);
-    // let values = this.props.selectedOptions.map( (element) => {
-    //   if (element.dataType === "scenario")
-    //     return {value: Number(element.id), label: element.name};
-    //   return true;
-    //   });
-
-    // let values = this.props.selectedOptions.map( (element) => {
-    //   if (element.dataType === "scenario")
-    //     return {value: Number(element.id), label: element.name};
-    //   });
-
     const listItems = [ 
       <Select
+        key = {scenarios.length}
         name = "scenarios"
         multi = {true}
         options = {this.scenarioOptions(scenarios)}

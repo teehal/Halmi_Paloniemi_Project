@@ -625,7 +625,7 @@ class App extends Component {
 					<img src="images/oamk_logo.png" alt="" class="logo" />
 					<img src="images/EU_EAKR_FI.png" alt="" class="logo" />*/}
 					{/*<img src="images/flag_eu.png" alt="" />*/}
-					<img src="images/logot2.png" alt="" class="logo" />
+					<img src="images/logot2.png" alt="" className="logo" />
 					
 				</div>
         </div>

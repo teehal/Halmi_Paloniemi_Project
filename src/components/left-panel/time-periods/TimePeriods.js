@@ -99,6 +99,7 @@ class TimePeriods extends Component {
     
     const listItems = [
       <Select
+        key = {timePeriods.length}
         name = "timeperiods"
         multi = {true}
         options = {this.timePeriodOptions(timePeriods)}
