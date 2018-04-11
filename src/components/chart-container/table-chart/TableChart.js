@@ -4,6 +4,7 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import html2canvas from "html2canvas";
 import {saveAs} from "file-saver";
 import {dataForGraphs} from '../utils/Utils';
+import printjs from "print-js";
 import "./table-chart-custom.scss";
 
 class TableChart extends Component {
@@ -11,23 +12,24 @@ class TableChart extends Component {
     super(props);
     this.state = {
       groupBy: "indicator",
-      groupByLabel: props.groupByScenariosLabel
+      groupByLabel: props.groupByIndicatorsLabel
     }
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.convertDataToTable = this.convertDataToTable.bind(this);
     this.dataForGraphs = dataForGraphs.bind(this);
+    //this.printjs = printJS.bind(this);
   }
 
   componentWillReceiveProps(nextProp) {
 
     if (this.state.groupBy === "scenario") {
       this.setState({
-        groupByLabel: nextProp.groupByIndicatorsLabel
+        groupByLabel: nextProp.groupByScenariosLabel
       });
     } else {
       this.setState({
-        groupByLabel: nextProp.groupByScenariosLabel
+        groupByLabel: nextProp.groupByIndicatorsLabel
       });
     }
   }
@@ -52,12 +54,12 @@ class TableChart extends Component {
     if (this.state.groupBy === "indicator") {
       this.setState({
         groupBy: "scenario",
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: this.props.groupByScenariosLabel
       });
     } else {
       this.setState({
         groupBy: "indicator",
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: this.props.groupByIndicatorsLabel
       });
     }
   }
@@ -68,6 +70,10 @@ class TableChart extends Component {
 
   mouseLeave = () => {
     setTimeout(() => {this.hideMenu();}, 250);
+  }
+
+  printTable = () => {
+    printjs({printable:'data-table', type: 'html', targetStyles: ['*'], honorMarginPadding:false, documentTitle:'', maxWidth:200});
   }
 
   renderImage = (index) => {
@@ -187,13 +193,16 @@ class TableChart extends Component {
             </div>
           </div>          
           <div id={"dropdownMenu"} className="dropdown-content">
+            <div className="print-button-separator">
+              <button className="menu-button" onClick={this.printTable}>{this.props.print}</button>
+            </div>
             <button className="menu-button" onClick={this.renderImage}>{this.props.saveAsPNG}</button>
             <button className="menu-button" onClick={this.tableToCSV.bind(this, tableData)}>{this.props.saveAsCSV}</button>
           </div>
         </div>
 
       let dataTable = <div key={'hc1'} id={"highcharts"} className="highcharts-data-table">{conversionMenu}
-        <table>
+        <table id="data-table">
         {/* <caption className="highcharts-caption">{element.name}</caption> */}
         <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
         <tbody>
@@ -214,6 +223,7 @@ class TableChart extends Component {
           {buttonElement}
         </div>
       </div>
+     
     );
   }
 }

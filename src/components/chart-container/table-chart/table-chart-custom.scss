@@ -1,3 +1,8 @@
+
+th, td, table {
+  border: 1px solid black;
+}
+
 .highcharts-data-table table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -9,7 +14,7 @@
 .highcharts-data-table td, .highcharts-data-table th {
   font-family: sans-serif;
   font-size: 10pt;
-  border: 1px solid black;
+  // border: 1px solid black;
   padding: 0.5em;
   text-align: center;
 }
@@ -84,6 +89,12 @@
   border: 0px;
   color:white;
   transition: 0.4s;
+}
+
+.print-button-separator {
+  border-bottom: 1px inset rgb(85, 85, 85);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .dropdown-menu-bars .menu-bar:first-child {

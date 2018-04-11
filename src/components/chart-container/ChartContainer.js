@@ -59,6 +59,7 @@ class ChartContainer extends Component {
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
             saveAsPNG = {this.props.saveAsPNG}
             saveAsCSV = {this.props.saveAsCSV}
+            print = {this.props.print}
           />
         );
       case "polar":

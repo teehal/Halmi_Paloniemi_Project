@@ -493,7 +493,8 @@ class App extends Component {
         columnTypeLabel: "Vertical",
         barTypeLabel: "Horizontal",
         saveAsPNG: "Save as PNG",
-        saveAsCSV: "Save as CSV"
+        saveAsCSV: "Save as CSV",
+        print: "Print"
       });
     } else {
       this.setState({
@@ -515,7 +516,8 @@ class App extends Component {
         columnTypeLabel: "Palkit pystysuoraan",
         barTypeLabel: "Palkit vaakasuoraan",
         saveAsPNG: "Tallenna PNG",
-        saveAsCSV: "Tallenna CSV"
+        saveAsCSV: "Tallenna CSV",
+        print: "Tulosta"
       });
     }
   }
@@ -593,15 +595,16 @@ class App extends Component {
 				scenarios={this.state.scenarios}
 				regionalLevel={this.state.regionalLevel}
 				region={this.state.region}
-		        barChartLabel = {this.state.barChartLabel}
-		        tableChartLabel = {this.state.tableChartLabel}
-		        polarChartLabel = {this.state.polarChartLabel}
-		        groupByScenariosLabel = {this.state.groupByScenariosLabel}
-		        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
-		        columnTypeLabel = {this.state.columnTypeLabel}
-		        barTypeLabel = {this.state.barTypeLabel}
-		        saveAsPNG = {this.state.saveAsPNG}
-		        saveAsCSV = {this.state.saveAsCSV}
+        barChartLabel = {this.state.barChartLabel}
+        tableChartLabel = {this.state.tableChartLabel}
+        polarChartLabel = {this.state.polarChartLabel}
+        groupByScenariosLabel = {this.state.groupByScenariosLabel}
+        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+        columnTypeLabel = {this.state.columnTypeLabel}
+        barTypeLabel = {this.state.barTypeLabel}
+        saveAsPNG = {this.state.saveAsPNG}
+        saveAsCSV = {this.state.saveAsCSV}
+        print = {this.state.print}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a
