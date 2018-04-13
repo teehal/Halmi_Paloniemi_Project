@@ -45,6 +45,13 @@ class ChartContainer extends Component {
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
             columnTypeLabel = {this.props.columnTypeLabel}
             barTypeLabel = {this.props.barTypeLabel}
+            valuesLabel = {this.props.valuesLabel}
+            scenariosLabel = {this.props.scenariosLabel}
+            indicatorsLabel = {this.props.indicatorsLabel}
+            saveAsPNG = {this.props.saveAsPNG}
+            saveAsSVG = {this.props.saveAsSVG}
+            saveAsJPEG = {this.props.saveAsJPEG}
+            print = {this.props.print}
           />
         );
       case "table":
@@ -59,7 +66,10 @@ class ChartContainer extends Component {
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
             saveAsPNG = {this.props.saveAsPNG}
             saveAsCSV = {this.props.saveAsCSV}
+            saveAsJPEG = {this.props.saveAsJPEG}
             print = {this.props.print}
+            scenariosLabel = {this.props.scenariosLabel}
+            indicatorsLabel = {this.props.indicatorsLabel}
           />
         );
       case "polar":
@@ -75,6 +85,13 @@ class ChartContainer extends Component {
           groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
           columnTypeLabel = {this.props.columnTypeLabel}
           barTypeLabel = {this.props.barTypeLabel}
+          valuesLabel = {this.props.valuesLabel}
+          scenariosLabel = {this.props.scenariosLabel}
+          indicatorsLabel = {this.props.indicatorsLabel}
+          saveAsPNG = {this.props.saveAsPNG}
+          saveAsSVG = {this.props.saveAsSVG}
+          saveAsJPEG = {this.props.saveAsJPEG}
+          print = {this.props.print}
         />
       );
       default:

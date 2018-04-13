@@ -77,7 +77,8 @@ class Indicators extends Component {
       options.push({
         value: indicator.id,
         label: indicator.name,
-        isMandatory: isMandatory
+        isMandatory: isMandatory,
+        absVar: indicator.absVar
       });
       return true;
     });
@@ -114,7 +115,8 @@ class Indicators extends Component {
       this.props.selectedDataChange({
         dataType: "indicator",
         name: element[0].label,
-        id: element[0].value.toString()
+        id: element[0].value.toString(),
+        absVar: element[0].absVar
       });
       this.setState({ indValues: tempArray });
     } else if (option.length > 0) {
@@ -123,7 +125,8 @@ class Indicators extends Component {
       this.props.selectedDataChange({
         dataType: "indicator",
         name: lastElement[0].label,
-        id: lastElement[0].value.toString()
+        id: lastElement[0].value.toString(),
+        absVar: lastElement[0].absVar
       });
     } else if (this.state.indValues[index][0].isMandatory !== 1) {
       let missingIndex = this.findMissingElementIndex(
@@ -137,7 +140,8 @@ class Indicators extends Component {
       this.props.selectedDataChange({
         dataType: "indicator",
         name: element[0].label,
-        id: element[0].value.toString()
+        id: element[0].value.toString(),
+        absVar: element[0].absVar
       });
       this.setState({ indValues: tempArray });
     } else alert("This item is mandatory!.");

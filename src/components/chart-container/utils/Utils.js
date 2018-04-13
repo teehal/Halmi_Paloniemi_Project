@@ -15,20 +15,38 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
           grouped.forEach(second_item => {
             let data = [];
             // console.log(indicatorName);
-            if (groupBy === "scenario") {
-               data = item.data.filter(function(e) {
-                return (
-                  e.scenarioId.toString() === first_itemId.toString() &&
-                  e.indicatorId.toString() === second_item.id.toString()
-                );
-              });
+            if (item.dataType === "timePeriod") {
+              if (groupBy === "scenario") {
+                data = item.data.filter(function(e) {
+                  return (
+                    e.scenarioId.toString() === first_itemId.toString() &&
+                    e.indicatorId.toString() === second_item.id.toString()
+                  );
+                });
+              } else {
+                data = item.data.filter(function(e) {
+                  return (
+                    e.indicatorId.toString() === first_itemId.toString() &&
+                    e.scenarioId.toString() === second_item.id.toString()
+                  );
+                });
+              }
             } else {
-              data = item.data.filter(function(e) {
-                return (
-                  e.indicatorId.toString() === first_itemId.toString() &&
-                  e.scenarioId.toString() === second_item.id.toString()
-                );
-              });
+              if (groupBy === "indicator") {
+                data = item.data.filter(function(e) {
+                  return (
+                    e.indicatorId.toString() === first_itemId.toString() &&
+                    e.timePeriodId.toString() === second_item.id.toString()
+                  );
+                });
+              } else {
+                data = item.data.filter(function(e) {
+                  return (
+                    e.timePeriodId.toString() === first_itemId.toString() &&
+                    e.indicatorId.toString() === second_item.id.toString()
+                  );
+                });
+              }
             }
             let seriesData = [];
             data.forEach(d => {
@@ -56,12 +74,13 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
   return {xAxis: xCategories, yAxis: ySeries};
   }
 
-  const exporting = {
-    buttons: {
+  function exporting(labels) {
+    let buttons = {
       contextButton: {
         menuItems: [
           {
-            textKey: "printChart",
+            //textKey: "printChart",
+            text: labels.print,
             onclick: function() {
               this.print();
             }
@@ -70,13 +89,15 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
             separator: true
           },
           {
-            textKey: "downloadPNG",
+            // textKey: "downloadPNG",
+            text: labels.saveAsPNG,
             onclick: function() {
               this.exportChart();
             }
           },
           {
-            textKey: "downloadJPEG",
+            // textKey: "downloadJPEG",
+            text: labels.saveAsJPEG,
             onclick: function() {
               this.exportChart({
                 type: "image/jpeg"
@@ -84,15 +105,8 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
             }
           },
           {
-            textKey: "downloadPDF",
-            onclick: function() {
-              this.exportChart({
-                type: "application/pdf"
-              });
-            }
-          },
-          {
-            textKey: "downloadSVG",
+            // textKey: "downloadSVG",
+            text: labels.saveAsSVG,
             onclick: function() {
               this.exportChart({
                 type: "image/svg+xml"
@@ -102,9 +116,10 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
         ]
       }
     }
-  };
+  return buttons;
+  }
 
-  function generateConfiguration(xaxis, yaxis, itIsPolar, exporting) {
+  function generateConfiguration(xaxis, yaxis, itIsPolar, exporting, yLabel, legendLabel) {
     let myConfig = [];
     let height_polar = 600;
     let height = this.state.chartType === "column" ? 400 :
@@ -122,16 +137,31 @@ function dataForGraphs(groupBy, data, scenarios, indicators) {
           backgroundColor: "transparent",
           height: itIsPolar ? height_polar : height
         },
+        legend: {
+          title: {
+            text: legendLabel + ':',
+            style: {
+              textAlign: 'center',
+              fontSize: '10pt',
+              color: '#666873',
+              fontWeight: 'normal',
+              textDecoration: 'underline'
+            }
+          }
+        },
         xAxis: {
           categories: xaxis,
           crosshair: true
         },
         yAxis: {
-          max: itIsPolar ? 1 : undefined,
+          max: itIsPolar ? 1 : 1,
           tickAmount: itIsPolar ? 5 : undefined,
           min: 0,
           labels: {
             overflow: "justify"
+          },
+          title: {
+            text: yLabel
           }
         },
         plotOptions: {

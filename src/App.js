@@ -341,7 +341,8 @@ class App extends Component {
             list.push({
               dataType: "indicator",
               name: indicator.name,
-              id: indicator.id.toString()
+              id: indicator.id.toString(),
+              absVar: indicator.absVar
             });
           }
         return true;
@@ -493,8 +494,12 @@ class App extends Component {
         columnTypeLabel: "Vertical",
         barTypeLabel: "Horizontal",
         saveAsPNG: "Save as PNG",
+        saveAsJPEG: "Save as JPG",
         saveAsCSV: "Save as CSV",
-        print: "Print"
+        saveAsSVG: "Save as SVG",
+        print: "Print",
+        valuesLabel: "Relative value",
+        indicatorsLabel: "Indicators"
       });
     } else {
       this.setState({
@@ -516,8 +521,12 @@ class App extends Component {
         columnTypeLabel: "Palkit pystysuoraan",
         barTypeLabel: "Palkit vaakasuoraan",
         saveAsPNG: "Tallenna PNG",
+        saveAsJPEG: "Tallenna JPG",
         saveAsCSV: "Tallenna CSV",
-        print: "Tulosta"
+        saveAsSVG: "Tallenna SVG",
+        print: "Tulosta",
+        valuesLabel: "Suhteellinen arvo",
+        indicatorsLabel: "Indikaattorit"
       });
     }
   }
@@ -582,7 +591,7 @@ class App extends Component {
             indicatorSelectionLabel={this.state.indicatorSelectionLabel}
             displayTexts={this.state.displayTexts}
             onToggleAccordionModalClick={this.onToggleAccordionModalClick}
-			onCloseAccordionModalClick={this.onCloseAccordionModalClick}
+			      onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
           />
 
@@ -604,7 +613,12 @@ class App extends Component {
         barTypeLabel = {this.state.barTypeLabel}
         saveAsPNG = {this.state.saveAsPNG}
         saveAsCSV = {this.state.saveAsCSV}
+        saveAsJPEG = {this.state.saveAsJPEG}
         print = {this.state.print}
+        valuesLabel = {this.state.valuesLabel}
+        indicatorsLabel = {this.state.indicatorsLabel}
+        scenariosLabel = {this.state.scenariosLabel}
+        saveAsSVG = {this.state.saveAsSVG}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a

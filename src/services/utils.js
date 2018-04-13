@@ -14,7 +14,7 @@ export function getMelaTupaService(
   let chosenIndicatos = [];
   selectedOptions.forEach(element => {
     if (element.dataType === "indicator") {
-      chosenIndicatos.push(element.id);
+      chosenIndicatos.push(element.absVar);
     }
   });
 

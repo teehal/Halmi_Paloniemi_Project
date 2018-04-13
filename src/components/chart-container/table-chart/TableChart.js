@@ -12,12 +12,15 @@ class TableChart extends Component {
     super(props);
     this.state = {
       groupBy: "indicator",
-      groupByLabel: props.groupByIndicatorsLabel
+      groupByLabel: props.groupByIndicatorsLabel,
+      timePeriodsInGraphs: true
     }
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
-    this.renderImage = this.renderImage.bind(this);
+    this.renderPNG = this.renderPNG.bind(this);
+    this.renderJPEG = this.renderJPEG.bind(this);
     this.convertDataToTable = this.convertDataToTable.bind(this);
     this.dataForGraphs = dataForGraphs.bind(this);
+    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
     //this.printjs = printJS.bind(this);
   }
 
@@ -73,18 +76,26 @@ class TableChart extends Component {
   }
 
   printTable = () => {
-    printjs({printable:'data-table', type: 'html', targetStyles: ['*'], honorMarginPadding:false, documentTitle:'', maxWidth:200});
+    printjs({printable:'data-table', type: 'html', targetStyles: ['*'], documentTitle:''});
   }
 
-  renderImage = (index) => {
-    html2canvas(document.querySelector("#highcharts")).then( canvas => {
+  renderPNG = () => {
+    html2canvas(document.querySelector("#highcharts"), {backgroundColor: null}).then( canvas => {
       canvas.toBlob( function(blob) {
         saveAs(blob, "table.png");
       });
     });
   }
 
-  showMenu = (index) => {
+  renderJPEG = () => {
+    html2canvas(document.querySelector("#highcharts"),).then( canvas => {
+      canvas.toBlob( function(blob) {
+        saveAs(blob, "table.jpg");
+      }, "image/jpeg");
+    });
+  }
+
+  showMenu = () => {
     document.getElementById("dropdownMenu").classList.toggle("show");
   }
 
@@ -112,6 +123,13 @@ class TableChart extends Component {
     let blob = new Blob([CSVtext], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "table.csv");
   }
+
+  toggleScenarioGraphs() {
+    let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
+    this.setState({
+      timePeriodsInGraphs: !isItTimePeriodsInGraphs
+    });
+  }
   
   render() {
 
@@ -125,16 +143,6 @@ class TableChart extends Component {
       });
 
       let validData = [];
-      timePeriod.forEach( (item, index) => {
-        validData.push({
-          timePeriodId: item.id,
-          timePeriodName: item.name,
-          data: values.filter(function(e) {
-              return e.timePeriodId.toString() === timePeriod[index].id.toString();
-             })
-        });
-      });
-
       let scenariosSelectedList = options.filter(function(e) {
         return e.dataType === "scenario";
       });
@@ -142,10 +150,40 @@ class TableChart extends Component {
       let indicatorsSelectedList = options.filter(function(e) {
         return e.dataType === "indicator";
       });
+      
+      if (this.state.timePeriodsInGraphs) {
+        timePeriod.forEach( (item, index) => {
+          validData.push({
+            dataType: item.dataType,
+            timePeriodId: item.id,
+            timePeriodName: item.name,
+            data: values.filter(function(e) {
+                return e.timePeriodId.toString() === timePeriod[index].id.toString();
+              })
+          });
+        });
+      }
+      else {
+        scenariosSelectedList.forEach( (item, index) => {
+          validData.push({
+            dataType: "scenario",
+            timePeriodId: item.id,
+            timePeriodName: item.name,
+            data: values.filter(function(e) {
+                return e.scenarioId.toString() === scenariosSelectedList[index].id.toString();
+              })
+          });
+        });
+      }
 
-      tableData = this.dataForGraphs(
-        this.state.groupBy, validData, scenariosSelectedList, indicatorsSelectedList
-      );
+      if (this.state.timePeriodsInGraphs)
+        tableData = this.dataForGraphs(
+          this.state.groupBy,validData, scenariosSelectedList, indicatorsSelectedList
+        );
+      else
+        tableData = this.dataForGraphs(
+          this.state.groupBy,validData, timePeriod, indicatorsSelectedList
+        );
     }
 
     const tableChart = [];
@@ -196,14 +234,17 @@ class TableChart extends Component {
             <div className="print-button-separator">
               <button className="menu-button" onClick={this.printTable}>{this.props.print}</button>
             </div>
-            <button className="menu-button" onClick={this.renderImage}>{this.props.saveAsPNG}</button>
+            <button className="menu-button" onClick={this.renderPNG}>{this.props.saveAsPNG}</button>
+            <button className="menu-button" onClick={this.renderJPEG}>{this.props.saveAsJPEG}</button>
             <button className="menu-button" onClick={this.tableToCSV.bind(this, tableData)}>{this.props.saveAsCSV}</button>
           </div>
         </div>
 
+      let caption = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
+
       let dataTable = <div key={'hc1'} id={"highcharts"} className="highcharts-data-table">{conversionMenu}
         <table id="data-table">
-        {/* <caption className="highcharts-caption">{element.name}</caption> */}
+        <caption className="highcharts-caption">{caption}</caption>
         <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
         <tbody>
         <tr><th scope="col" className="text"></th>{dataTableYearHead}</tr>
@@ -212,16 +253,20 @@ class TableChart extends Component {
       
       tableChart.push(dataTable);
     }
-    const buttonElement = <button className="btn btn-info" onClick={this.toggleGroupBy}>
-                            {this.state.groupByLabel}
-                          </button>
+    const buttonElement = 
+      <div className="control-wrapper">
+      <button className="btn btn-info" onClick={this.toggleGroupBy}>
+        {this.state.groupByLabel}
+      </button>
+      <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+          One scenario in graph
+      </button>
+      </div>  
 
     return (
       <div>
         {tableChart}
-        <div className="control-wrapper">
-          {buttonElement}
-        </div>
+        {buttonElement}
       </div>
      
     );

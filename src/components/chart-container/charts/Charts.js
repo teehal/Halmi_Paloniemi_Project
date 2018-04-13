@@ -17,10 +17,12 @@ class Charts extends Component {
       chartType: "column",
       chartTypeLabel: props.barTypeLabel,
       pointWidth: 15,
+      timePeriodsInGraphs: true
     };
 
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
     this.toggleChartType = this.toggleChartType.bind(this);
+    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
     this.myConfig = [];
     this.exporting = exporting;
     this.dataForGraphs = dataForGraphs;
@@ -78,6 +80,13 @@ class Charts extends Component {
     }
   }
 
+  toggleScenarioGraphs() {
+    let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
+    this.setState({
+      timePeriodsInGraphs: !isItTimePeriodsInGraphs
+    });
+  }
+
   render() {
     const values = this.props.values;
     const options = this.props.options;
@@ -85,17 +94,6 @@ class Charts extends Component {
     if (values.length > 0 && options.length > 0) {
       let timePeriod = options.filter(function(e) {
         return e.dataType === "timePeriod";
-      });
-
-      let validData = [];
-      timePeriod.forEach( (item, index) => {
-        validData.push({
-          timePeriodId: item.id,
-          timePeriodName: item.name,
-          data: values.filter(function(e) {
-              return e.timePeriodId.toString() === timePeriod[index].id.toString();
-             })
-        });
       });
 
       let scenariosSelectedList = options.filter(function(e) {
@@ -106,12 +104,53 @@ class Charts extends Component {
         return e.dataType === "indicator";
       });
 
-      let graphData = this.dataForGraphs(
-        this.state.groupBy,validData, scenariosSelectedList, indicatorsSelectedList
-      );
+      let validData = [];
+
+      if (this.state.timePeriodsInGraphs) {
+        timePeriod.forEach( (item, index) => {
+          validData.push({
+            dataType: item.dataType,
+            timePeriodId: item.id,
+            timePeriodName: item.name,
+            data: values.filter(function(e) {
+                return e.timePeriodId.toString() === timePeriod[index].id.toString();
+              })
+          });
+        });
+      }
+      else {
+        scenariosSelectedList.forEach( (item, index) => {
+          validData.push({
+            dataType: "scenario",
+            timePeriodId: item.id,
+            timePeriodName: item.name,
+            data: values.filter(function(e) {
+                return e.scenarioId.toString() === scenariosSelectedList[index].id.toString();
+              })
+          });
+        });
+      }
+      console.log(validData);
+      console.log(scenariosSelectedList);
+      console.log(values);
+
+      let graphData;
+      
+      if (this.state.timePeriodsInGraphs)
+        graphData = this.dataForGraphs(
+          this.state.groupBy,validData, scenariosSelectedList, indicatorsSelectedList
+        );
+      else
+        graphData = this.dataForGraphs(
+          this.state.groupBy,validData, timePeriod, indicatorsSelectedList
+        );
+
+      let legendLabel = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
+      let export_buttons = this.exporting(this.props);
 
       this.myConfig = this.generateConfiguration(
-        graphData.xAxis, graphData.yAxis, this.props.isPolar, this.exporting
+        graphData.xAxis, graphData.yAxis, this.props.isPolar, {buttons: export_buttons}, 
+        this.props.valuesLabel, legendLabel
       );
     }
  
@@ -140,6 +179,9 @@ class Charts extends Component {
         <button className="btn btn-info charts" onClick={this.toggleGroupBy}>
             {this.state.groupByLabel}
         </button>
+        <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+          One scenario in graph
+        </button>  
       </div>
       );
   }
