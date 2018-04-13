@@ -43,6 +43,7 @@ class ChartContainer extends Component {
             isPolar={false}
             groupByScenariosLabel = {this.props.groupByScenariosLabel}
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+            groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
             columnTypeLabel = {this.props.columnTypeLabel}
             barTypeLabel = {this.props.barTypeLabel}
             valuesLabel = {this.props.valuesLabel}
@@ -52,6 +53,8 @@ class ChartContainer extends Component {
             saveAsSVG = {this.props.saveAsSVG}
             saveAsJPEG = {this.props.saveAsJPEG}
             print = {this.props.print}
+            graphByYearLabel = {this.props.graphByYearLabel}
+            graphByScenariosLabel = {this.props.graphByScenariosLabel}
           />
         );
       case "table":
@@ -64,12 +67,15 @@ class ChartContainer extends Component {
             region={this.props.region}
             groupByScenariosLabel = {this.props.groupByScenariosLabel}
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+            groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
             saveAsPNG = {this.props.saveAsPNG}
             saveAsCSV = {this.props.saveAsCSV}
             saveAsJPEG = {this.props.saveAsJPEG}
             print = {this.props.print}
             scenariosLabel = {this.props.scenariosLabel}
             indicatorsLabel = {this.props.indicatorsLabel}
+            graphByYearLabel = {this.props.graphByYearLabel}
+            graphByScenariosLabel = {this.props.graphByScenariosLabel}
           />
         );
       case "polar":
@@ -83,6 +89,7 @@ class ChartContainer extends Component {
           isPolar={true}
           groupByScenariosLabel = {this.props.groupByScenariosLabel}
           groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+          groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
           columnTypeLabel = {this.props.columnTypeLabel}
           barTypeLabel = {this.props.barTypeLabel}
           valuesLabel = {this.props.valuesLabel}
@@ -92,6 +99,8 @@ class ChartContainer extends Component {
           saveAsSVG = {this.props.saveAsSVG}
           saveAsJPEG = {this.props.saveAsJPEG}
           print = {this.props.print}
+          graphByYearLabel = {this.props.graphByYearLabel}
+          graphByScenariosLabel = {this.props.graphByScenariosLabel}
         />
       );
       default:

@@ -14,13 +14,16 @@ class Charts extends Component {
     this.state = {
       groupBy: "indicator",
       groupByLabel: props.groupByScenariosLabel,
+      groupByYearOrIndicator: props.groupByTimeperiodsLabel,
       chartType: "column",
       chartTypeLabel: props.barTypeLabel,
       pointWidth: 15,
-      timePeriodsInGraphs: true
+      timePeriodsInGraphs: true,
+      graphByYearOrScenarioLabel: props.graphByScenariosLabel
     };
 
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
+    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
     this.toggleChartType = this.toggleChartType.bind(this);
     this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
     this.myConfig = [];
@@ -30,6 +33,16 @@ class Charts extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
+    if (this.state.timePeriodsInGraphs) {
+      this.setState({
+        graphByYearOrScenarioLabel: nextProp.graphByScenariosLabel,
+        groupByYearOrIndicator: nextProp.groupByTimeperiodsLabel
+      });
+    } else {
+      this.setState({
+        graphByYearOrScenarioLabel: nextProp.graphByYearLabel
+      });
+    }
 
     if (this.state.chartType === "column") {
       this.setState({
@@ -80,10 +93,29 @@ class Charts extends Component {
     }
   }
 
+  toggleGroupByYearOrIndicator() {
+    let newGrouping = this.state.groupBy === "indicator" ? 
+      "timePeriod" : "indicator";
+    let newLabel = newGrouping === "indicator" ? this.props.groupByTimeperiodsLabel :
+      this.props.groupByIndicatorsLabel;
+   // console.log(`newgrouping ${newGrouping} newlabel ${newLabel}`);
+    this.setState({
+      groupBy: newGrouping,
+      groupByYearOrIndicator: newLabel
+    });
+  }
+
   toggleScenarioGraphs() {
     let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
+    let graphByYearOrScenarioLabel = isItTimePeriodsInGraphs ? this.props.graphByYearLabel: this.props.graphByScenariosLabel;
+    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : this.state.groupBy;
+
+    //console.log(`true or false ${isItTimePeriodsInGraphs} label ${graphByYearOrScenarioLabel}`);
+
     this.setState({
-      timePeriodsInGraphs: !isItTimePeriodsInGraphs
+      timePeriodsInGraphs: !isItTimePeriodsInGraphs,
+      graphByYearOrScenarioLabel: graphByYearOrScenarioLabel,
+      groupBy: newGroupBy
     });
   }
 
@@ -130,19 +162,16 @@ class Charts extends Component {
           });
         });
       }
-      console.log(validData);
-      console.log(scenariosSelectedList);
-      console.log(values);
 
       let graphData;
       
       if (this.state.timePeriodsInGraphs)
         graphData = this.dataForGraphs(
-          this.state.groupBy,validData, scenariosSelectedList, indicatorsSelectedList
+          this.state.groupBy, validData, scenariosSelectedList, indicatorsSelectedList
         );
       else
         graphData = this.dataForGraphs(
-          this.state.groupBy,validData, timePeriod, indicatorsSelectedList
+          this.state.groupBy, validData, timePeriod, indicatorsSelectedList
         );
 
       let legendLabel = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
@@ -170,7 +199,7 @@ class Charts extends Component {
 
     const buttonElement = [];
 
-    if (!this.props.isPolar) {
+    if (!this.props.isPolar && this.state.timePeriodsInGraphs) {
       buttonElement.push( 
       <div key={this.state.groupBy} className="btn-group">
         <button className="btn btn-info charts" onClick={this.toggleChartType}>
@@ -180,16 +209,34 @@ class Charts extends Component {
             {this.state.groupByLabel}
         </button>
         <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
-          One scenario in graph
+          {this.state.graphByYearOrScenarioLabel}
         </button>  
       </div>
       );
-  }
-    else {
+    } else if (!this.state.timePeriodsInGraphs){
       buttonElement.push( 
-        <button className="btn btn-info" onClick={this.toggleGroupBy}>
-        {this.state.groupByLabel}
+        <div key={this.state.groupBy} className="btn-group">
+          <button className="btn btn-info charts" onClick={this.toggleChartType}>
+            {this.state.chartTypeLabel}
+          </button>
+          <button className="btn btn-info charts" onClick={this.toggleGroupByYearOrIndicator}>
+              {this.state.groupByYearOrIndicator}
+          </button>
+          <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+            {this.state.graphByYearOrScenarioLabel}
+          </button>  
+        </div>
+        );
+    } else {
+      buttonElement.push( 
+        <div key={this.state.groupBy} className="btn-group">
+          <button className="btn btn-info" onClick={this.toggleGroupBy}>
+          {this.state.groupByLabel}
+          </button>
+          <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+          {this.state.graphByYearOrScenarioLabel}
         </button>
+       </div>  
       );
     }
 

@@ -491,6 +491,7 @@ class App extends Component {
         polarChartLabel: "Polar chart",
         groupByScenariosLabel: "Group by scenarios",
         groupByIndicatorsLabel: "Group by indicators",
+        groupByTimeperiodsLabel: "Group by timeperiods",
         columnTypeLabel: "Vertical",
         barTypeLabel: "Horizontal",
         saveAsPNG: "Save as PNG",
@@ -499,7 +500,9 @@ class App extends Component {
         saveAsSVG: "Save as SVG",
         print: "Print",
         valuesLabel: "Relative value",
-        indicatorsLabel: "Indicators"
+        indicatorsLabel: "Indicators",
+        graphByYearLabel: "One timeperiod per graph",
+        graphByScenariosLabel: "One scenario per graph"
       });
     } else {
       this.setState({
@@ -518,6 +521,7 @@ class App extends Component {
         polarChartLabel: "Ympyräkaavio",
         groupByScenariosLabel: "Ryhmittele skenaarioittain",
         groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
+        groupByTimeperiodsLabel: "Ryhmittele aikajaksoittain",
         columnTypeLabel: "Palkit pystysuoraan",
         barTypeLabel: "Palkit vaakasuoraan",
         saveAsPNG: "Tallenna PNG",
@@ -526,7 +530,9 @@ class App extends Component {
         saveAsSVG: "Tallenna SVG",
         print: "Tulosta",
         valuesLabel: "Suhteellinen arvo",
-        indicatorsLabel: "Indikaattorit"
+        indicatorsLabel: "Indikaattorit",
+        graphByYearLabel: "Yksi aikajakso per graafi",
+        graphByScenariosLabel: "Yksi skenaario per graafi"
       });
     }
   }
@@ -609,6 +615,7 @@ class App extends Component {
         polarChartLabel = {this.state.polarChartLabel}
         groupByScenariosLabel = {this.state.groupByScenariosLabel}
         groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+        groupByTimeperiodsLabel = {this.state.groupByTimeperiodsLabel}
         columnTypeLabel = {this.state.columnTypeLabel}
         barTypeLabel = {this.state.barTypeLabel}
         saveAsPNG = {this.state.saveAsPNG}
@@ -619,6 +626,8 @@ class App extends Component {
         indicatorsLabel = {this.state.indicatorsLabel}
         scenariosLabel = {this.state.scenariosLabel}
         saveAsSVG = {this.state.saveAsSVG}
+        graphByYearLabel = {this.state.graphByYearLabel}
+        graphByScenariosLabel = {this.state.graphByScenariosLabel}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a

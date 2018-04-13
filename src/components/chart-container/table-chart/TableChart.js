@@ -13,7 +13,9 @@ class TableChart extends Component {
     this.state = {
       groupBy: "indicator",
       groupByLabel: props.groupByIndicatorsLabel,
-      timePeriodsInGraphs: true
+      groupByYearOrIndicator: props.groupByTimeperiodsLabel,
+      timePeriodsInGraphs: true,
+      graphByYearOrScenarioLabel: props.graphByScenariosLabel
     }
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
     this.renderPNG = this.renderPNG.bind(this);
@@ -21,7 +23,7 @@ class TableChart extends Component {
     this.convertDataToTable = this.convertDataToTable.bind(this);
     this.dataForGraphs = dataForGraphs.bind(this);
     this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
-    //this.printjs = printJS.bind(this);
+    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
   }
 
   componentWillReceiveProps(nextProp) {
@@ -124,10 +126,27 @@ class TableChart extends Component {
     saveAs(blob, "table.csv");
   }
 
+  toggleGroupByYearOrIndicator() {
+    let newGrouping = this.state.groupBy === "indicator" ? 
+      "timePeriod" : "indicator";
+    let newLabel = newGrouping === "indicator" ? this.props.groupByTimeperiodsLabel :
+      this.props.groupByIndicatorsLabel;
+
+    this.setState({
+      groupBy: newGrouping,
+      groupByYearOrIndicator: newLabel
+    });
+  }
+
   toggleScenarioGraphs() {
     let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
+    let graphByYearOrScenarioLabel = isItTimePeriodsInGraphs ? this.props.graphByYearLabel: this.props.graphByScenariosLabel;
+    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : this.state.groupBy;
+
     this.setState({
-      timePeriodsInGraphs: !isItTimePeriodsInGraphs
+      timePeriodsInGraphs: !isItTimePeriodsInGraphs,
+      graphByYearOrScenarioLabel: graphByYearOrScenarioLabel,
+      groupBy: newGroupBy
     });
   }
   
@@ -198,21 +217,37 @@ class TableChart extends Component {
           return 0;
       });
 
-      let headColumnSpan = tableData.yAxis.length;
+      let headColumnSpan = this.state.timePeriodsInGraphs ? tableData.yAxis.length : 1;
+      let yearHeadColumnSpan = this.state.timePeriodsInGraphs ? 1 : tableData.yAxis[0].series.length;
       let numberOfScenarios = tableData.yAxis[0].series.length;
-      let dataTableHead, dataTableRow;
+      let dataTableHead = [], dataTableRow;
       let dataTableYearHead = [];
      
-      tableData.yAxis.forEach( (element, element_index) => {
-        dataTableHead = element.series.map( item => 
-          <th key={item.name} scope="col" colSpan={headColumnSpan} className="text header">{item.name}</th>
-        );
-      });
+      if (this.state.timePeriodsInGraphs) 
+        tableData.yAxis.forEach( (element, element_index) => {
+          dataTableHead = element.series.map( item => 
+            <th key={item.name} scope="col" colSpan={headColumnSpan} className="text header">{item.name}</th>
+          );
+        });
+      else
+        tableData.yAxis.forEach( (element, element_index) => {
+          element.series.forEach( item => 
+            dataTableHead.push(<th key={item.name + element_index} scope="col" colSpan={headColumnSpan} className="text header">{item.name}</th>
+          ));
+        });
+      // console.log("tabledata.yaxis", tableData.yAxis);
+      // console.log("tabledata.xaxis", tableData.xAxis);
 
-      dataTableYearHead = Array.apply(null, {length: numberOfScenarios}).map( item =>
-        tableData.yAxis.map( element => 
-          <th key={element.name} className="text header">{element.name}</th>
-      ));
+      if (this.state.timePeriodsInGraphs)
+        dataTableYearHead = Array.apply(null, {length: numberOfScenarios}).map( item =>
+          tableData.yAxis.map( element => 
+            <th key={element.name} colSpan={yearHeadColumnSpan} className="text header">{element.name}</th>
+        ));
+      else
+        dataTableYearHead.push(
+          tableData.yAxis.map( element => 
+            <th key={element.name} colSpan={yearHeadColumnSpan} className="text header">{element.name}</th>
+        ));
 
       dataTableRow = tableData.xAxis.map( (x_item, index) => (
           <tr key={x_item + index}>
@@ -242,31 +277,64 @@ class TableChart extends Component {
 
       let caption = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
 
-      let dataTable = <div key={'hc1'} id={"highcharts"} className="highcharts-data-table">{conversionMenu}
-        <table id="data-table">
-        <caption className="highcharts-caption">{caption}</caption>
-        <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
-        <tbody>
-        <tr><th scope="col" className="text"></th>{dataTableYearHead}</tr>
-        {dataTableRow}</tbody></table>
-        </div> 
+      let dataTable = []; 
+      
+      if (this.state.timePeriodsInGraphs)
+        dataTable.push(
+          <div key={'hc1'} id={"highcharts"} className="highcharts-data-table">{conversionMenu}
+          <table id="data-table">
+          <caption className="highcharts-caption">{caption}</caption>
+          <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
+          <tbody>
+          <tr><th scope="col" className="text"></th>{dataTableYearHead}</tr>
+          {dataTableRow}</tbody></table>
+          </div> 
+        );
+      else
+        dataTable.push(
+          <div key={'hc1'} id={"highcharts"} className="highcharts-data-table">{conversionMenu}
+          <table id="data-table">
+          <caption className="highcharts-caption">{caption}</caption>
+          <thead><tr><th scope="col" className="text"></th>{dataTableYearHead}</tr></thead>
+          <tbody>
+          <tr><th scope="col" className="text"></th>{dataTableHead}</tr>
+          {dataTableRow}</tbody></table>
+          </div> 
+        );
       
       tableChart.push(dataTable);
     }
-    const buttonElement = 
-      <div className="control-wrapper">
-      <button className="btn btn-info" onClick={this.toggleGroupBy}>
-        {this.state.groupByLabel}
-      </button>
-      <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
-          One scenario in graph
-      </button>
-      </div>  
+    const buttonElement = [];
+
+    if (this.state.timePeriodsInGraphs)
+      buttonElement.push(
+        <div className="btn-group">
+        <button className="btn btn-info  table-chart" onClick={this.toggleGroupBy}>
+          {this.state.groupByLabel}
+        </button>
+        <button className="btn btn-info table-chart" onClick={this.toggleScenarioGraphs}>
+            {this.state.graphByYearOrScenarioLabel}
+        </button>
+        </div>
+      );
+    else
+      buttonElement.push(
+        <div className="btn-group">
+        <button className="btn btn-info  table-chart" onClick={this.toggleGroupByYearOrIndicator}>
+          {this.state.groupByYearOrIndicator}
+        </button>
+        <button className="btn btn-info table-chart" onClick={this.toggleScenarioGraphs}>
+            {this.state.graphByYearOrScenarioLabel}
+        </button>
+        </div>
+      )  
 
     return (
       <div>
         {tableChart}
+      <div className="control-wrapper">
         {buttonElement}
+      </div>
       </div>
      
     );
