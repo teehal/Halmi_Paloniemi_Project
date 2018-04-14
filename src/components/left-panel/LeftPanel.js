@@ -91,7 +91,8 @@ class LeftPanel extends Component {
 							regionalLevel={regionalLevel}
 							updateSelectedOptions = {updateSelectedOptions}
 							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
-							scenarioCollection = {scenarioCollection} 
+							scenarioCollection = {scenarioCollection}
+							isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
 	          />
 	        </div>
 	        <div className="timeline">
@@ -105,7 +106,8 @@ class LeftPanel extends Component {
 					regionalLevel={regionalLevel}
 					language={language}
 					scenarioCollection = {scenarioCollection}
-					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
 				/>
 	        </div>
 	    </div>
@@ -122,6 +124,7 @@ class LeftPanel extends Component {
 					updateSelectedOptions = {updateSelectedOptions}
 					scenarioCollection = {scenarioCollection}
 					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
 				/>
 			</div>
 	</div>

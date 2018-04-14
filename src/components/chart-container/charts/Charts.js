@@ -19,7 +19,8 @@ class Charts extends Component {
       chartTypeLabel: props.barTypeLabel,
       pointWidth: 15,
       timePeriodsInGraphs: true,
-      graphByYearOrScenarioLabel: props.graphByScenariosLabel
+      graphByYearOrScenarioLabel: props.graphByScenariosLabel,
+      previousGroupBy: "indicator" 
     };
 
     this.toggleGroupBy = this.toggleGroupBy.bind(this);
@@ -108,7 +109,8 @@ class Charts extends Component {
   toggleScenarioGraphs() {
     let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
     let graphByYearOrScenarioLabel = isItTimePeriodsInGraphs ? this.props.graphByYearLabel: this.props.graphByScenariosLabel;
-    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : this.state.groupBy;
+    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : 
+      (!isItTimePeriodsInGraphs ? "scenario" : this.state.groupBy);
 
     //console.log(`true or false ${isItTimePeriodsInGraphs} label ${graphByYearOrScenarioLabel}`);
 
@@ -174,11 +176,17 @@ class Charts extends Component {
           this.state.groupBy, validData, timePeriod, indicatorsSelectedList
         );
 
-      let legendLabel = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
-      let export_buttons = this.exporting(this.props);
+      let legendLabel;
+      
+      if (this.state.timePeriodsInGraphs)
+        legendLabel = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
+      else 
+        legendLabel = this.state.groupBy === "indicator" ? this.props.timePeriodsLabel : this.props.indicatorsLabel;
+
+      let exporting = this.exporting(this.props);
 
       this.myConfig = this.generateConfiguration(
-        graphData.xAxis, graphData.yAxis, this.props.isPolar, {buttons: export_buttons}, 
+        graphData.xAxis, graphData.yAxis, this.props.isPolar, exporting, 
         this.props.valuesLabel, legendLabel
       );
     }

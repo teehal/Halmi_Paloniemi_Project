@@ -24,6 +24,7 @@ class TableChart extends Component {
     this.dataForGraphs = dataForGraphs.bind(this);
     this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
     this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
+    this.showText = this.showText.bind(this);
   }
 
   componentWillReceiveProps(nextProp) {
@@ -82,23 +83,36 @@ class TableChart extends Component {
   }
 
   renderPNG = () => {
+    const self = this;
+    this.showText(true);
     html2canvas(document.querySelector("#highcharts"), {backgroundColor: null}).then( canvas => {
       canvas.toBlob( function(blob) {
         saveAs(blob, "table.png");
+        self.showText(false);
       });
     });
   }
 
   renderJPEG = () => {
+    const self = this;
+    this.showText(true);
     html2canvas(document.querySelector("#highcharts"),).then( canvas => {
       canvas.toBlob( function(blob) {
         saveAs(blob, "table.jpg");
-      }, "image/jpeg");
+        self.showText(false);
+      }, "image/jpeg")
     });
   }
 
   showMenu = () => {
     document.getElementById("dropdownMenu").classList.toggle("show");
+  }
+
+  showText(textIsDisplayed) {
+    if (textIsDisplayed)
+      document.getElementById("sourcetext").classList.toggle("show");
+    else
+      document.getElementById("sourcetext").classList.remove("show");
   }
 
   tableToCSV = (data) => {
@@ -129,8 +143,8 @@ class TableChart extends Component {
   toggleGroupByYearOrIndicator() {
     let newGrouping = this.state.groupBy === "indicator" ? 
       "timePeriod" : "indicator";
-    let newLabel = newGrouping === "indicator" ? this.props.groupByTimeperiodsLabel :
-      this.props.groupByIndicatorsLabel;
+    let newLabel = newGrouping === "indicator" ? this.props.groupByIndicatorsLabel :
+      this.props.groupByTimeperiodsLabel;
 
     this.setState({
       groupBy: newGrouping,
@@ -141,7 +155,8 @@ class TableChart extends Component {
   toggleScenarioGraphs() {
     let isItTimePeriodsInGraphs = this.state.timePeriodsInGraphs;
     let graphByYearOrScenarioLabel = isItTimePeriodsInGraphs ? this.props.graphByYearLabel: this.props.graphByScenariosLabel;
-    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : this.state.groupBy;
+    let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : 
+      (!isItTimePeriodsInGraphs ? "scenario" : this.state.groupBy);
 
     this.setState({
       timePeriodsInGraphs: !isItTimePeriodsInGraphs,
@@ -275,9 +290,18 @@ class TableChart extends Component {
           </div>
         </div>
 
-      let caption = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
+      let caption;
 
-      let dataTable = []; 
+      if (this.state.timePeriodsInGraphs)
+        caption = this.state.groupBy === "indicator" ? this.props.scenariosLabel : this.props.indicatorsLabel;
+      else
+        caption = this.props.scenariosLabel;
+
+      let dataTable = [];
+      const Style = {
+        fontSize: '6pt',
+        border: '0px'
+      };
       
       if (this.state.timePeriodsInGraphs)
         dataTable.push(
@@ -287,7 +311,11 @@ class TableChart extends Component {
           <thead><tr><th scope="col" className="text"></th>{dataTableHead}</tr></thead>
           <tbody>
           <tr><th scope="col" className="text"></th>{dataTableYearHead}</tr>
-          {dataTableRow}</tbody></table>
+          {dataTableRow}</tbody>
+          <tfoot id="sourcetext" className="hidden-text"><tr className="hidden-tr">
+            <td style={Style}>Lähde: Metsämittari/Luke | Source: Forest Indicator/Luke</td>
+          </tr></tfoot>
+          </table>
           </div> 
         );
       else
@@ -298,7 +326,11 @@ class TableChart extends Component {
           <thead><tr><th scope="col" className="text"></th>{dataTableYearHead}</tr></thead>
           <tbody>
           <tr><th scope="col" className="text"></th>{dataTableHead}</tr>
-          {dataTableRow}</tbody></table>
+          {dataTableRow}</tbody>
+          <tfoot id="sourcetext" className="hidden-text"><tr className="hidden-tr">
+            <td style={Style}>Lähde: Metsämittari/Luke | Source: Forest Indicator/Luke</td>
+          </tr></tfoot>
+          </table>
           </div> 
         );
       

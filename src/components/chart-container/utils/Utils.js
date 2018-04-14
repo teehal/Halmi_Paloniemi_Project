@@ -124,7 +124,19 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
         ]
       }
     }
-  return buttons;
+    let chartOptions = {
+      subtitle: {
+        text: `Lähde: Metsämittari/Luke |
+               Source: Forest Indicator/Luke`,
+        floating: true,
+        align: 'left',
+        verticalAlign: 'bottom',
+        style: {
+          fontSize: '4pt',
+        }
+      }
+    }
+  return {buttons: buttons, chartOptions: chartOptions};
   }
 
   function generateConfiguration(xaxis, yaxis, itIsPolar, exporting, yLabel, legendLabel) {

@@ -81,7 +81,7 @@ class TimePeriods extends Component {
           name: lastElement[0].label, id: lastElement[0].value.toString()});
     }
     else
-      alert("This item is mandatory!.");
+      alert(this.props.isMandatoryAlertLabel);
   }
 
   timePeriodOptions = (timeperiods) => {

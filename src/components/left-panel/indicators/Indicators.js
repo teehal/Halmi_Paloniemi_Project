@@ -144,7 +144,7 @@ class Indicators extends Component {
         absVar: element[0].absVar
       });
       this.setState({ indValues: tempArray });
-    } else alert("This item is mandatory!.");
+    } else alert(this.props.isMandatoryAlertLabel);
   };
 
   updateIndValues = categories => {

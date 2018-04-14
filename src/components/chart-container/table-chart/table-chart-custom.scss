@@ -1,5 +1,5 @@
 
-th, td, table {
+th, td{
   border: 1px solid black;
 }
 
@@ -65,6 +65,18 @@ th, td, table {
   background: white;
   padding: 5px 0;
   box-shadow: 3px 3px 10px #888;
+}
+
+.hidden-text {
+  display: none;
+  font-size: 14px;
+  float: left;
+  vertical-align: bottom;
+  border: 0px;
+}
+
+.hidden-tr {
+  border: 0px;
 }
 
 .menu-bar {

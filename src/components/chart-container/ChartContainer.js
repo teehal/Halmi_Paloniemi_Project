@@ -55,6 +55,7 @@ class ChartContainer extends Component {
             print = {this.props.print}
             graphByYearLabel = {this.props.graphByYearLabel}
             graphByScenariosLabel = {this.props.graphByScenariosLabel}
+            timePeriodsLabel = {this.props.timePeriodsLabel}
           />
         );
       case "table":
@@ -76,6 +77,7 @@ class ChartContainer extends Component {
             indicatorsLabel = {this.props.indicatorsLabel}
             graphByYearLabel = {this.props.graphByYearLabel}
             graphByScenariosLabel = {this.props.graphByScenariosLabel}
+            timePeriodsLabel = {this.props.timePeriodsLabel}
           />
         );
       case "polar":
@@ -101,6 +103,7 @@ class ChartContainer extends Component {
           print = {this.props.print}
           graphByYearLabel = {this.props.graphByYearLabel}
           graphByScenariosLabel = {this.props.graphByScenariosLabel}
+          timePeriodsLabel = {this.props.timePeriodsLabel}
         />
       );
       default:

@@ -501,8 +501,9 @@ class App extends Component {
         print: "Print",
         valuesLabel: "Relative value",
         indicatorsLabel: "Indicators",
-        graphByYearLabel: "One timeperiod per graph",
-        graphByScenariosLabel: "One scenario per graph"
+        graphByYearLabel: "Group by scenarios/indicators",
+        graphByScenariosLabel: "Group by periods/indicators",
+        isMandatoryAlertLabel: "This selection cannot be empty."
       });
     } else {
       this.setState({
@@ -531,8 +532,9 @@ class App extends Component {
         print: "Tulosta",
         valuesLabel: "Suhteellinen arvo",
         indicatorsLabel: "Indikaattorit",
-        graphByYearLabel: "Yksi aikajakso per graafi",
-        graphByScenariosLabel: "Yksi skenaario per graafi"
+        graphByYearLabel: "Ryhmittely skenaario/indikaattori",
+        graphByScenariosLabel: "Ryhmittely aikajakso/indikaattori",
+        isMandatoryAlertLabel: "Tämä valinta ei voi olla tyhjä."
       });
     }
   }
@@ -599,6 +601,7 @@ class App extends Component {
             onToggleAccordionModalClick={this.onToggleAccordionModalClick}
 			      onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
+            isMandatoryAlertLabel = {this.state.isMandatoryAlertLabel}
           />
 
         </div>
@@ -628,6 +631,7 @@ class App extends Component {
         saveAsSVG = {this.state.saveAsSVG}
         graphByYearLabel = {this.state.graphByYearLabel}
         graphByScenariosLabel = {this.state.graphByScenariosLabel}
+        timePeriodsLabel = {this.state.timePeriodsLabel}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a
