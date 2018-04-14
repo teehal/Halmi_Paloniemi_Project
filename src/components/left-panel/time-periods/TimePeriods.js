@@ -7,9 +7,9 @@ class TimePeriods extends Component {
     super(props)
 
     this.state = { 
-      timePeriodValues: [],
       currentRegionId: props.region,
-      currentRegionalLevelId: props.regionalLevel
+      currentRegionalLevelId: props.regionalLevel,
+      timePeriodValues: []
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -99,28 +99,28 @@ class TimePeriods extends Component {
     
     const listItems = [
       <Select
-        key = {timePeriods.length}
-        name = "timeperiods"
-        multi = {true}
-        options = {this.timePeriodOptions(timePeriods)}
-        onChange = {(option) => this.handleChange(option)}
-        value = {this.state.timePeriodValues}//{values}//
+        closeOnSelect = {false}  
         dataType = "timePeriod"
-        closeOnSelect = {false}
+        key = {timePeriods.length}
+        multi = {true}
+        name = "timeperiods"
+        onChange = {(option) => this.handleChange(option)}
+        options = {this.timePeriodOptions(timePeriods)}
+        value = {this.state.timePeriodValues}
       />];
 
     return (
       <div className="time-periods">
         <h4>{this.props.timePeriodsLabel}
-        	<QuickHelp 
+          <QuickHelp 
+          	displayTexts={this.props.displayTexts}
 	        	helpTitle={this.props.displayTexts.helpTimePeriodTitle} 
 	        	helpText={this.props.displayTexts.helpTimePeriodText}
 	        	helpImage={this.props.displayTexts.helpTimePeriodImage}
 	        	helpID="helpTimePeriods"
 	        	helpLink="#helpTimePeriods"
 	        	language={this.props.language}
-	        	displayTexts={this.props.displayTexts}
-			/>    
+     			/>    
         </h4>
         <div className="item_list">
           {listItems}

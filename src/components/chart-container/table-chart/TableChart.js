@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import html2canvas from "html2canvas";
 import {saveAs} from "file-saver";
-import {dataForGraphs} from '../utils/Utils';
+import {dataForGraphs, organizeData} from '../utils/Utils';
 import printjs from "print-js";
 import "./table-chart-custom.scss";
 
@@ -17,27 +17,15 @@ class TableChart extends Component {
       timePeriodsInGraphs: true,
       graphByYearOrScenarioLabel: props.graphByScenariosLabel
     }
-    this.toggleGroupBy = this.toggleGroupBy.bind(this);
-    this.renderPNG = this.renderPNG.bind(this);
-    this.renderJPEG = this.renderJPEG.bind(this);
     this.convertDataToTable = this.convertDataToTable.bind(this);
     this.dataForGraphs = dataForGraphs.bind(this);
-    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
-    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
+    this.organizeData = organizeData.bind(this);
+    this.renderPNG = this.renderPNG.bind(this);
+    this.renderJPEG = this.renderJPEG.bind(this);
     this.showText = this.showText.bind(this);
-  }
-
-  componentWillReceiveProps(nextProp) {
-
-    if (this.state.groupBy === "scenario") {
-      this.setState({
-        groupByLabel: nextProp.groupByScenariosLabel
-      });
-    } else {
-      this.setState({
-        groupByLabel: nextProp.groupByIndicatorsLabel
-      });
-    }
+    this.toggleGroupBy = this.toggleGroupBy.bind(this);
+    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
+    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
   }
 
   convertDataToTable( data, index ) {
@@ -56,16 +44,15 @@ class TableChart extends Component {
     return returnArray;
   }
 
-  toggleGroupBy() {
-    if (this.state.groupBy === "indicator") {
+  componentWillReceiveProps(nextProp) {
+
+    if (this.state.groupBy === "scenario") {
       this.setState({
-        groupBy: "scenario",
-        groupByLabel: this.props.groupByScenariosLabel
+        groupByLabel: nextProp.groupByScenariosLabel
       });
     } else {
       this.setState({
-        groupBy: "indicator",
-        groupByLabel: this.props.groupByIndicatorsLabel
+        groupByLabel: nextProp.groupByIndicatorsLabel
       });
     }
   }
@@ -82,17 +69,6 @@ class TableChart extends Component {
     printjs({printable:'data-table', type: 'html', targetStyles: ['*'], documentTitle:''});
   }
 
-  renderPNG = () => {
-    const self = this;
-    this.showText(true);
-    html2canvas(document.querySelector("#highcharts"), {backgroundColor: null}).then( canvas => {
-      canvas.toBlob( function(blob) {
-        saveAs(blob, "table.png");
-        self.showText(false);
-      });
-    });
-  }
-
   renderJPEG = () => {
     const self = this;
     this.showText(true);
@@ -101,6 +77,17 @@ class TableChart extends Component {
         saveAs(blob, "table.jpg");
         self.showText(false);
       }, "image/jpeg")
+    });
+  }
+
+  renderPNG = () => {
+    const self = this;
+    this.showText(true);
+    html2canvas(document.querySelector("#highcharts"), {backgroundColor: null}).then( canvas => {
+      canvas.toBlob( function(blob) {
+        saveAs(blob, "table.png");
+        self.showText(false);
+      });
     });
   }
 
@@ -140,6 +127,20 @@ class TableChart extends Component {
     saveAs(blob, "table.csv");
   }
 
+  toggleGroupBy() {
+    if (this.state.groupBy === "indicator") {
+      this.setState({
+        groupBy: "scenario",
+        groupByLabel: this.props.groupByScenariosLabel
+      });
+    } else {
+      this.setState({
+        groupBy: "indicator",
+        groupByLabel: this.props.groupByIndicatorsLabel
+      });
+    }
+  }
+
   toggleGroupByYearOrIndicator() {
     let newGrouping = this.state.groupBy === "indicator" ? 
       "timePeriod" : "indicator";
@@ -176,7 +177,6 @@ class TableChart extends Component {
         return e.dataType === "timePeriod";
       });
 
-      let validData = [];
       let scenariosSelectedList = options.filter(function(e) {
         return e.dataType === "scenario";
       });
@@ -185,30 +185,12 @@ class TableChart extends Component {
         return e.dataType === "indicator";
       });
       
-      if (this.state.timePeriodsInGraphs) {
-        timePeriod.forEach( (item, index) => {
-          validData.push({
-            dataType: item.dataType,
-            timePeriodId: item.id,
-            timePeriodName: item.name,
-            data: values.filter(function(e) {
-                return e.timePeriodId.toString() === timePeriod[index].id.toString();
-              })
-          });
-        });
-      }
-      else {
-        scenariosSelectedList.forEach( (item, index) => {
-          validData.push({
-            dataType: "scenario",
-            timePeriodId: item.id,
-            timePeriodName: item.name,
-            data: values.filter(function(e) {
-                return e.scenarioId.toString() === scenariosSelectedList[index].id.toString();
-              })
-          });
-        });
-      }
+      let validData = this.organizeData(
+        this.state.timePeriodsInGraphs,
+        scenariosSelectedList,
+        timePeriod,
+        values
+      );
 
       if (this.state.timePeriodsInGraphs)
         tableData = this.dataForGraphs(
@@ -250,8 +232,6 @@ class TableChart extends Component {
             dataTableHead.push(<th key={item.name + element_index} scope="col" colSpan={headColumnSpan} className="text header">{item.name}</th>
           ));
         });
-      // console.log("tabledata.yaxis", tableData.yAxis);
-      // console.log("tabledata.xaxis", tableData.xAxis);
 
       if (this.state.timePeriodsInGraphs)
         dataTableYearHead = Array.apply(null, {length: numberOfScenarios}).map( item =>

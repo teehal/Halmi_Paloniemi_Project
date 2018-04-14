@@ -45,86 +45,86 @@ class LeftPanel extends Component {
 	
 	        <div className="region-level">
 	          <RegionLevel
-	          	language={language}
-	            regionalLevelList={regionalLevelList}
-	            regionalLevel={regionalLevel}
-	            regionalLevelData={regionalLevelData}
-	            regionalLevelLabel={this.props.regionalLevelLabel}
-	            displayTexts={this.props.displayTexts}  
-	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}          
+							displayTexts={this.props.displayTexts}
+							language={language}
+							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							regionalLevelData={regionalLevelData}
+							regionalLevelLabel={this.props.regionalLevelLabel}
+							regionalLevelList={regionalLevelList}
+							regionalLevel={regionalLevel}
 	          />
 	        </div>
 	
 	        <div className="region">
 	          <Region
-	            regionList={regionList}
-	            region={region}
-	            regionData={regionData}
-	            regionLabel={this.props.regionLabel}
-	            displayTexts={this.props.displayTexts}
-	            language={language}
-	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							displayTexts={this.props.displayTexts}
+							language={language}
+							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							regionData={regionData}
+							regionLabel={this.props.regionLabel}
+							regionList={regionList}
+							region={region}
 	          />
 	        </div>
 	
 	        <div className="region-level">
 	          <ScenarioCollection
-	            scenarioCollectionList={scenarioCollectionList}
-	            scenarioCollection={scenarioCollection}
-	            scenarioCollectionData={scenarioCollectionData}
-	            scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
-	            displayTexts={this.props.displayTexts}
-	            language={language}
-	            onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							displayTexts={this.props.displayTexts}
+							language={language}
+							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
+							scenarioCollectionData={scenarioCollectionData}
+							scenarioCollectionListLabel={this.props.scenarioCollectionListLabel}
+							scenarioCollectionList={scenarioCollectionList}
+							scenarioCollection={scenarioCollection}
 	          />
 	        </div>
 	
 	        <div className="scenarios">
 	          <Scenarios
-	            scenarios={scenarios}
-	            selectedDataChange={selectedDataChange}
-	            scenariosLabel={this.props.scenariosLabel}
-	            selectedOptions={this.props.selectedOptions}
-	            displayTexts={this.props.displayTexts}
-							language={language}
-							region={region}
-							regionalLevel={regionalLevel}
-							updateSelectedOptions = {updateSelectedOptions}
-							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
-							scenarioCollection = {scenarioCollection}
+							displayTexts={this.props.displayTexts}
 							isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
+							language={language}
+							onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+							regionalLevel={regionalLevel}
+							region={region}
+							scenarioCollection = {scenarioCollection}
+							scenariosLabel={this.props.scenariosLabel}
+							scenarios={scenarios}
+							selectedDataChange={selectedDataChange}
+							selectedOptions={this.props.selectedOptions}
+							updateSelectedOptions = {updateSelectedOptions}
 	          />
 	        </div>
 	        <div className="timeline">
 				<TimePeriods
-					timePeriods={timePeriods}
-					selectedDataChange={selectedDataChange}
-					timePeriodsLabel={this.props.timePeriodsLabel}
-					selectedOptions={this.props.selectedOptions}
 					displayTexts={this.props.displayTexts}
-					region={region}
-					regionalLevel={regionalLevel}
+					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel}  
 					language={language}
-					scenarioCollection = {scenarioCollection}
 					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
-					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
+					regionalLevel={regionalLevel}
+					region={region}
+					scenarioCollection = {scenarioCollection}
+					selectedDataChange={selectedDataChange}
+					selectedOptions={this.props.selectedOptions}
+					timePeriodsLabel={this.props.timePeriodsLabel}
+					timePeriods={timePeriods}
 				/>
 	        </div>
 	    </div>
 			<div>
 				<Indicators
+					displayTexts={this.props.displayTexts}
 					indicatorCategories={this.props.indicatorCategories}
+					indicatorSelectionLabel={this.props.indicatorSelectionLabel}
+					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel}   
+					language={language}
+					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick}
+					regionalLevel={regionalLevel}
+					region={region}
+					scenarioCollection = {scenarioCollection}
 					selectedDataChange={selectedDataChange}
 					selectedOptions={this.props.selectedOptions}
-					indicatorSelectionLabel={this.props.indicatorSelectionLabel}
-					displayTexts={this.props.displayTexts}
-					language={language}
-					region={region}
-					regionalLevel={regionalLevel}
 					updateSelectedOptions = {updateSelectedOptions}
-					scenarioCollection = {scenarioCollection}
-					onToggleAccordionModalClick={this.props.onToggleAccordionModalClick} 
-					isMandatoryAlertLabel = {this.props.isMandatoryAlertLabel} 
 				/>
 			</div>
 	</div>

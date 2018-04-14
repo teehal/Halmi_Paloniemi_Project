@@ -45,14 +45,14 @@ class ScenarioCollection extends Component {
          	</div>
 		</h4>
         <Select
-          name={FormControlNames.SCENARIO_COLLECTION}
           className="max"
-          value={scenarioCollection}
+          clearable = {false}
+          clearableValue = {false}
+          disabled={this.state.dropdownDisabledBool}
+          name={FormControlNames.SCENARIO_COLLECTION}
           onChange={this.handleChange}
           options={scenarioCollectionList}
-          disabled={this.state.dropdownDisabledBool}
-          clearableValue = {false}
-          clearable = {false}
+          value={scenarioCollection}
         />
       </div>
     );

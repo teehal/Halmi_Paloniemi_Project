@@ -9,10 +9,10 @@ class Indicators extends Component {
     super(props);
 
     this.state = { 
-      indValues: [],
       currentIndicatorsLanguage: props.language,
       currentRegionId: props.region.id,
-      currentRegionalLevelId: props.regionalLevel
+      currentRegionalLevelId: props.regionalLevel,
+      indValues: [],
      };
 
     this.handleChange = this.handleChange.bind(this);
@@ -70,35 +70,6 @@ class Indicators extends Component {
   }
   }
 
-  indicatorOptions = (indicators, isMandatory) => {
-    let options = [];
-
-    indicators.map(indicator => {
-      options.push({
-        value: indicator.id,
-        label: indicator.name,
-        isMandatory: isMandatory,
-        absVar: indicator.absVar
-      });
-      return true;
-    });
-    return options;
-  };
-
-  findMissingElementIndex = (first_arr, second_arr) => {
-    let value = -1;
-
-    first_arr.forEach((item, index) => {
-      let counter = 0;
-      second_arr.forEach(element => {
-        if (item.value === element.value) counter++;
-      });
-      if (!counter) value = index;
-    });
-
-    return value;
-  };
-
   handleChange = (option, index) => {
     let tempArray = this.state.indValues.slice();
     tempArray[index] = option;
@@ -147,6 +118,35 @@ class Indicators extends Component {
     } else alert(this.props.isMandatoryAlertLabel);
   };
 
+  indicatorOptions = (indicators, isMandatory) => {
+    let options = [];
+
+    indicators.map(indicator => {
+      options.push({
+        value: indicator.id,
+        label: indicator.name,
+        isMandatory: isMandatory,
+        absVar: indicator.absVar
+      });
+      return true;
+    });
+    return options;
+  };
+
+  findMissingElementIndex = (first_arr, second_arr) => {
+    let value = -1;
+
+    first_arr.forEach((item, index) => {
+      let counter = 0;
+      second_arr.forEach(element => {
+        if (item.value === element.value) counter++;
+      });
+      if (!counter) value = index;
+    });
+
+    return value;
+  };
+
   updateIndValues = categories => {
     let tempArray = [];
     categories.forEach((item, index) => {
@@ -171,14 +171,14 @@ class Indicators extends Component {
 
         <div className="item_list">
           <Select
-            name={FormControlNames.INDICATORS}
-            multi={true}
-            options={this.indicatorOptions(item.indicators, item.isMandatory)}
-            onChange={option => this.handleChange(option, index)}
-            value={this.state.indValues[index]} //{values[index]} //
-            id={index.toString()}
-            dataType="indicator"
             closeOnSelect={false}
+            dataType="indicator"
+            id={index.toString()}
+            multi={true}
+            name={FormControlNames.INDICATORS}
+            onChange={option => this.handleChange(option, index)}
+            options={this.indicatorOptions(item.indicators, item.isMandatory)}
+            value={this.state.indValues[index]}
           />
         </div>
       </div>

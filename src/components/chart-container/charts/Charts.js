@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./charts.css";
 import ReactHighcharts from "react-highcharts";
-import {dataForGraphs, exporting, generateConfiguration} from '../utils/Utils';
+import {dataForGraphs, exporting, generateConfiguration, organizeData} from '../utils/Utils';
 require("highcharts-more")(ReactHighcharts.Highcharts);
 require("highcharts-exporting")(ReactHighcharts.Highcharts);
 
@@ -12,25 +12,25 @@ class Charts extends Component {
     super(props);
 
     this.state = {
+      chartType: "column",
+      chartTypeLabel: props.barTypeLabel,
       groupBy: "indicator",
       groupByLabel: props.groupByScenariosLabel,
       groupByYearOrIndicator: props.groupByTimeperiodsLabel,
-      chartType: "column",
-      chartTypeLabel: props.barTypeLabel,
+      graphByYearOrScenarioLabel: props.graphByScenariosLabel,
       pointWidth: 15,
       timePeriodsInGraphs: true,
-      graphByYearOrScenarioLabel: props.graphByScenariosLabel,
-      previousGroupBy: "indicator" 
     };
 
-    this.toggleGroupBy = this.toggleGroupBy.bind(this);
-    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
-    this.toggleChartType = this.toggleChartType.bind(this);
-    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
-    this.myConfig = [];
-    this.exporting = exporting;
     this.dataForGraphs = dataForGraphs;
+    this.exporting = exporting;
     this.generateConfiguration = generateConfiguration;
+    this.myConfig = [];
+    this.toggleChartType = this.toggleChartType.bind(this);
+    this.toggleGroupBy = this.toggleGroupBy.bind(this);
+    this.toggleScenarioGraphs = this.toggleScenarioGraphs.bind(this);
+    this.toggleGroupByYearOrIndicator = this.toggleGroupByYearOrIndicator.bind(this);
+    this.organizeData = organizeData;
   }
 
   componentWillReceiveProps(nextProp) {
@@ -99,7 +99,7 @@ class Charts extends Component {
       "timePeriod" : "indicator";
     let newLabel = newGrouping === "indicator" ? this.props.groupByTimeperiodsLabel :
       this.props.groupByIndicatorsLabel;
-   // console.log(`newgrouping ${newGrouping} newlabel ${newLabel}`);
+ 
     this.setState({
       groupBy: newGrouping,
       groupByYearOrIndicator: newLabel
@@ -111,8 +111,6 @@ class Charts extends Component {
     let graphByYearOrScenarioLabel = isItTimePeriodsInGraphs ? this.props.graphByYearLabel: this.props.graphByScenariosLabel;
     let newGroupBy = this.state.groupBy === "scenario" ? "indicator" : 
       (!isItTimePeriodsInGraphs ? "scenario" : this.state.groupBy);
-
-    //console.log(`true or false ${isItTimePeriodsInGraphs} label ${graphByYearOrScenarioLabel}`);
 
     this.setState({
       timePeriodsInGraphs: !isItTimePeriodsInGraphs,
@@ -138,32 +136,12 @@ class Charts extends Component {
         return e.dataType === "indicator";
       });
 
-      let validData = [];
-
-      if (this.state.timePeriodsInGraphs) {
-        timePeriod.forEach( (item, index) => {
-          validData.push({
-            dataType: item.dataType,
-            timePeriodId: item.id,
-            timePeriodName: item.name,
-            data: values.filter(function(e) {
-                return e.timePeriodId.toString() === timePeriod[index].id.toString();
-              })
-          });
-        });
-      }
-      else {
-        scenariosSelectedList.forEach( (item, index) => {
-          validData.push({
-            dataType: "scenario",
-            timePeriodId: item.id,
-            timePeriodName: item.name,
-            data: values.filter(function(e) {
-                return e.scenarioId.toString() === scenariosSelectedList[index].id.toString();
-              })
-          });
-        });
-      }
+      let validData = this.organizeData(
+        this.state.timePeriodsInGraphs,
+        scenariosSelectedList,
+        timePeriod,
+        values
+      );
 
       let graphData;
       

@@ -476,65 +476,65 @@ class App extends Component {
     let cookie = getCookie(getCookieName());
     if (cookie === "1") {
       this.setState({
-        scenarioSelectionLabel: "Scenario Selection",
+        barChartLabel: "Bar chart",
+        barTypeLabel: "Horizontal",
+        columnTypeLabel: "Vertical",
+        feedbackLabel: "Give feedback",
+        graphByScenariosLabel: "Group by periods/indicators",
+        graphByYearLabel: "Group by scenarios/indicators",
+        groupByIndicatorsLabel: "Group by indicators",
+        groupByScenariosLabel: "Group by scenarios",
+        groupByTimeperiodsLabel: "Group by timeperiods",
+        guidanceLabel: "Help",
+        indicatorSelectionLabel: "Indicator Categories",
+        indicatorsLabel: "Indicators",
+        isMandatoryAlertLabel: "This selection cannot be empty.",
         languageLabel: "Language",
+        polarChartLabel: "Polar chart",
+        print: "Print",
         regionalLevelLabel: "Regional Level",
         regionLabel: "Region",
-        scenarioCollectionListLabel: "Scenario Collection",
-        scenariosLabel: "Scenarios",
-        timePeriodsLabel: "Time Periods",
-        indicatorSelectionLabel: "Indicator Categories",
-        feedbackLabel: "Give feedback",
-        guidanceLabel: "Help",
-        barChartLabel: "Bar chart",
-        tableChartLabel: "Table chart",
-        polarChartLabel: "Polar chart",
-        groupByScenariosLabel: "Group by scenarios",
-        groupByIndicatorsLabel: "Group by indicators",
-        groupByTimeperiodsLabel: "Group by timeperiods",
-        columnTypeLabel: "Vertical",
-        barTypeLabel: "Horizontal",
-        saveAsPNG: "Save as PNG",
-        saveAsJPEG: "Save as JPG",
         saveAsCSV: "Save as CSV",
+        saveAsJPEG: "Save as JPG",
+        saveAsPNG: "Save as PNG",
         saveAsSVG: "Save as SVG",
-        print: "Print",
-        valuesLabel: "Relative value",
-        indicatorsLabel: "Indicators",
-        graphByYearLabel: "Group by scenarios/indicators",
-        graphByScenariosLabel: "Group by periods/indicators",
-        isMandatoryAlertLabel: "This selection cannot be empty."
+        scenarioCollectionListLabel: "Scenario Collection",
+        scenarioSelectionLabel: "Scenario Selection",
+        scenariosLabel: "Scenarios",
+        tableChartLabel: "Table chart",
+        timePeriodsLabel: "Time Periods",
+        valuesLabel: "Relative value"
       });
     } else {
       this.setState({
-        scenarioSelectionLabel: "Skenaarioiden valinta",
+        barChartLabel: "Pylväskaavio",
+        barTypeLabel: "Palkit vaakasuoraan",
+        columnTypeLabel: "Palkit pystysuoraan",
+        feedbackLabel: "Anna palautetta",
+        graphByScenariosLabel: "Ryhmittely aikajakso/indikaattori",
+        graphByYearLabel: "Ryhmittely skenaario/indikaattori",
+        groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
+        groupByScenariosLabel: "Ryhmittele skenaarioittain",
+        groupByTimeperiodsLabel: "Ryhmittele aikajaksoittain",
+        guidanceLabel: "Ohje",
+        indicatorSelectionLabel: "Indikaattoreiden valinta",
+        indicatorsLabel: "Indikaattorit",
+        isMandatoryAlertLabel: "Tämä valinta ei voi olla tyhjä.",
         languageLabel: "Kieli",
+        polarChartLabel: "Ympyräkaavio",
+        print: "Tulosta",
         regionalLevelLabel: "Aluetaso",
         regionLabel: "Alue",
-        scenarioCollectionListLabel: "Skenaariokokoelma",
-        scenariosLabel: "Skenaariot",
-        timePeriodsLabel: "Ajankohta",
-        indicatorSelectionLabel: "Indikaattoreiden valinta",
-        feedbackLabel: "Anna palautetta",
-        guidanceLabel: "Ohje",
-        barChartLabel: "Pylväskaavio",
-        tableChartLabel: "Taulukko",
-        polarChartLabel: "Ympyräkaavio",
-        groupByScenariosLabel: "Ryhmittele skenaarioittain",
-        groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
-        groupByTimeperiodsLabel: "Ryhmittele aikajaksoittain",
-        columnTypeLabel: "Palkit pystysuoraan",
-        barTypeLabel: "Palkit vaakasuoraan",
-        saveAsPNG: "Tallenna PNG",
-        saveAsJPEG: "Tallenna JPG",
         saveAsCSV: "Tallenna CSV",
+        saveAsJPEG: "Tallenna JPG",
+        saveAsPNG: "Tallenna PNG",
         saveAsSVG: "Tallenna SVG",
-        print: "Tulosta",
-        valuesLabel: "Suhteellinen arvo",
-        indicatorsLabel: "Indikaattorit",
-        graphByYearLabel: "Ryhmittely skenaario/indikaattori",
-        graphByScenariosLabel: "Ryhmittely aikajakso/indikaattori",
-        isMandatoryAlertLabel: "Tämä valinta ei voi olla tyhjä."
+        scenarioCollectionListLabel: "Skenaariokokoelma",
+        scenarioSelectionLabel: "Skenaarioiden valinta",
+        scenariosLabel: "Skenaariot",
+        tableChartLabel: "Taulukko",
+        timePeriodsLabel: "Ajankohta",
+        valuesLabel: "Suhteellinen arvo"
       });
     }
   }
@@ -563,75 +563,76 @@ class App extends Component {
   render() {
     return (
       <div className="container-fluid App">
-        <Header 
+        <Header
+          displayTexts={this.state.displayTexts}
+          handleLanguageChange={this.handleLanguageChange} 
         	language={this.state.language}
-            languageList={this.state.languageList}
-            handleLanguageChange={this.handleLanguageChange}
-        	displayTexts={this.state.displayTexts} />
+          languageList={this.state.languageList}
+        />
 
         <div className="col-lg-2 col-md-4 col-sm-4 col-xs-6">
           <LeftPanel
-            language={this.state.language}
-            languageList={this.state.languageList}
+            displayTexts={this.state.displayTexts}
             handleLanguageChange={this.handleLanguageChange}
+            handleRegionalLevelChange={this.handleRegionalLevelChange}
+            handleRegionChange={this.handleRegionChange}
+            handleScenarioCollectionChange={this.handleScenarioCollectionChange}
+            handleSelectedDataChange={this.handleSelectedDataChange}
+            indicatorCategories={this.state.indicatorCategories}
+            indicatorSelectionLabel={this.state.indicatorSelectionLabel}
+            isMandatoryAlertLabel = {this.state.isMandatoryAlertLabel}
+            languageLabel={this.state.languageLabel}
+            languageList={this.state.languageList}
+            language={this.state.language}
+            onCloseAccordionModalClick={this.onCloseAccordionModalClick}
+            onToggleAccordionModalClick={this.onToggleAccordionModalClick}
+            regionalLevelLabel={this.state.regionalLevelLabel}
             regionalLevelList={this.state.regionalLevelList}
             regionalLevel={this.state.regionalLevel}
-            handleRegionalLevelChange={this.handleRegionalLevelChange}
-            region={this.state.region}
-            regionList={this.state.regionList}
-            handleRegionChange={this.handleRegionChange}
-            scenarioCollection={this.state.scenarioCollection}
-            scenarioCollectionList={this.state.scenarioCollectionList}
-            handleScenarioCollectionChange={this.handleScenarioCollectionChange}
-            scenarios={this.state.scenarios}
-            timePeriods={this.state.timePeriods}
-            handleSelectedDataChange={this.handleSelectedDataChange}
-            selectedOptions={this.state.selectedOptions}
-            scenarioSelectionLabel={this.state.scenarioSelectionLabel}
-            languageLabel={this.state.languageLabel}
-            regionalLevelLabel={this.state.regionalLevelLabel}
             regionLabel={this.state.regionLabel}
+            regionList={this.state.regionList}
+            region={this.state.region}
             scenarioCollectionListLabel={this.state.scenarioCollectionListLabel}
+            scenarioCollectionList={this.state.scenarioCollectionList}
+            scenarioCollection={this.state.scenarioCollection}
+            scenarioSelectionLabel={this.state.scenarioSelectionLabel}
             scenariosLabel={this.state.scenariosLabel}
-            timePeriodsLabel={this.state.timePeriodsLabel}
-            indicatorCategories={this.state.indicatorCategories}
+            scenarios={this.state.scenarios}
             selectedDataChange={this.handleSelectedDataChange}
-            indicatorSelectionLabel={this.state.indicatorSelectionLabel}
-            displayTexts={this.state.displayTexts}
-            onToggleAccordionModalClick={this.onToggleAccordionModalClick}
-			      onCloseAccordionModalClick={this.onCloseAccordionModalClick}
+            selectedOptions={this.state.selectedOptions}
+            timePeriodsLabel={this.state.timePeriodsLabel}
+            timePeriods={this.state.timePeriods}
             updateSelectedOptions = {this.updateSelectedOptions}
-            isMandatoryAlertLabel = {this.state.isMandatoryAlertLabel}
           />
 
         </div>
 
         <div className="col-lg-10 col-md-8 col-sm-8 col-xs-6">
 			<ChartContainer
-				valueData={this.state.values}
-				options={this.state.selectedOptions}
-				scenarios={this.state.scenarios}
-				regionalLevel={this.state.regionalLevel}
-				region={this.state.region}
         barChartLabel = {this.state.barChartLabel}
-        tableChartLabel = {this.state.tableChartLabel}
-        polarChartLabel = {this.state.polarChartLabel}
-        groupByScenariosLabel = {this.state.groupByScenariosLabel}
-        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
-        groupByTimeperiodsLabel = {this.state.groupByTimeperiodsLabel}
-        columnTypeLabel = {this.state.columnTypeLabel}
         barTypeLabel = {this.state.barTypeLabel}
-        saveAsPNG = {this.state.saveAsPNG}
+        columnTypeLabel = {this.state.columnTypeLabel}
+        graphByScenariosLabel = {this.state.graphByScenariosLabel}
+        graphByYearLabel = {this.state.graphByYearLabel}
+        groupByIndicatorsLabel = {this.state.groupByIndicatorsLabel}
+        groupByScenariosLabel = {this.state.groupByScenariosLabel}
+        groupByTimeperiodsLabel = {this.state.groupByTimeperiodsLabel}
+        indicatorsLabel = {this.state.indicatorsLabel}
+        options={this.state.selectedOptions}
+        polarChartLabel = {this.state.polarChartLabel}
+        print = {this.state.print}
+        regionalLevel={this.state.regionalLevel}
+        region={this.state.region}
         saveAsCSV = {this.state.saveAsCSV}
         saveAsJPEG = {this.state.saveAsJPEG}
-        print = {this.state.print}
-        valuesLabel = {this.state.valuesLabel}
-        indicatorsLabel = {this.state.indicatorsLabel}
-        scenariosLabel = {this.state.scenariosLabel}
+        saveAsPNG = {this.state.saveAsPNG}
         saveAsSVG = {this.state.saveAsSVG}
-        graphByYearLabel = {this.state.graphByYearLabel}
-        graphByScenariosLabel = {this.state.graphByScenariosLabel}
+        scenariosLabel = {this.state.scenariosLabel}
+        scenarios={this.state.scenarios}
+        tableChartLabel = {this.state.tableChartLabel}
         timePeriodsLabel = {this.state.timePeriodsLabel}
+        valueData={this.state.values}
+        valuesLabel = {this.state.valuesLabel}
 			/>
 	        <div className="services text-center content-panel shadow-1">
 	            <a

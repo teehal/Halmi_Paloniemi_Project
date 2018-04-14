@@ -49,15 +49,15 @@ class RegionLevels extends Component {
 		</h4>
 		
         <Select
-        	name={FormControlNames.REGION_LEVEL}
-	          placeholder="Select region level"
-	          value={regionalLevel}
-	          onChange={this.handleChange}
-	          options={regionalLevelList}
-	          disabled={this.state.dropdownDisabledBool}
-	          clearableValue = {false}
-	          clearable = {false}
-        />
+          clearable = {false}
+          clearableValue = {false}
+          disabled={this.state.dropdownDisabledBool}
+          name={FormControlNames.REGION_LEVEL}
+          onChange={this.handleChange}
+          options={regionalLevelList}
+          placeholder="Select region level"
+          value={regionalLevel}
+         />
       </div>
     );
   }

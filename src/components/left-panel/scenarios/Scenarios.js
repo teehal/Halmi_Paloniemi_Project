@@ -8,9 +8,9 @@ class Scenarios extends Component {
     super(props);
 
     this.state = { 
-      scenarioValues: [], 
       currentRegionId: props.region,
-      currentRegionalLevelId: props.regionalLevel
+      currentRegionalLevelId: props.regionalLevel,
+      scenarioValues: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -118,14 +118,14 @@ class Scenarios extends Component {
 
     const listItems = [ 
       <Select
-        key = {scenarios.length}
-        name = "scenarios"
-        multi = {true}
-        options = {this.scenarioOptions(scenarios)}
-        onChange = {(option) => this.handleChange(option)}
-        value = {this.state.scenarioValues}//{values}//
+        closeOnSelect = {false} 
         dataType = "scenario"
-        closeOnSelect = {false}
+        key = {scenarios.length}
+        multi = {true}
+        name = "scenarios"
+        onChange = {(option) => this.handleChange(option)}
+        options = {this.scenarioOptions(scenarios)}
+        value = {this.state.scenarioValues}
       />];
 
     return (
@@ -137,7 +137,7 @@ class Scenarios extends Component {
 						name={FormControlNames.SCENARIOS}
 						onClick={this.props.onToggleAccordionModalClick}>
 						[?]
-			         </Button>
+			    </Button>
 	         	</div>
 			</h4>
 	        <div className="item_list">

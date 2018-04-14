@@ -196,4 +196,35 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
     return myConfig;
   }
 
-  export {dataForGraphs, exporting, generateConfiguration}
+  function organizeData(graphState, scenarios, timeperiods, values) {
+
+    let validData = [];
+
+    if (graphState) {
+      timeperiods.forEach( (item, index) => {
+        validData.push({
+          dataType: item.dataType,
+          timePeriodId: item.id,
+          timePeriodName: item.name,
+          data: values.filter(function(e) {
+              return e.timePeriodId.toString() === timeperiods[index].id.toString();
+            })
+        });
+      });
+    }
+    else {
+      scenarios.forEach( (item, index) => {
+        validData.push({
+          dataType: "scenario",
+          timePeriodId: item.id,
+          timePeriodName: item.name,
+          data: values.filter(function(e) {
+              return e.scenarioId.toString() === scenarios[index].id.toString();
+            })
+        });
+      });
+    }
+    return validData;
+  }
+
+  export {dataForGraphs, exporting, generateConfiguration, organizeData}

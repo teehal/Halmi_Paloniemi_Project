@@ -46,14 +46,14 @@ class Region extends Component {
 	        </div>
 		</h4>     
         <Select
-          name={FormControlNames.REGION}
           className=""
-          value={region}
+          clearable = {false}
+          clearableValue = {false}
+          disabled={this.state.dropdownDisabledBool}
+          name={FormControlNames.REGION}
           onChange={this.handleChange}
           options={regionList}
-          disabled={this.state.dropdownDisabledBool} 
-          clearableValue = {false}
-          clearable = {false}
+          value={region}
         />
            
       </div>

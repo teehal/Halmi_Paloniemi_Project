@@ -35,27 +35,27 @@ class ChartContainer extends Component {
       case "bar":
         return (
           <Charts
-            values={this.props.valueData}
+            barTypeLabel = {this.props.barTypeLabel}
+            columnTypeLabel = {this.props.columnTypeLabel}
+            graphByScenariosLabel = {this.props.graphByScenariosLabel}
+            graphByYearLabel = {this.props.graphByYearLabel}
+            groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+            groupByScenariosLabel = {this.props.groupByScenariosLabel}
+            groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
+            indicatorsLabel = {this.props.indicatorsLabel}
+            isPolar={false}
             options={this.props.options}
-            scenarios={this.props.scenarios}
+            print = {this.props.print}
             regionalLevel={this.props.regionalLevel}
             region={this.props.region}
-            isPolar={false}
-            groupByScenariosLabel = {this.props.groupByScenariosLabel}
-            groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
-            groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
-            columnTypeLabel = {this.props.columnTypeLabel}
-            barTypeLabel = {this.props.barTypeLabel}
-            valuesLabel = {this.props.valuesLabel}
-            scenariosLabel = {this.props.scenariosLabel}
-            indicatorsLabel = {this.props.indicatorsLabel}
+            saveAsJPEG = {this.props.saveAsJPEG}
             saveAsPNG = {this.props.saveAsPNG}
             saveAsSVG = {this.props.saveAsSVG}
-            saveAsJPEG = {this.props.saveAsJPEG}
-            print = {this.props.print}
-            graphByYearLabel = {this.props.graphByYearLabel}
-            graphByScenariosLabel = {this.props.graphByScenariosLabel}
+            scenariosLabel = {this.props.scenariosLabel}
+            scenarios={this.props.scenarios}
             timePeriodsLabel = {this.props.timePeriodsLabel}
+            valuesLabel = {this.props.valuesLabel}
+            values={this.props.valueData}
           />
         );
       case "table":
@@ -83,27 +83,27 @@ class ChartContainer extends Component {
       case "polar":
       return (
         <Charts
-          values={this.props.valueData}
+          barTypeLabel = {this.props.barTypeLabel}
+          columnTypeLabel = {this.props.columnTypeLabel}
+          graphByScenariosLabel = {this.props.graphByScenariosLabel}
+          graphByYearLabel = {this.props.graphByYearLabel}
+          groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+          groupByScenariosLabel = {this.props.groupByScenariosLabel}
+          groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
+          indicatorsLabel = {this.props.indicatorsLabel}
+          isPolar={true}
           options={this.props.options}
-          scenarios={this.props.scenarios}
+          print = {this.props.print}
           regionalLevel={this.props.regionalLevel}
           region={this.props.region}
-          isPolar={true}
-          groupByScenariosLabel = {this.props.groupByScenariosLabel}
-          groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
-          groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
-          columnTypeLabel = {this.props.columnTypeLabel}
-          barTypeLabel = {this.props.barTypeLabel}
-          valuesLabel = {this.props.valuesLabel}
-          scenariosLabel = {this.props.scenariosLabel}
-          indicatorsLabel = {this.props.indicatorsLabel}
+          saveAsJPEG = {this.props.saveAsJPEG}
           saveAsPNG = {this.props.saveAsPNG}
           saveAsSVG = {this.props.saveAsSVG}
-          saveAsJPEG = {this.props.saveAsJPEG}
-          print = {this.props.print}
-          graphByYearLabel = {this.props.graphByYearLabel}
-          graphByScenariosLabel = {this.props.graphByScenariosLabel}
+          scenariosLabel = {this.props.scenariosLabel}
+          scenarios={this.props.scenarios}
           timePeriodsLabel = {this.props.timePeriodsLabel}
+          valuesLabel = {this.props.valuesLabel}
+          values={this.props.valueData}
         />
       );
       default:
@@ -119,11 +119,11 @@ class ChartContainer extends Component {
         </div>
         <div className="chart-controls">
           <ChartControls 
-            changeChartType={this.changeChartType}
             barChartLabel = {this.props.barChartLabel}
-            tableChartLabel = {this.props.tableChartLabel}
+            changeChartType={this.changeChartType}
             polarChartLabel = {this.props.polarChartLabel}
-            />
+            tableChartLabel = {this.props.tableChartLabel}
+          />
         </div>
       </div>
     );
