@@ -188,10 +188,10 @@ class Charts extends Component {
     if (!this.props.isPolar && this.state.timePeriodsInGraphs) {
       buttonElement.push( 
       <div key={this.state.groupBy} className="btn-group">
-        <button className="btn btn-info charts" onClick={this.toggleChartType}>
+        <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
           {this.state.chartTypeLabel}
         </button>
-        <button className="btn btn-info charts" onClick={this.toggleGroupBy}>
+        <button className="btn btn-info charts charts-button" onClick={this.toggleGroupBy}>
             {this.state.groupByLabel}
         </button>
         <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>

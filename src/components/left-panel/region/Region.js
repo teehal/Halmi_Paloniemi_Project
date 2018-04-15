@@ -36,14 +36,14 @@ class Region extends Component {
       <div>
         <h4>
 	        {this.props.regionLabel} 
-			<div className="help">
+			{/*<div className="help">
 				<Button
 					bsStyle='link'
 					name={FormControlNames.REGION}
 					onClick={this.props.onToggleAccordionModalClick}>
 					[?]
 		        </Button>
-	        </div>
+	        </div>*/}
 		</h4>     
         <Select
           className=""

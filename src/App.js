@@ -602,6 +602,7 @@ class App extends Component {
             selectedOptions={this.state.selectedOptions}
             timePeriodsLabel={this.state.timePeriodsLabel}
             timePeriods={this.state.timePeriods}
+			onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
           />
 
@@ -648,17 +649,17 @@ class App extends Component {
 	            </a>
 	            <a href="mailto:metsamittari@luke.fi?Subject=Feedback%20about%20service">
 	              <h4>{this.state.feedbackLabel}</h4>
-	            </a>
+	            </a>				
 				
           </div>
-          <div id="logos">
+          <div className="partnerlogos">	          
 					{/*<img src="images/logo_luke.png" alt="" class="logo" />
 					<img src="images/oamk_logo.png" alt="" class="logo" />
-					<img src="images/EU_EAKR_FI.png" alt="" class="logo" />*/}
+			<img src="images/logot.png" class="logo" alt="" />
 					{/*<img src="images/flag_eu.png" alt="" />*/}
 					<img src="images/logot2.png" alt="" className="logo" />
 					
-				</div>
+		</div>
         </div>
         <div className="accordionModal">
 			{this.accordionModal}
