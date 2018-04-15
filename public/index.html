@@ -13,6 +13,13 @@
 	<script src="https://use.fontawesome.com/f37ca4412a.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Mukta|Titillium+Web" rel="stylesheet">
 	<script>
+
+		var ua = window.navigator.userAgent;
+		if (ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0) {
+			alert("Internet Explorer ei ole tuettu. \nInternet Explorer not supported.");
+			window.location.href = "error.html";
+		}
+		
 		// History API 
 		if( window.history && window.history.pushState ){
 		  history.pushState( "noback", null, "" );
