@@ -11,13 +11,23 @@
 .chart-control{
   margin-left: 2px;
   margin-right: 2px;
-  background-color: #1d7c32;
+  //background-color: #1d7c32;//original
+  background-color: rgb(0, 51, 160);//luke blue
   color:white;
 }
 
 .chart-control:hover{
-  background-color: #39914c;
+  //background-color: #39914c;//original
+  background-color: #004BE4;
   color:white;
 }
 
+.charts-button {
+	background-color: rgb(0, 181, 226);//luke cyan
+	color:white;
+}
 
+.charts-button:hover{
+	background-color: RGB(69, 209, 255);
+	color:white;
+}

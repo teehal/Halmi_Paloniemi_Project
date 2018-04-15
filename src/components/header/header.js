@@ -14,7 +14,7 @@ class Header extends Component {
 
     return (
       	<div>
-	       	<nav className="navbar navbar-expand-lg navbar-dark bg-success" style={{padding: 2 }}>
+	       	<nav className="navbar navbar-expand-lg navbar-dark btn-success" style={{padding: 2 }}>
 		        <a className="navbar-brand text-white animate" >
 	            	<i className="treeanimate fa fa-tree" aria-hidden="true" /> { ' ' } { this.props.displayTexts.appName } 
 	            </a> 
@@ -71,7 +71,7 @@ class Header extends Component {
 				            </div> 
 				            <div className = "modal-footer">
 					            <button type = "button"
-						            className = "btn btn-secondary"
+						            className = "btn btn-secondary close-button"
 					            	data-dismiss = "modal">
     								{ this.props.displayTexts.close } 
     							</button> 

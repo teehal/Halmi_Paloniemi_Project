@@ -1,27 +1,30 @@
 @import '../../variables.scss';
 
-.top-header {
-    background-color: transparent;
-    color: $blue-font;
-    text-align: center;
-}
 
 .languageSelection {
 	width: 10rem;
 	margin-left: 1rem;
 	margin-bottom: 0.5rem;
+	//font-family: 'Mukta', sans-serif !important;
+	font-family: 'Titillium Web', sans-serif;
+	color: rgb(84, 88, 90) !important;
 }
 
 .help-button {
 	margin-left: 1rem;
 	margin-bottom: 0.25rem;
 	margin-top: 0.25rem;
+	//font-family: 'Mukta', sans-serif !important;
+	font-family: 'Titillium Web', sans-serif !important;
+	color: rgb(84, 88, 90) !important;
 }
 
 .qtyDscr {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
-	
+	//font-family: 'Mukta', sans-serif !important;
+	font-family: 'Titillium Web', sans-serif !important;
+	color: rgb(84, 88, 90) !important;
 }
 
 .navbar {
@@ -30,8 +33,11 @@
 
 .navbar-brand {
 	display: block;
+	//font-family: 'Mukta', sans-serif;
 }
 
-.navbar-toggler {
-	//float: right;
+.close-button {
+	background-color: rgb(120, 190, 32) !important;
+	color: white !important;
+	font-family: 'Titillium Web', sans-serif !important;
 }

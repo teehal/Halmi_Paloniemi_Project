@@ -2,7 +2,8 @@ h3,
 h4 {
   //color: rgb(50, 63, 160);
   //rgb(29, 124, 50)
-  color: rgba(18, 97, 35, 1);
+  color: rgb(84, 88, 90);//black;//rgba(18, 97, 35, 1);
+  font-family: 'Titillium Web', sans-serif;
   font-weight: bold;
 }
 
@@ -13,7 +14,8 @@ h3 {
 
 label {
   //color: rgb(50, 63, 160);
-  color: rgb(29, 124, 50);
+  //color: rgb(29, 124, 50);
+  //color: red;
 }
 
 .header-spacing-panels {
@@ -29,53 +31,70 @@ label {
 
 //Detail panel
 .panel-default {
-	background: rgb(210, 247, 199);
-	//color: white;
+	//background: rgb(210, 247, 199);
+	background: white;
+	//font-family: 'Titillium Web', sans-serif;
+	font-family: 'Mukta', sans-serif;//text
+	color: rgb(84, 88, 90);
 }
 
 .panel-heading {
-	background-color: rgb(92,184,92) !important;
+	//background-color: rgb(92,184,92) !important;
+	background-color: rgb(120, 190, 32) !important;//luke green
+	//font-family: 'Mukta', sans-serif;
+	font-family: 'Titillium Web', sans-serif;//heading
 	color: white !important;
 	cursor: pointer;
 }
 
 .modal-content {
-	background: linear-gradient(rgba(210, 247, 199, .95), rgba(108, 155, 87, .95)) !important;
-	//rgb(137, 158, 124)
-
+	//background: rgba(210, 247, 199, .95);//light green
+	//background: rgba(220, 245, 190, 0.95) ;//diluted from luke green
+	background: #def5c1;
+	//font-family: 'Titillium Web', sans-serif;
+	font-family: 'Mukta', sans-serif;//text
+	color: rgb(84, 88, 90);
 }
 
 .modal-dialog {
-	//position: absolute;
 	top: 200px;
-	//left: -100px;
-
 }
 
-//Detail panel upper close button
+//Detail panel UPPER close button
 button.close {
-	//display: inline-block;
-	//border: solid red 1px !important;
 	float: right !important;
+	font-size: larger;
+	font-weight: bold;
 }
 
+//Modal help panel header 
 .modal-header {
-	//border: solid cyan 1px;
-	//text-align: left;
 	display: block;
 	cursor: pointer;
+	//font-family: 'Mukta', sans-serif;
+	font-family: 'Titillium Web', sans-serif;//heading
+	color: rgb(84, 88, 90);
 }
 
 .modal-header>h4 {
 	float: left;
 	//display: inline-block;
+	font-family: 'Titillium Web', sans-serif;//heading
 	//border: solid blue 1px;
 }
+
+//link for accordion help panels
 .help {
 	float: right;
-	//margin-right: .5rem;
-	//padding-bottom: 5rem;
-	color: rgba(18, 97, 35, 1);
+	//color: rgb(0, 51, 160) !important;
 	font-size: small;
-	font-weight: normal;
+	cursor: pointer;
+	//margin-right: 2rem;
+}
+
+//pop-up accordion panel close button
+.btn-default {
+	background-color: rgb(120, 190, 32) !important;
+	color: white !important;
+	font-family: 'Titillium Web', sans-serif !important;
 }
