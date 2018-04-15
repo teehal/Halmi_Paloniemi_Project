@@ -653,12 +653,7 @@ class App extends Component {
 				
           </div>
           <div className="partnerlogos">	          
-					{/*<img src="images/logo_luke.png" alt="" class="logo" />
-					<img src="images/oamk_logo.png" alt="" class="logo" />
-			<img src="images/logot.png" class="logo" alt="" />
-					{/*<img src="images/flag_eu.png" alt="" />*/}
-					<img src="images/logot2.png" alt="" className="logo" />
-					
+			<img src="images/logot.png" alt="" className="logo" />
 		</div>
         </div>
         <div className="accordionModal">

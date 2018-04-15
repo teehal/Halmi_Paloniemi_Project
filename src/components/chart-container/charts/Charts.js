@@ -194,7 +194,7 @@ class Charts extends Component {
         <button className="btn btn-info charts charts-button" onClick={this.toggleGroupBy}>
             {this.state.groupByLabel}
         </button>
-        <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+        <button className="btn btn-info charts charts-button" onClick={this.toggleScenarioGraphs}>
           {this.state.graphByYearOrScenarioLabel}
         </button>  
       </div>
@@ -202,13 +202,13 @@ class Charts extends Component {
     } else if (!this.state.timePeriodsInGraphs){
       buttonElement.push( 
         <div key={this.state.groupBy} className="btn-group">
-          <button className="btn btn-info charts" onClick={this.toggleChartType}>
+          <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
             {this.state.chartTypeLabel}
           </button>
-          <button className="btn btn-info charts" onClick={this.toggleGroupByYearOrIndicator}>
+          <button className="btn btn-info charts charts-button" onClick={this.toggleGroupByYearOrIndicator}>
               {this.state.groupByYearOrIndicator}
           </button>
-          <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+          <button className="btn btn-info charts charts-button" onClick={this.toggleScenarioGraphs}>
             {this.state.graphByYearOrScenarioLabel}
           </button>  
         </div>
@@ -216,10 +216,10 @@ class Charts extends Component {
     } else {
       buttonElement.push( 
         <div key={this.state.groupBy} className="btn-group">
-          <button className="btn btn-info" onClick={this.toggleGroupBy}>
+          <button className="btn btn-info charts-button" onClick={this.toggleGroupBy}>
           {this.state.groupByLabel}
           </button>
-          <button className="btn btn-info charts" onClick={this.toggleScenarioGraphs}>
+          <button className="btn btn-info charts charts-button" onClick={this.toggleScenarioGraphs}>
           {this.state.graphByYearOrScenarioLabel}
         </button>
        </div>  
