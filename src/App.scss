@@ -1,7 +1,8 @@
 @import './variables.scss';
 
 .App {
-  background: linear-gradient($bg-color-first, $bg-color-second, $bg-color-third);
+  //background: linear-gradient($bg-color-first, $bg-color-second, $bg-color-third);
+  background: white;
   height: 100vh;
   overflow: auto;
 }
@@ -31,7 +32,7 @@
 }
 
 .content-panel {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #d5f2b0;//rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   padding: 0.5rem 1rem 2rem;
   margin-bottom: 2rem;
