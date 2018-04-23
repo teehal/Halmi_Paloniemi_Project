@@ -6,13 +6,9 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
       ( groupBy === "indicator" ? indicators : scenariosOrTimeperiods);
     let grouped = groupBy === "scenario" ? indicators : 
       (groupBy === "timePeriod" ? indicators : scenariosOrTimeperiods);
-    console.log(`groupby ${groupBy}`);
-    console.log("groupingBy ", groupingBy);
-    console.log("grouped ", grouped);
-    console.log("values ", data);
+
     data.forEach( (item) => {
       groupingBy.forEach(first_item => {
-        console.log("first_item ", first_item);
         let first_itemId = first_item.id;
 
         if ( xCategories.indexOf(first_item.name) === -1 )
@@ -20,7 +16,6 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
 
           grouped.forEach(second_item => {
             let data = [];
-            // console.log(indicatorName);
             if (item.dataType === "timePeriod") {
               if (groupBy === "scenario") {
                 data = item.data.filter(function(e) {
@@ -54,7 +49,6 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
                 });
               }
             }
-            console.log("data is ", data);
 
             let seriesData = [];
             data.forEach(d => {

@@ -299,12 +299,10 @@ class App extends Component {
         }
       );
     }
-    // console.log(this.state.selectedOptions);
   }
 
   handleScenarioCollectionChange(value) {
     DataBinding.bindChartData(value, this.state.region).then(result => {
-      //  console.log(result.indicatorCategories);
       this.setState({
         scenarioCollection: value,
         scenarios: result.scenarios,
@@ -336,8 +334,7 @@ class App extends Component {
     this.state.indicatorCategories.map(cat => {
       if (cat.isMandatory.toString() === "1") {
         cat.indicators.map((indicator, index) => {
-          // console.log(indicator);
-          if (index === 0) {
+           if (index === 0) {
             list.push({
               dataType: "indicator",
               name: indicator.name,
@@ -426,7 +423,6 @@ class App extends Component {
           scenarioCollectionList[0],
           regionList[0]
         ).then(result => {
-	        //console.log("bindChartData result: ", result);
           if (isFirst === true) {
             this.setState({
               regionalLevelList: regionalLevelList,
@@ -476,15 +472,16 @@ class App extends Component {
     let cookie = getCookie(getCookieName());
     if (cookie === "1") {
       this.setState({
-        barChartLabel: "Bar chart",
+        barChartLabel: "Horizontal bar chart",
         barTypeLabel: "Horizontal",
+        columnChartLabel: "Vertical bar chart",
         columnTypeLabel: "Vertical",
         feedbackLabel: "Give feedback",
-        graphByScenariosLabel: "Group by periods/indicators",
-        graphByYearLabel: "Group by scenarios/indicators",
+        graphByScenariosLabel: "Scenarios as separate charts",
+        graphByYearLabel: "Periods as separate charts",
         groupByIndicatorsLabel: "Group by indicators",
         groupByScenariosLabel: "Group by scenarios",
-        groupByTimeperiodsLabel: "Group by timeperiods",
+        groupByTimeperiodsLabel: "Group by periods",
         guidanceLabel: "Help",
         indicatorSelectionLabel: "Indicator Categories",
         indicatorsLabel: "Indicators",
@@ -507,15 +504,16 @@ class App extends Component {
       });
     } else {
       this.setState({
-        barChartLabel: "Pylväskaavio",
+        barChartLabel: "Palkkikaavio",
         barTypeLabel: "Palkit vaakasuoraan",
+        columnChartLabel: "Pylväskaavio",
         columnTypeLabel: "Palkit pystysuoraan",
         feedbackLabel: "Anna palautetta",
-        graphByScenariosLabel: "Ryhmittely aikajakso/indikaattori",
-        graphByYearLabel: "Ryhmittely skenaario/indikaattori",
+        graphByScenariosLabel: "Skenaariot erillisinä kaavioina",
+        graphByYearLabel: "Kaudet erillisinä kaavioina",
         groupByIndicatorsLabel: "Ryhmittele indikaattoreiden mukaan",
         groupByScenariosLabel: "Ryhmittele skenaarioittain",
-        groupByTimeperiodsLabel: "Ryhmittele aikajaksoittain",
+        groupByTimeperiodsLabel: "Ryhmittele kausittain",
         guidanceLabel: "Ohje",
         indicatorSelectionLabel: "Indikaattoreiden valinta",
         indicatorsLabel: "Indikaattorit",
@@ -602,7 +600,6 @@ class App extends Component {
             selectedOptions={this.state.selectedOptions}
             timePeriodsLabel={this.state.timePeriodsLabel}
             timePeriods={this.state.timePeriods}
-			onCloseAccordionModalClick={this.onCloseAccordionModalClick}
             updateSelectedOptions = {this.updateSelectedOptions}
           />
 
@@ -612,6 +609,7 @@ class App extends Component {
 			<ChartContainer
         barChartLabel = {this.state.barChartLabel}
         barTypeLabel = {this.state.barTypeLabel}
+        columnChartLabel = {this.state.columnChartLabel}
         columnTypeLabel = {this.state.columnTypeLabel}
         graphByScenariosLabel = {this.state.graphByScenariosLabel}
         graphByYearLabel = {this.state.graphByYearLabel}

@@ -31,7 +31,7 @@ class Region extends Component {
   render() {
     const regionList = this.props.regionList;
     const region = this.props.region;
-	//console.log("Region, regionList: ", this.props.regionList);
+
     return (
       <div>
         <h4>

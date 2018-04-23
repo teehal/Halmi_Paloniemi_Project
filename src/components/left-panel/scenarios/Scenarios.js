@@ -34,15 +34,17 @@ class Scenarios extends Component {
     let regionalLevelHasChanged = this.state.currentRegionalLevelId !== newRegionalId;
 
     if ( (nextProp.scenarios.length && !this.state.scenarioValues.length) || 
-      ((regionHasChanged || regionalLevelHasChanged  || scenarioCollectionChanged) && nextProp.scenarios.length))
-      this.setState({ 
-        scenarioValues: [{
-          value: nextProp.scenarios[0].id, 
-          label: nextProp.scenarios[0].name}
-          ],
-        currentRegionId: newRegionId,
-        currentRegionalLevelId: newRegionalId
-      });
+      ((regionHasChanged || regionalLevelHasChanged  || scenarioCollectionChanged) && nextProp.scenarios.length)) {
+        this.setState({ 
+          scenarioValues: [{
+            value: nextProp.scenarios[0].id, 
+            label: nextProp.scenarios[0].name}
+            ],
+          currentRegionId: newRegionId,
+          currentRegionalLevelId: newRegionalId
+        });
+        return;
+    }
 
     if (nextProp.scenarios.length && this.props.scenarios.length) {
       // Check for language change and update labels

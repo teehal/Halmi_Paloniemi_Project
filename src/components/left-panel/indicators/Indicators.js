@@ -42,6 +42,7 @@ class Indicators extends Component {
           currentRegionId: newRegionId,
           currentRegionalLevelId: newRegionalId
         });
+      return;
     }
 
     if (nextProp.indicatorCategories.length && this.props.indicatorCategories.length) {

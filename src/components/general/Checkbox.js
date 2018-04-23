@@ -5,7 +5,6 @@ import "./styling.scss";
 class Checkbox extends Component {
   constructor(props) {
     super(props);
-    // console.log("constructor:", this.props.name, this.props.checked);
     this.state = {
       isChecked: this.props.checked
     };
@@ -18,7 +17,6 @@ class Checkbox extends Component {
       id: event.target.value
     });
 
-    //console.log("toogle ", check);
 
     this.setState({
       isChecked: check

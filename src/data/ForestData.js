@@ -3,7 +3,6 @@ import { getCookie, getCookieName } from "../services/cookie.js";
 
 function getLanguage() {
   let language = getCookie(getCookieName());
-  // console.log(language);
   if (language === "1") {
     return "en";
   } else {

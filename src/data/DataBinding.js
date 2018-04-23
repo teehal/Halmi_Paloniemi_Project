@@ -9,7 +9,6 @@ function bindRegionalLevelData() {
 }
 
 function bindRegionData(regionalLevel) {
-  //console.log("bindRegionData " + regionalLevel.value);
   if (regionalLevel !== "") {
     return new Promise((resolve, reject) => {
       ForestData.getRegion(regionalLevel.value).then(function(result) {

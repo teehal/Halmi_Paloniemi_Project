@@ -31,8 +31,6 @@ class LeftPanel extends Component {
     const scenarios = this.props.scenarios;
 		const timePeriods = this.props.timePeriods;
 		const updateSelectedOptions = this.props.updateSelectedOptions;
-    //  console.log(scenarios);
-    //  const timePeriods = this.props.timePeriods;
 
     const selectedDataChange = this.props.handleSelectedDataChange;
     return (

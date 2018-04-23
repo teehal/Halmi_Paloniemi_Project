@@ -12,6 +12,9 @@ class ChartControls extends Component {
       case "polar":
         this.props.changeChartType(e.target.value);
         break;
+      case "column":
+        this.props.changeChartType(e.target.value);
+        break;
       case "bar":
         this.props.changeChartType(e.target.value);
         break;
@@ -32,6 +35,9 @@ class ChartControls extends Component {
         <div className="chart-control-buttons btn-group">
           <button className="btn chart-control" value="bar" onClick={this.changeChartType}>
            {this.props.barChartLabel}
+          </button>
+          <button className="btn chart-control" value="column" onClick={this.changeChartType}>
+            {this.props.columnChartLabel}
           </button>
           <button className="btn chart-control" value="table" onClick={this.changeChartType}>
             {this.props.tableChartLabel}

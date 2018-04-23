@@ -10,19 +10,14 @@ import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 class ChartContainer extends Component {
   constructor(props) {
     super(props);
-  //  this.setScenarioId = this.setScenarioId.bind(this);
 
     this.state = {
-      chartType: "bar"
+      chartType: "column"
     };
 
     this.changeChartType = this.changeChartType.bind(this);
     this.RenderChart = this.RenderChart.bind(this);
   }
-
-  // setScenarioId() {
-  //   console.log(this.props.options);
-  // }
 
   changeChartType(type) {
     this.setState({
@@ -36,7 +31,36 @@ class ChartContainer extends Component {
         return (
           <Charts
             barTypeLabel = {this.props.barTypeLabel}
+            chartType = {chartType}
             columnTypeLabel = {this.props.columnTypeLabel}
+            graphByScenariosLabel = {this.props.graphByScenariosLabel}
+            graphByYearLabel = {this.props.graphByYearLabel}
+            groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
+            groupByScenariosLabel = {this.props.groupByScenariosLabel}
+            groupByTimeperiodsLabel = {this.props.groupByTimeperiodsLabel}
+            indicatorsLabel = {this.props.indicatorsLabel}
+            isPolar={false}
+            options={this.props.options}
+            print = {this.props.print}
+            regionalLevel={this.props.regionalLevel}
+            region={this.props.region}
+            saveAsJPEG = {this.props.saveAsJPEG}
+            saveAsPNG = {this.props.saveAsPNG}
+            saveAsSVG = {this.props.saveAsSVG}
+            scenariosLabel = {this.props.scenariosLabel}
+            scenarios={this.props.scenarios}
+            timePeriodsLabel = {this.props.timePeriodsLabel}
+            valuesLabel = {this.props.valuesLabel}
+            values={this.props.valueData}
+          />
+        );
+      case "column":
+        return (
+          <Charts
+            barTypeLabel = {this.props.barTypeLabel}
+            chartType = {chartType}
+            columnTypeLabel = {this.props.columnTypeLabel}
+            columnChartLabel = {this.props.columnChartLabel}
             graphByScenariosLabel = {this.props.graphByScenariosLabel}
             graphByYearLabel = {this.props.graphByYearLabel}
             groupByIndicatorsLabel = {this.props.groupByIndicatorsLabel}
@@ -84,6 +108,7 @@ class ChartContainer extends Component {
       return (
         <Charts
           barTypeLabel = {this.props.barTypeLabel}
+          chartType = "bar"
           columnTypeLabel = {this.props.columnTypeLabel}
           graphByScenariosLabel = {this.props.graphByScenariosLabel}
           graphByYearLabel = {this.props.graphByYearLabel}
@@ -121,6 +146,7 @@ class ChartContainer extends Component {
           <ChartControls 
             barChartLabel = {this.props.barChartLabel}
             changeChartType={this.changeChartType}
+            columnChartLabel = {this.props.columnChartLabel}
             polarChartLabel = {this.props.polarChartLabel}
             tableChartLabel = {this.props.tableChartLabel}
           />

@@ -12,7 +12,7 @@ class Charts extends Component {
     super(props);
 
     this.state = {
-      chartType: "column",
+      chartType: props.chartType,
       chartTypeLabel: props.barTypeLabel,
       groupBy: "indicator",
       groupByLabel: props.groupByScenariosLabel,
@@ -64,6 +64,11 @@ class Charts extends Component {
         groupByLabel: nextProp.groupByScenariosLabel
       });
     }
+
+    if (this.state.chartType !== nextProp.chartType)
+      this.setState({
+        chartType: nextProp.chartType
+      });
   }
 
   toggleChartType() {
@@ -188,9 +193,9 @@ class Charts extends Component {
     if (!this.props.isPolar && this.state.timePeriodsInGraphs) {
       buttonElement.push( 
       <div key={this.state.groupBy} className="btn-group">
-        <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
+        {/* <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
           {this.state.chartTypeLabel}
-        </button>
+        </button> */}
         <button className="btn btn-info charts charts-button" onClick={this.toggleGroupBy}>
             {this.state.groupByLabel}
         </button>
@@ -202,9 +207,9 @@ class Charts extends Component {
     } else if (!this.state.timePeriodsInGraphs){
       buttonElement.push( 
         <div key={this.state.groupBy} className="btn-group">
-          <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
+          {/* <button className="btn btn-info charts charts-button" onClick={this.toggleChartType}>
             {this.state.chartTypeLabel}
-          </button>
+          </button> */}
           <button className="btn btn-info charts charts-button" onClick={this.toggleGroupByYearOrIndicator}>
               {this.state.groupByYearOrIndicator}
           </button>
