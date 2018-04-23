@@ -138,10 +138,12 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
     let height_polar = 600;
     let height = this.state.chartType === "column" ? 400 :
           400 + yaxis[0].series.length * 65 + xaxis.length * 55
-    let pointWidth = itIsPolar ? null : this.state.pointWidth;
+    //let pointWidth = itIsPolar ? null : this.state.pointWidth;
    
     yaxis.forEach( (item) => {
       myConfig.push( {
+        colors: ["#ff8200", "#00B5E2", "#54585a", "#0033a0", "#e13c98", "#78be20",
+          "#7f3f98", "#ff9548", "#53d1ef", "#686c71", "#ea70b5", "#7dc969", "#2f69b8", "#845eaf"],
         title: {
           text: this.props.region.name + " " + item.name
         },
@@ -180,7 +182,10 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
         },
         plotOptions: {
           series: {
-              pointWidth: pointWidth
+              //pointWidth: pointWidth
+              groupPadding: 0.1,
+              pointPadding: 0.1,
+              borderWidth: 0
           }
         }, 
         series: item.series,
