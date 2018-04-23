@@ -81,8 +81,8 @@ class Indicators extends Component {
         option
       );
       let element = this.state.indValues[index].slice(
-        missingIndex,
-        missingIndex + 1
+        missingIndex[0],
+        missingIndex[0] + 1
       );
       this.props.selectedDataChange({
         dataType: "indicator",
@@ -101,19 +101,24 @@ class Indicators extends Component {
         absVar: lastElement[0].absVar
       });
     } else if (this.state.indValues[index][0].isMandatory !== 1) {
-      let missingIndex = this.findMissingElementIndex(
+      let missingIndices = this.findMissingElementIndex(
         this.state.indValues[index],
         option
       );
-      let element = this.state.indValues[index].slice(
-        missingIndex,
-        missingIndex + 1
-      );
-      this.props.selectedDataChange({
-        dataType: "indicator",
-        name: element[0].label,
-        id: element[0].value.toString(),
-        absVar: element[0].absVar
+      let element = [];
+       missingIndices.forEach( (item) => {
+          element.push(this.state.indValues[index].slice(
+            item,
+            item + 1
+          )
+        )});
+      element.forEach((item) => {
+        this.props.selectedDataChange({
+          dataType: "indicator",
+          name: item[0].label,
+          id: item[0].value.toString(),
+          absVar: item[0].absVar
+        });
       });
       this.setState({ indValues: tempArray });
     } else alert(this.props.isMandatoryAlertLabel);
@@ -135,14 +140,15 @@ class Indicators extends Component {
   };
 
   findMissingElementIndex = (first_arr, second_arr) => {
-    let value = -1;
+    //let value = -1;
+    let value = [];
 
     first_arr.forEach((item, index) => {
       let counter = 0;
       second_arr.forEach(element => {
         if (item.value === element.value) counter++;
       });
-      if (!counter) value = index;
+      if (!counter) value.push(index);
     });
 
     return value;

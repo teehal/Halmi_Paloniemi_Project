@@ -182,6 +182,7 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
         },
         plotOptions: {
           series: {
+              maxPointWidth: 150,
               //pointWidth: pointWidth
               groupPadding: 0.1,
               pointPadding: 0.1,
