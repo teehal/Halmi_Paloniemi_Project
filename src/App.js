@@ -499,7 +499,7 @@ class App extends Component {
         scenarioSelectionLabel: "Scenario Selection",
         scenariosLabel: "Scenarios",
         tableChartLabel: "Table chart",
-        timePeriodsLabel: "Time Periods",
+        timePeriodsLabel: "Period",
         valuesLabel: "Relative value"
       });
     } else {
@@ -531,7 +531,7 @@ class App extends Component {
         scenarioSelectionLabel: "Skenaarioiden valinta",
         scenariosLabel: "Skenaariot",
         tableChartLabel: "Taulukko",
-        timePeriodsLabel: "Ajankohta",
+        timePeriodsLabel: "Kausi",
         valuesLabel: "Suhteellinen arvo"
       });
     }
