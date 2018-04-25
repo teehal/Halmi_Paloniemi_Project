@@ -159,7 +159,7 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
             style: {
               textAlign: 'center',
               fontSize: '10pt',
-              color: '#666873',
+              color: 'black', //'#666873',
               fontWeight: 'normal',
               textDecoration: 'underline'
             }
@@ -169,7 +169,13 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
           lineColor: '#a5a5a5',
           gridLineColor: '#a5a5a5',
           categories: xaxis,
-          crosshair: true
+          crosshair: true,
+          labels: {
+            style: {
+              color: 'black',
+              fontFamily: 'Arial'
+            }
+          }
         },
         yAxis: {
           lineColor: '#a5a5a5',
@@ -178,10 +184,16 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
           tickAmount: itIsPolar ? 5 : undefined,
           min: 0,
           labels: {
-            overflow: "justify"
+            overflow: "justify",
+            style:{
+              color: 'black'
+            }
           },
           title: {
-            text: yLabel
+            text: yLabel,
+            style: {
+              color: 'black'
+            }
           }
         },
         plotOptions: {
