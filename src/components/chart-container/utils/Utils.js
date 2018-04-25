@@ -166,10 +166,14 @@ function dataForGraphs(groupBy, data, scenariosOrTimeperiods, indicators) {
           }
         },
         xAxis: {
+          lineColor: '#a5a5a5',
+          gridLineColor: '#a5a5a5',
           categories: xaxis,
           crosshair: true
         },
         yAxis: {
+          lineColor: '#a5a5a5',
+          gridLineColor: '#a5a5a5',
           max: itIsPolar ? 1 : 1,
           tickAmount: itIsPolar ? 5 : undefined,
           min: 0,
