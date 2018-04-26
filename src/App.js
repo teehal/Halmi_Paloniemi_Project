@@ -606,11 +606,6 @@ class App extends Component {
         </div>
 
         <div className="col-lg-10 col-md-8 col-sm-8 col-xs-6">
-	        <div className="row">
-	        <div className = "col-lg-12 content-panel serviceDescription">
-		        <p className="serviceDescriptionText">{this.state.displayTexts.serviceDescription} </p>
-		    </div>
-		</div>
 			<ChartContainer
         barChartLabel = {this.state.barChartLabel}
         barTypeLabel = {this.state.barTypeLabel}
