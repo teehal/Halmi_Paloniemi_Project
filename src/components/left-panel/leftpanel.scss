@@ -1,15 +1,12 @@
 h3,
 h4 {
-  //color: rgb(50, 63, 160);
-  //rgb(29, 124, 50)
-  color: rgb(84, 88, 90);//black;//rgba(18, 97, 35, 1);
-  font-family: 'Titillium Web', sans-serif;
+  color: rgb(84, 88, 90);//luke black
+  font-family: 'Titillium Web', sans-serif;//header font
   font-weight: bold;
 }
 
 h3 {
 	margin-top: 1rem;
-
 }
 
 label {
@@ -35,22 +32,24 @@ label {
 	background: white;
 	//font-family: 'Titillium Web', sans-serif;
 	font-family: 'Mukta', sans-serif;//text
-	color: rgb(84, 88, 90);
+	color: rgb(84, 88, 90);//luke black
 }
 
 .panel-heading {
 	//background-color: rgb(92,184,92) !important;
-	background-color: rgb(120, 190, 32) !important;//luke green
+	//background-color: rgb(120, 190, 32) !important;//luke green
+	background-color: white;
 	//font-family: 'Mukta', sans-serif;
 	font-family: 'Titillium Web', sans-serif;//heading
-	color: white !important;
+	//color: white !important;
+	color: rgb(84, 88, 90);//luke black
 	cursor: pointer;
 }
 
 .modal-content {
 	//background: rgba(210, 247, 199, .95);//light green
 	//background: rgba(220, 245, 190, 0.95) ;//diluted from luke green
-	background: #def5c1;
+	background: white;//#def5c1;
 	//font-family: 'Titillium Web', sans-serif;
 	font-family: 'Mukta', sans-serif;//text
 	color: rgb(84, 88, 90);
@@ -71,16 +70,13 @@ button.close {
 .modal-header {
 	display: block;
 	cursor: pointer;
-	//font-family: 'Mukta', sans-serif;
 	font-family: 'Titillium Web', sans-serif;//heading
-	color: rgb(84, 88, 90);
+	color: rgb(84, 88, 90);//luke black
 }
 
 .modal-header>h4 {
 	float: left;
-	//display: inline-block;
 	font-family: 'Titillium Web', sans-serif;//heading
-	//border: solid blue 1px;
 }
 
 //link for accordion help panels
@@ -89,12 +85,12 @@ button.close {
 	//color: rgb(0, 51, 160) !important;
 	font-size: small;
 	cursor: pointer;
-	//margin-right: 2rem;
 }
 
-//pop-up accordion panel close button
+//accordion panel close button
 .btn-default {
-	background-color: rgb(120, 190, 32) !important;
-	color: white !important;
+	background-color: white;
+	border: solid 0.5px rgb(84, 88, 90);
+	color: rgb(84, 88, 90);//luke black
 	font-family: 'Titillium Web', sans-serif !important;
 }

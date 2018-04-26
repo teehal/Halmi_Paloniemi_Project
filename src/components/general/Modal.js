@@ -34,6 +34,7 @@ class Help extends Component {
                       </button>
                     </div>
                     <div className="modal-body">
+	                    <p>{this.props.displayTexts.serviceDescription} </p>
                       <p>{this.props.displayTexts.helpGeneralDescription}</p>
                       <br />
                       <br />
