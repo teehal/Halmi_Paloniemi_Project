@@ -183,7 +183,7 @@ class Language {
                 indicators: "Indikaattorit",
                 savePDF: "Tallenna PDF-muodossa",
                 emailSendInfo: "Kun painat Lähetä-nappia, laitteesi sähköpostiapplikaatio avautuu ja se täyttyy kirjoittamallasi tekstillä",
-                serviceDescription: "monimuotoisuus, ekosysteemipalvelut ja puuntuotos yhdessä kuvassa."
+                serviceDescription: "Monimuotoisuus, ekosysteemipalvelut ja puuntuotos yhdessä kuvassa."
             }
         }
 

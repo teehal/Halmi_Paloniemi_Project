@@ -14,7 +14,7 @@ class Header extends Component {
 
     return (
       	<div>
-	       	<nav className="navbar navbar-expand-lg navbar-light" style={{padding: 2 }}>{/* btn-success */}
+	       	<nav className="navbar navbar-expand-lg navbar-dark btn-success" style={{padding: 2 }}>{/* btn-success */}
 		        <a className="navbar-brand animate" >{/* text-white */}
 	            	<i className="treeanimate fa fa-tree" aria-hidden="true" /> { ' ' } { this.props.displayTexts.appName }
 	            </a> 
