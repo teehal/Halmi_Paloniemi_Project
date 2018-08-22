@@ -34,8 +34,8 @@ class Help extends Component {
                       </button>
                     </div>
                     <div className="modal-body">
-	                    <p>{this.props.displayTexts.serviceDescription} </p>
                       <p>{this.props.displayTexts.helpGeneralDescription}</p>
+                      <p>{this.props.displayTexts.generalServiceDescription} </p>
                       <br />
                       <br />
                       <div className="row">
@@ -142,7 +142,7 @@ class Help extends Component {
                     <div className="modal-footer">
                       <button
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-secondary close-button"
                         data-dismiss="modal"
                       >
                         {this.props.displayTexts.close}

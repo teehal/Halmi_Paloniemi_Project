@@ -95,7 +95,8 @@ class Language {
                 indicators: "Indicators",
                 savePDF: "Save as PDF",
                 emailSendInfo: "Pressing the Send button will open your device's default email application and fill it with the text you've written here", 
-                serviceDescription: "Using Forest Indicator you can analyze the  effects of forest use on biodiversity and ecosystem services. The effect is indicated as a relative share of the maximum value."
+                serviceDescription: "Biodiversity, ecosystem services and timber production in one figure.", 
+                generalServiceDescription: "Using Forest Indicator you can analyze the  effects of forest use on biodiversity and ecosystem services. The effect is indicated as a relative share of the maximum value."
             }
         }
         // If Finnish is chosen when Language is created populate with English
@@ -183,7 +184,8 @@ class Language {
                 indicators: "Indikaattorit",
                 savePDF: "Tallenna PDF-muodossa",
                 emailSendInfo: "Kun painat Lähetä-nappia, laitteesi sähköpostiapplikaatio avautuu ja se täyttyy kirjoittamallasi tekstillä",
-                serviceDescription: "Metsämittarilla voit tutkia metsien käytön vaikutuksia metsien monimuotoisuuteen ja ekosysteemipalveluihin. Vaikutus ilmaistaan suhteellisena osuutena maksimiarvosta, indikaattorina."
+                serviceDescription: "Monimuotoisuus, ekosysteemipalvelut ja puuntuotos yhdessä kuvassa.", 
+                generalServiceDescription: "Metsämittarilla voit tutkia metsien käytön vaikutuksia metsien monimuotoisuuteen ja ekosysteemipalveluihin. Vaikutus ilmaistaan suhteellisena osuutena maksimiarvosta, indikaattorina."
             }
         }
 

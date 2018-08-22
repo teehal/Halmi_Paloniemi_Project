@@ -5,7 +5,6 @@
 	width: 10rem;
 	margin-left: 1rem;
 	margin-bottom: 0.5rem;
-	//font-family: 'Mukta', sans-serif !important;
 	font-family: 'Titillium Web', sans-serif;//luke header
 	color: rgb(84, 88, 90) !important;//luke black
 }
@@ -14,38 +13,42 @@
 	margin-left: 1rem;
 	margin-bottom: 0.25rem;
 	margin-top: 0.25rem;
-	//font-family: 'Mukta', sans-serif !important;
 	font-family: 'Titillium Web', sans-serif !important;//luke header
 	color: rgb(84, 88, 90) !important;//luke black
-	border: 0.5px rgb(84, 88, 90) solid !important; //luke black
+	//border: 0.5px rgb(84, 88, 90) solid !important; //luke black
 	background-color: white !important;
 }
 
 .qtyDscr {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
-	//font-family: 'Mukta', sans-serif !important;
 	font-family: 'Titillium Web', sans-serif !important;//luke header
 	color: rgb(84, 88, 90) !important;//luke black
-	border: 0.5px rgb(84, 88, 90) solid !important; //luke black
+	//border: 0.5px rgb(84, 88, 90) solid !important; //luke black
 	background-color: white !important;	
 }
 
 .navbar {
 	display: block;
-	border: 0.5px rgb(84, 88, 90) solid; //luke black
+	//border: 0.5px rgb(84, 88, 90) solid; //luke black
 }
 
 .navbar-brand {
 	display: block;
-	//font-family: 'Mukta', sans-serif;
 }
 
 .close-button {
 	//background-color: rgb(120, 190, 32) !important;
-	background-color: white;
-	//border: 0.5px rgb(84, 88, 90) solid; //luke black
-	border: red solid 2px;
-	color: white !important;
+	background-color: white !important;
+	//color: white !important;
 	font-family: 'Titillium Web', sans-serif !important;//luke header
+	color: rgb(84, 88, 90) !important;//luke black
+}
+
+div.nav-service-description {
+	font-family: 'Titillium Web', sans-serif !important;//luke header
+	font-size: medium;
+	//color: rgb(84, 88, 90) !important;//luke black
+	color: white;
+	margin-bottom: 0.5rem;
 }
