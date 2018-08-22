@@ -29,7 +29,7 @@ export function getMelaTupaService(
   url += "&ty=";
   url += chosenScenarios.join();
   url += "&ka=";
-  url += timePeriods.length > 0 ? timePeriods[0].id.toString() : "";
+  url += timePeriods.length > 0 ? timePeriods.map(period => period.id).toString() : "";
   url += "&mj=";
   url += chosenIndicatos.join();
   url += language === "1" ? "&la=uk" : "";
