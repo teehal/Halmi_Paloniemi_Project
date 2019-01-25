@@ -41,7 +41,8 @@ class Charts extends Component {
       });
     } else {
       this.setState({
-        graphByYearOrScenarioLabel: nextProp.graphByYearLabel
+        graphByYearOrScenarioLabel: nextProp.graphByYearLabel,
+        groupByYearOrIndicator: nextProp.groupByIndicatorsLabel
       });
     }
 
